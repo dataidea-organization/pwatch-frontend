@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Image from 'next/image';
+import { Button } from '@/components/ui/button';
 
 export default function Home() {
   const newsItems = [
@@ -46,7 +47,7 @@ export default function Home() {
     <div className="min-h-screen bg-white">
       <Header variant="support" />
 
-      <main className="max-w-7xl mx-auto px-4 py-6">
+      <main className="max-w-7xl mx-auto px-4 py-6 pb-20">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
             <div className="relative h-[400px] rounded-lg overflow-hidden">
@@ -67,12 +68,12 @@ export default function Home() {
                     <div className="absolute -bottom-2 left-0 w-32 h-1 bg-[#7AB51D]" />
                   </span>
                 </h2>
-                <button className="mt-6 bg-[#7AB51D] text-white px-6 py-2 rounded-md hover:bg-[#6a9e1a] transition-colors flex items-center gap-2">
+                <Button variant="green" size="lg" className="mt-6">
                   Get Involved
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
                   </svg>
-                </button>
+                </Button>
               </div>
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
                 <div className="w-2 h-2 rounded-full bg-white" />
@@ -120,9 +121,9 @@ export default function Home() {
         <div className="mt-8">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-2xl font-bold text-gray-800">News and Updates</h3>
-            <button className="text-[#7AB51D] hover:text-[#6a9e1a] font-medium">
+            <Button variant="ghost" className="text-[#7AB51D] hover:text-[#6a9e1a] font-medium h-auto p-0">
               View All
-            </button>
+            </Button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -147,7 +148,7 @@ export default function Home() {
         </div>
       </main>
 
-      <div className="mt-12 bg-[#7AB51D] text-white py-3 overflow-hidden">
+      <div className="fixed bottom-0 left-0 right-0 bg-[#7AB51D] text-white py-3 overflow-hidden z-50 shadow-lg">
         <div className="animate-marquee whitespace-nowrap">
           <span className="text-sm font-medium mx-8">
             <span className="font-bold">Top Stories:</span> Power transition underway;Museveni confirms

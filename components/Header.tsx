@@ -2,6 +2,14 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 export default function Header({ variant = 'support' }: { variant?: 'support' | 'donate' }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -33,16 +41,16 @@ export default function Header({ variant = 'support' }: { variant?: 'support' | 
         </div>
 
         <div className="flex items-center gap-4">
-          <button className="text-white font-medium hover:opacity-80">
+          <Button variant="ghost" className="text-white hover:bg-white/20 hover:text-white">
             {variant === 'support' ? 'Support Us' : 'Donate'}
-          </button>
+          </Button>
           <div className="relative">
-            <input
+            <Input
               type="text"
               placeholder="Search..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="bg-white/20 text-white placeholder-white/70 px-4 py-1 pr-10 rounded-full text-sm focus:outline-none focus:bg-white/30"
+              className="bg-white/20 text-white placeholder-white/70 border-0 px-4 py-1 pr-10 rounded-full text-sm focus-visible:ring-0 focus-visible:bg-white/30"
             />
             <button className="absolute right-2 top-1/2 -translate-y-1/2 text-white">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -55,7 +63,7 @@ export default function Header({ variant = 'support' }: { variant?: 'support' | 
 
       <div className="border-b">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
               <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
@@ -64,14 +72,98 @@ export default function Header({ variant = 'support' }: { variant?: 'support' | 
             <div>
               <h1 className="text-xs font-semibold text-gray-700">PARLIAMENT WATCH UGANDA</h1>
             </div>
-          </div>
+          </Link>
 
           <nav className="hidden md:flex items-center gap-6">
-            <Link href="/trackers" className="text-gray-700 hover:text-[#7AB51D] font-medium text-sm">
-              Trackers
-            </Link>
-            <Link href="/resources" className="text-gray-700 hover:text-[#7AB51D] font-medium text-sm">
-              Resources
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="text-gray-700 hover:text-[#7AB51D] font-medium text-sm h-auto p-0">
+                  Trackers
+                  <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-64">
+                <DropdownMenuItem asChild>
+                  <Link href="/trackers/loans" className="w-full cursor-pointer">Loans Tracker</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/trackers/debt" className="w-full cursor-pointer">Debt Tracker</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/trackers/bills" className="w-full cursor-pointer">Bills Tracker</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/trackers/parliament-performance" className="w-full cursor-pointer">Parliament Performance Tracker</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/trackers/budget" className="w-full cursor-pointer">Budget Tracker</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/trackers/know-your-mp" className="w-full cursor-pointer">Know Your MP Tracker</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/trackers/hansards" className="w-full cursor-pointer">Hansards Tracker</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/trackers/order-paper" className="w-full cursor-pointer">Order Paper Tracker</Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="text-gray-700 hover:text-[#7AB51D] font-medium text-sm h-auto p-0">
+                  Multimedia
+                  <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-48">
+                <DropdownMenuItem asChild>
+                  <Link href="/multimedia/x-spaces" className="w-full cursor-pointer">X Spaces</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/multimedia/podcast" className="w-full cursor-pointer">Podcast</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/multimedia/gallery" className="w-full cursor-pointer">Gallery</Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="text-gray-700 hover:text-[#7AB51D] font-medium text-sm h-auto p-0">
+                  Resources
+                  <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-56">
+                <DropdownMenuItem asChild>
+                  <Link href="/resources/explainers" className="w-full cursor-pointer">Explainers (&quot;How a Bill becomes an Act&quot;)</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/resources/reports-briefs" className="w-full cursor-pointer">Reports &amp; Briefs</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/resources/partner-publications" className="w-full cursor-pointer">Partner Publications</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/resources/statements" className="w-full cursor-pointer">Statements</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/resources/committees" className="w-full cursor-pointer">Committees</Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <Link href="/citizen-voices" className="text-gray-700 hover:text-[#7AB51D] font-medium text-sm">
+              Citizen Voices
             </Link>
             <Link href="/news" className="text-gray-700 hover:text-[#7AB51D] font-medium text-sm">
               News&Update
