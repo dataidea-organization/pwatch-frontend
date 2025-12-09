@@ -41,9 +41,11 @@ export default function Header({ variant = 'support' }: { variant?: 'support' | 
         </div>
 
         <div className="flex items-center gap-4">
-          <Button variant="ghost" className="text-white hover:bg-white/20 hover:text-white">
-            {variant === 'support' ? 'Support Us' : 'Donate'}
-          </Button>
+          <Link href="/donate">
+            <Button variant="ghost" className="text-white hover:bg-white/20 hover:text-white">
+              {variant === 'support' ? 'Support Us' : 'Donate'}
+            </Button>
+          </Link>
           <div className="relative">
             <Input
               type="text"
