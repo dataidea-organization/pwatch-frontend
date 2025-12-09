@@ -1,65 +1,168 @@
-import Image from "next/image";
+import Header from '@/components/Header';
+import Image from 'next/image';
 
 export default function Home() {
+  const newsItems = [
+    {
+      title: 'MPs Doubt Impact of State Funds Model Ministerial Poverty',
+      image: '/news1.jpg',
+      category: 'LATEST ON BLOGS'
+    },
+    {
+      title: 'News Item 2',
+      image: '/news2.jpg',
+      category: 'News and Updates'
+    },
+    {
+      title: 'News Item 3',
+      image: '/news3.jpg',
+      category: 'News and Updates'
+    },
+    {
+      title: 'News Item 4',
+      image: '/news4.jpg',
+      category: 'LATEST ON BLOGS'
+    },
+    {
+      title: 'News Item 5',
+      image: '/news5.jpg',
+      category: 'LATEST ON BLOGS'
+    },
+    {
+      title: 'News Item 6',
+      image: '/news6.jpg',
+      category: 'LATEST ON BLOGS'
+    }
+  ];
+
+  const carouselImages = [
+    '/mp1.jpg',
+    '/mp2.jpg',
+    '/mp3.jpg',
+    '/mp4.jpg'
+  ];
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="min-h-screen bg-white">
+      <Header variant="support" />
+
+      <main className="max-w-7xl mx-auto px-4 py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <div className="relative h-[400px] rounded-lg overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent z-10" />
+              <Image
+                src="/parliament.jpg"
+                alt="Parliament Building"
+                fill
+                className="object-cover"
+                priority
+              />
+              <div className="absolute bottom-8 left-8 z-20">
+                <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                  Your Eye on
+                  <br />
+                  <span className="relative inline-block">
+                    Parliament
+                    <div className="absolute -bottom-2 left-0 w-32 h-1 bg-[#7AB51D]" />
+                  </span>
+                </h2>
+                <button className="mt-6 bg-[#7AB51D] text-white px-6 py-2 rounded-md hover:bg-[#6a9e1a] transition-colors flex items-center gap-2">
+                  Get Involved
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </button>
+              </div>
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+                <div className="w-2 h-2 rounded-full bg-white" />
+                <div className="w-2 h-2 rounded-full bg-white/50" />
+                <div className="w-2 h-2 rounded-full bg-white/50" />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-[#1a5f1a] rounded-lg p-6 text-white">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-bold">HM+ in Parliament</h3>
+              <div className="flex gap-2">
+                <button className="text-[#7AB51D] hover:text-white">
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </button>
+                <button className="text-[#7AB51D] hover:text-white">
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 mb-4">
+              {carouselImages.map((img, index) => (
+                <div key={index} className="relative h-24 rounded-lg overflow-hidden bg-gray-700">
+                  <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-400">
+                    Image {index + 1}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="bg-white/10 p-3 rounded-lg">
+              <p className="text-sm font-medium">
+                MPs Doubt Impact of State Funds Model Ministerial Poverty
+              </p>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <div className="mt-8">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-2xl font-bold text-gray-800">News and Updates</h3>
+            <button className="text-[#7AB51D] hover:text-[#6a9e1a] font-medium">
+              View All
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {newsItems.map((item, index) => (
+              <div key={index} className="rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+                <div className="relative h-48 bg-gray-200">
+                  <div className="absolute inset-0 flex items-center justify-center text-gray-400">
+                    News Image {index + 1}
+                  </div>
+                </div>
+                <div className="p-4 bg-white">
+                  <span className="text-xs font-semibold text-[#7AB51D] uppercase">
+                    {item.category}
+                  </span>
+                  <h4 className="mt-2 text-sm font-semibold text-gray-800 line-clamp-2">
+                    {item.title}
+                  </h4>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </main>
+
+      <div className="mt-12 bg-[#7AB51D] text-white py-3 overflow-hidden">
+        <div className="animate-marquee whitespace-nowrap">
+          <span className="text-sm font-medium mx-8">
+            <span className="font-bold">Top Stories:</span> Power transition underway;Museveni confirms
+          </span>
+          <span className="text-sm font-medium mx-8">
+            Among backs MP&apos;s
+          </span>
+          <span className="text-sm font-medium mx-8">
+            <span className="font-bold">Top Stories:</span> Power transition underway;Museveni confirms
+          </span>
+          <span className="text-sm font-medium mx-8">
+            Among backs MP&apos;s
+          </span>
+        </div>
+      </div>
     </div>
   );
 }
