@@ -2,8 +2,15 @@ import Header from '@/components/Header';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { fetchBills } from '@/lib/api';
 
-export default function BillsTrackerPage() {
+export default async function BillsTrackerPage() {
+  let bills = [];
+  try {
+    bills = await fetchBills();
+  } catch (error) {
+    console.error('Failed to fetch bills:', error);
+  }
   const steps = [
     {
       step: 1,
@@ -23,50 +30,48 @@ export default function BillsTrackerPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-50">
       <Header variant="support" />
 
       <main className="relative">
-        <div className="relative h-[600px] overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30 z-10" />
-          <div className="absolute inset-0 bg-gray-700">
-            <div className="absolute inset-0 flex items-center justify-center text-white text-2xl">
-              Parliament Building Background
+        {/* Hero Section */}
+        <div className="bg-gradient-to-br from-slate-700 via-slate-600 to-slate-700">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div className="text-center mb-12">
+              <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                Bills Tracker
+              </h1>
+              <p className="text-slate-200 text-lg max-w-2xl mx-auto">
+                Track the progress of bills through Parliament from introduction to presidential assent
+              </p>
             </div>
           </div>
+        </div>
 
-          <div className="relative z-20 max-w-7xl mx-auto px-4 py-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-white text-center mb-16">
-              HOW DOES A BILL BECOME AN ACT
-            </h1>
+        {/* How a Bill Becomes an Act Section */}
+        <div className="bg-white border-b">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <h2 className="text-2xl font-semibold text-slate-800 text-center mb-8">
+              How a Bill Becomes an Act
+            </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {steps.map((stepItem, index) => (
-                <div key={index} className="flex flex-col items-center">
-                  <div className="relative w-64 h-64 mb-6">
-                    <div className="absolute inset-0 rounded-full border-4 border-white bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm flex items-center justify-center">
-                      <div className="text-center p-6">
-                        <div className="w-32 h-32 mx-auto mb-4 bg-white/30 rounded-lg flex items-center justify-center">
-                          <span className="text-white/70 text-xs">
-                            Illustration {index + 1}
-                          </span>
-                        </div>
-                      </div>
+                <div key={index} className="flex flex-col items-center text-center">
+                  <div className="relative mb-6">
+                    <div className="w-20 h-20 rounded-full bg-[#7AB51D] text-white flex items-center justify-center text-3xl font-bold shadow-lg">
+                      {stepItem.step}
                     </div>
                     {index < steps.length - 1 && (
-                      <div className="hidden md:block absolute top-1/2 -right-8 w-16 h-0.5 bg-white" />
+                      <div className="hidden md:block absolute top-1/2 left-full w-full h-0.5 bg-slate-200" style={{ transform: 'translateY(-50%)', width: 'calc(100% + 2rem)' }} />
                     )}
                   </div>
 
-                  <Button
-                    variant="green"
-                    size="lg"
-                    className="mb-4 px-8"
-                  >
+                  <h3 className="text-sm font-semibold text-[#7AB51D] mb-2 uppercase tracking-wide">
                     Step {stepItem.step}
-                  </Button>
+                  </h3>
 
-                  <p className="text-white text-center text-sm max-w-xs leading-relaxed">
+                  <p className="text-slate-600 text-sm max-w-xs leading-relaxed">
                     {stepItem.title}
                   </p>
                 </div>
@@ -75,107 +80,63 @@ export default function BillsTrackerPage() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-              <div className="p-6">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex-1">
-                    <span className="inline-block px-3 py-1 bg-[#7AB51D] text-white text-xs font-semibold rounded-full mb-3">
-                      1ST READING
-                    </span>
-                    <h3 className="text-lg font-bold text-gray-800 mb-2">
-                      Forensic and Scientific Analytical Services Bill, 2025
-                    </h3>
-                  </div>
-                </div>
-                <div className="space-y-2 text-sm text-gray-600 mb-4">
-                  <div>
-                    <span className="font-medium">Bill type:</span> Government
-                  </div>
-                  <div>
-                    <span className="font-medium">Year Introduced:</span> 2025-07-16
-                  </div>
-                  <div>
-                    <span className="font-medium">Mover:</span> Major General Kahinda Otafiire
-                  </div>
-                </div>
-                <Link href="/trackers/bills/1">
-                  <Button variant="outline" className="w-full border-[#7AB51D] text-[#7AB51D] hover:bg-[#7AB51D] hover:text-white">
-                    View Details
-                  </Button>
-                </Link>
-              </div>
-            </div>
-
-            <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-              <div className="p-6">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex-1">
-                    <span className="inline-block px-3 py-1 bg-[#7AB51D] text-white text-xs font-semibold rounded-full mb-3">
-                      2ND READING
-                    </span>
-                    <h3 className="text-lg font-bold text-gray-800 mb-2">
-                      Sample Bill Title Here, 2025
-                    </h3>
-                  </div>
-                </div>
-                <div className="space-y-2 text-sm text-gray-600 mb-4">
-                  <div>
-                    <span className="font-medium">Bill type:</span> Private Member
-                  </div>
-                  <div>
-                    <span className="font-medium">Year Introduced:</span> 2025-06-10
-                  </div>
-                  <div>
-                    <span className="font-medium">Mover:</span> Sample MP Name
-                  </div>
-                </div>
-                <Link href="/trackers/bills/2">
-                  <Button variant="outline" className="w-full border-[#7AB51D] text-[#7AB51D] hover:bg-[#7AB51D] hover:text-white">
-                    View Details
-                  </Button>
-                </Link>
-              </div>
-            </div>
-
-            <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-              <div className="p-6">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex-1">
-                    <span className="inline-block px-3 py-1 bg-gray-600 text-white text-xs font-semibold rounded-full mb-3">
-                      ASSENTED
-                    </span>
-                    <h3 className="text-lg font-bold text-gray-800 mb-2">
-                      Sample Assented Bill, 2024
-                    </h3>
-                  </div>
-                </div>
-                <div className="space-y-2 text-sm text-gray-600 mb-4">
-                  <div>
-                    <span className="font-medium">Bill type:</span> Government
-                  </div>
-                  <div>
-                    <span className="font-medium">Year Introduced:</span> 2024-03-15
-                  </div>
-                  <div>
-                    <span className="font-medium">Mover:</span> Sample Minister
-                  </div>
-                </div>
-                <Link href="/trackers/bills/3">
-                  <Button variant="outline" className="w-full border-[#7AB51D] text-[#7AB51D] hover:bg-[#7AB51D] hover:text-white">
-                    View Details
-                  </Button>
-                </Link>
-              </div>
-            </div>
+        {/* Bills Listing Section */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="mb-8">
+            <h2 className="text-2xl font-semibold text-slate-800 mb-2">Current Bills</h2>
+            <p className="text-slate-600">Browse all bills currently in the legislative process</p>
           </div>
 
-          <div className="flex justify-center mt-8">
-            <Button variant="outline" className="border-[#7AB51D] text-[#7AB51D] hover:bg-[#7AB51D] hover:text-white px-8">
-              Load More Bills
-            </Button>
-          </div>
+          {bills.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {bills.map((bill) => (
+                  <div key={bill.id} className="bg-white rounded-lg border border-slate-200 hover:border-slate-300 transition-all duration-200 hover:shadow-lg overflow-hidden">
+                    <div className="p-6">
+                      <div className="flex items-start justify-between mb-4">
+                        <span className={`inline-flex items-center px-3 py-1 rounded-md text-xs font-medium ${
+                          bill.status === 'assented'
+                            ? 'bg-slate-100 text-slate-700'
+                            : 'bg-emerald-50 text-[#7AB51D]'
+                        }`}>
+                          {bill.status_display}
+                        </span>
+                      </div>
+
+                      <h3 className="text-lg font-semibold text-slate-900 mb-4 line-clamp-2 leading-tight">
+                        {bill.title}
+                      </h3>
+
+                      <div className="space-y-2 mb-6">
+                        <div className="flex items-start text-sm">
+                          <span className="text-slate-500 w-32 flex-shrink-0">Type:</span>
+                          <span className="text-slate-700 font-medium">{bill.bill_type_display}</span>
+                        </div>
+                        <div className="flex items-start text-sm">
+                          <span className="text-slate-500 w-32 flex-shrink-0">Introduced:</span>
+                          <span className="text-slate-700 font-medium">{bill.year_introduced}</span>
+                        </div>
+                        <div className="flex items-start text-sm">
+                          <span className="text-slate-500 w-32 flex-shrink-0">Mover:</span>
+                          <span className="text-slate-700 font-medium">{bill.mover}</span>
+                        </div>
+                      </div>
+
+                      <Link href={`/trackers/bills/${bill.id}`}>
+                        <Button className="w-full bg-[#7AB51D] hover:bg-[#6a9e1a] text-white">
+                          View Details
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : (
+            <div className="text-center py-16 bg-white rounded-lg border border-slate-200">
+              <p className="text-slate-600">No bills found. Please check back later.</p>
+            </div>
+          )}
         </div>
       </main>
     </div>
