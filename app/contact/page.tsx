@@ -83,7 +83,7 @@ export default function ContactPage() {
                   placeholder="Name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#7AB51D]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#085e29]"
                 />
 
                 <input
@@ -91,7 +91,7 @@ export default function ContactPage() {
                   placeholder="Email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#7AB51D]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#085e29]"
                 />
 
                 <input
@@ -99,7 +99,7 @@ export default function ContactPage() {
                   placeholder="Subject"
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#7AB51D]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#085e29]"
                 />
 
                 <textarea
@@ -107,12 +107,12 @@ export default function ContactPage() {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   rows={4}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#7AB51D]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#085e29]"
                 />
 
                 <button
                   type="submit"
-                  className="w-full bg-[#7AB51D] text-white py-3 rounded-md hover:bg-[#6a9e1a] transition-colors font-medium"
+                  className="w-full bg-[#085e29] text-white py-3 rounded-md hover:bg-[#064920] transition-colors font-medium"
                 >
                   Send Message
                 </button>

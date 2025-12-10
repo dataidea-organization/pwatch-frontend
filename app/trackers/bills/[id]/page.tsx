@@ -34,7 +34,7 @@ export default async function BillDetailsPage({
       <div className="bg-white border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center gap-3 text-sm text-slate-600 mb-4">
-            <Link href="/trackers/bills" className="hover:text-[#7AB51D]">Bills Tracker</Link>
+            <Link href="/trackers/bills" className="hover:text-[#085e29]">Bills Tracker</Link>
             <span>/</span>
             <span className="text-slate-900 font-medium">Bill Details</span>
           </div>
@@ -43,11 +43,11 @@ export default async function BillDetailsPage({
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
           {/* Video Player Section */}
-          <div className="lg:col-span-2">
-            <div className="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-sm">
-              <div className="relative h-96 bg-slate-900">
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-sm h-full flex flex-col">
+              <div className="relative flex-1 bg-slate-900" style={{ minHeight: '400px' }}>
               {bill.video_url ? (
                 <iframe
                   src={bill.video_url}
@@ -74,89 +74,87 @@ export default async function BillDetailsPage({
 
           {/* Bill Status Section */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg border border-slate-200 p-6 shadow-sm">
+            <div className="bg-white rounded-lg border border-slate-200 p-6 shadow-sm h-full flex flex-col">
               <h2 className="text-lg font-semibold text-slate-900 mb-6">Bill Progress</h2>
 
-              {/* Progress Tracker - Vertical Timeline */}
-              <div className="space-y-6 mb-8">
-                {/* 1st Reading */}
-                <div className="flex gap-4">
-                  <div className="flex flex-col items-center">
+              {/* Progress Tracker - Horizontal Timeline */}
+              <div className="mb-8">
+                <div className="flex items-start justify-between gap-2">
+                  {/* 1st Reading */}
+                  <div className="flex flex-col items-center flex-1">
                     <div className={`w-12 h-12 rounded-full flex items-center justify-center font-semibold text-sm ${
                       currentProgress >= 0
-                        ? 'bg-[#7AB51D] text-white'
+                        ? 'bg-[#085e29] text-white'
                         : 'bg-slate-100 text-slate-400'
                     }`}>
                       1st
                     </div>
-                    {currentProgress >= 0 && <div className="w-0.5 flex-1 bg-[#7AB51D] mt-2" style={{ minHeight: '24px' }} />}
-                  </div>
-                  <div className="flex-1 pt-2">
-                    <h4 className={`font-medium text-sm ${currentProgress >= 0 ? 'text-slate-900' : 'text-slate-400'}`}>
+                    <h4 className={`font-medium text-xs mt-3 text-center ${currentProgress >= 0 ? 'text-slate-900' : 'text-slate-400'}`}>
                       1st Reading
                     </h4>
-                    <p className="text-xs text-slate-500 mt-1">Bill introduced to Parliament</p>
+                    <p className="text-[10px] text-slate-500 mt-1 text-center leading-tight">Bill introduced</p>
                   </div>
-                </div>
 
-                {/* 2nd Reading */}
-                <div className="flex gap-4">
-                  <div className="flex flex-col items-center">
+                  {/* Connector Line */}
+                  <div className="flex items-center pt-6 flex-shrink-0" style={{ width: '40px' }}>
+                    <div className={`h-0.5 w-full ${currentProgress >= 1 ? 'bg-[#085e29]' : 'bg-slate-200'}`} />
+                  </div>
+
+                  {/* 2nd Reading */}
+                  <div className="flex flex-col items-center flex-1">
                     <div className={`w-12 h-12 rounded-full flex items-center justify-center font-semibold text-sm ${
                       currentProgress >= 1
-                        ? 'bg-[#7AB51D] text-white'
+                        ? 'bg-[#085e29] text-white'
                         : 'bg-slate-100 text-slate-400'
                     }`}>
                       2nd
                     </div>
-                    {currentProgress >= 1 && <div className="w-0.5 flex-1 bg-[#7AB51D] mt-2" style={{ minHeight: '24px' }} />}
-                  </div>
-                  <div className="flex-1 pt-2">
-                    <h4 className={`font-medium text-sm ${currentProgress >= 1 ? 'text-slate-900' : 'text-slate-400'}`}>
+                    <h4 className={`font-medium text-xs mt-3 text-center ${currentProgress >= 1 ? 'text-slate-900' : 'text-slate-400'}`}>
                       2nd Reading
                     </h4>
-                    <p className="text-xs text-slate-500 mt-1">Debate and committee review</p>
+                    <p className="text-[10px] text-slate-500 mt-1 text-center leading-tight">Committee review</p>
                   </div>
-                </div>
 
-                {/* 3rd Reading */}
-                <div className="flex gap-4">
-                  <div className="flex flex-col items-center">
+                  {/* Connector Line */}
+                  <div className="flex items-center pt-6 flex-shrink-0" style={{ width: '40px' }}>
+                    <div className={`h-0.5 w-full ${currentProgress >= 2 ? 'bg-[#085e29]' : 'bg-slate-200'}`} />
+                  </div>
+
+                  {/* 3rd Reading */}
+                  <div className="flex flex-col items-center flex-1">
                     <div className={`w-12 h-12 rounded-full flex items-center justify-center font-semibold text-sm ${
                       currentProgress >= 2
-                        ? 'bg-[#7AB51D] text-white'
+                        ? 'bg-[#085e29] text-white'
                         : 'bg-slate-100 text-slate-400'
                     }`}>
                       3rd
                     </div>
-                    {currentProgress >= 2 && <div className="w-0.5 flex-1 bg-[#7AB51D] mt-2" style={{ minHeight: '24px' }} />}
-                  </div>
-                  <div className="flex-1 pt-2">
-                    <h4 className={`font-medium text-sm ${currentProgress >= 2 ? 'text-slate-900' : 'text-slate-400'}`}>
-                      3rd Reading & Vote
+                    <h4 className={`font-medium text-xs mt-3 text-center ${currentProgress >= 2 ? 'text-slate-900' : 'text-slate-400'}`}>
+                      3rd Reading
                     </h4>
-                    <p className="text-xs text-slate-500 mt-1">Final debate and passage</p>
+                    <p className="text-[10px] text-slate-500 mt-1 text-center leading-tight">Final vote</p>
                   </div>
-                </div>
 
-                {/* Presidential Assent */}
-                <div className="flex gap-4">
-                  <div className="flex flex-col items-center">
+                  {/* Connector Line */}
+                  <div className="flex items-center pt-6 flex-shrink-0" style={{ width: '40px' }}>
+                    <div className={`h-0.5 w-full ${currentProgress >= 4 ? 'bg-[#085e29]' : 'bg-slate-200'}`} />
+                  </div>
+
+                  {/* Presidential Assent */}
+                  <div className="flex flex-col items-center flex-1">
                     <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
                       currentProgress >= 4
-                        ? 'bg-[#7AB51D] text-white'
+                        ? 'bg-[#085e29] text-white'
                         : 'bg-slate-100 text-slate-400'
                     }`}>
                       <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
                     </div>
-                  </div>
-                  <div className="flex-1 pt-2">
-                    <h4 className={`font-medium text-sm ${currentProgress >= 4 ? 'text-slate-900' : 'text-slate-400'}`}>
-                      Presidential Assent
+                    <h4 className={`font-medium text-xs mt-3 text-center ${currentProgress >= 4 ? 'text-slate-900' : 'text-slate-400'}`}>
+                      Assent
                     </h4>
-                    <p className="text-xs text-slate-500 mt-1">Bill becomes law</p>
+                    <p className="text-[10px] text-slate-500 mt-1 text-center leading-tight">Becomes law</p>
                   </div>
                 </div>
               </div>
@@ -164,32 +162,32 @@ export default async function BillDetailsPage({
               {/* Bill Details */}
               <div className="border-t pt-6">
                 <h3 className="text-sm font-semibold text-slate-900 mb-4">Bill Information</h3>
-                <div className="space-y-3 text-sm">
+                <div className="grid grid-cols-2 gap-x-4 gap-y-4 text-sm">
                   <div>
-                    <span className="text-slate-500 block mb-1">Status</span>
+                    <span className="text-slate-500 block mb-1 text-xs">Status</span>
                     <span className={`inline-flex items-center px-3 py-1 rounded-md text-xs font-medium ${
                       bill.status === 'assented'
                         ? 'bg-slate-100 text-slate-700'
-                        : 'bg-emerald-50 text-[#7AB51D]'
+                        : 'bg-emerald-50 text-[#085e29]'
                     }`}>
                       {bill.status_display}
                     </span>
                   </div>
                   <div>
-                    <span className="text-slate-500 block mb-1">Type</span>
-                    <span className="text-slate-900 font-medium">{bill.bill_type_display}</span>
+                    <span className="text-slate-500 block mb-1 text-xs">Type</span>
+                    <span className="text-slate-900 font-medium text-sm">{bill.bill_type_display}</span>
                   </div>
                   <div>
-                    <span className="text-slate-500 block mb-1">Introduced</span>
-                    <span className="text-slate-900 font-medium">{bill.year_introduced}</span>
+                    <span className="text-slate-500 block mb-1 text-xs">Introduced</span>
+                    <span className="text-slate-900 font-medium text-sm">{bill.year_introduced}</span>
                   </div>
                   <div>
-                    <span className="text-slate-500 block mb-1">Moved by</span>
-                    <span className="text-slate-900 font-medium">{bill.mover}</span>
+                    <span className="text-slate-500 block mb-1 text-xs">Moved by</span>
+                    <span className="text-slate-900 font-medium text-sm">{bill.mover}</span>
                   </div>
-                  <div>
-                    <span className="text-slate-500 block mb-1">Assigned to</span>
-                    <span className="text-slate-900 font-medium">{bill.assigned_to}</span>
+                  <div className="col-span-2">
+                    <span className="text-slate-500 block mb-1 text-xs">Assigned to</span>
+                    <span className="text-slate-900 font-medium text-sm">{bill.assigned_to}</span>
                   </div>
                 </div>
               </div>
@@ -197,19 +195,20 @@ export default async function BillDetailsPage({
           </div>
         </div>
 
-        {/* Reading Stages Section */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-slate-900 mb-2">Bill Readings</h2>
-          <p className="text-slate-600 mb-8">Documents and reports from each reading stage</p>
-        </div>
+        {/* Bill Readings Section */}
+        <div className="mt-12">
+          <div className="mb-8">
+            <h2 className="text-2xl font-semibold text-slate-900 mb-2">Bill Readings</h2>
+            <p className="text-slate-600">Documents and reports from each reading stage</p>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {bill.readings && bill.readings.length > 0 ? (
             bill.readings.map((reading, index) => (
               <div key={reading.id} className="bg-white rounded-lg border border-slate-200 overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="bg-[#7AB51D] px-6 py-4">
+                <div className="bg-[#085e29] px-6 py-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#7AB51D] font-bold text-sm">
+                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#085e29] font-bold text-sm">
                       {index + 1}
                       {index === 0 && <sup className="text-xs">st</sup>}
                       {index === 1 && <sup className="text-xs">nd</sup>}
@@ -269,10 +268,11 @@ export default async function BillDetailsPage({
               </div>
             ))
           ) : (
-            <div className="col-span-3 text-center py-12">
-              <p className="text-gray-600">No reading information available yet.</p>
+            <div className="col-span-3 text-center py-12 bg-white rounded-lg border border-slate-200">
+              <p className="text-slate-600">No reading information available yet.</p>
             </div>
           )}
+          </div>
         </div>
       </main>
     </div>

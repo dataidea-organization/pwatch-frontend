@@ -59,7 +59,7 @@ export default async function BillsTrackerPage() {
               {steps.map((stepItem, index) => (
                 <div key={index} className="flex flex-col items-center text-center">
                   <div className="relative mb-6">
-                    <div className="w-20 h-20 rounded-full bg-[#7AB51D] text-white flex items-center justify-center text-3xl font-bold shadow-lg">
+                    <div className="w-20 h-20 rounded-full bg-[#085e29] text-white flex items-center justify-center text-3xl font-bold shadow-lg">
                       {stepItem.step}
                     </div>
                     {index < steps.length - 1 && (
@@ -67,7 +67,7 @@ export default async function BillsTrackerPage() {
                     )}
                   </div>
 
-                  <h3 className="text-sm font-semibold text-[#7AB51D] mb-2 uppercase tracking-wide">
+                  <h3 className="text-sm font-semibold text-[#085e29] mb-2 uppercase tracking-wide">
                     Step {stepItem.step}
                   </h3>
 
@@ -97,7 +97,7 @@ export default async function BillsTrackerPage() {
                         <span className={`inline-flex items-center px-3 py-1 rounded-md text-xs font-medium ${
                           bill.status === 'assented'
                             ? 'bg-slate-100 text-slate-700'
-                            : 'bg-emerald-50 text-[#7AB51D]'
+                            : 'bg-emerald-50 text-[#085e29]'
                         }`}>
                           {bill.status_display}
                         </span>
@@ -123,7 +123,7 @@ export default async function BillsTrackerPage() {
                       </div>
 
                       <Link href={`/trackers/bills/${bill.id}`}>
-                        <Button className="w-full bg-[#7AB51D] hover:bg-[#6a9e1a] text-white">
+                        <Button className="w-full bg-[#085e29] hover:bg-[#064920] text-white">
                           View Details
                         </Button>
                       </Link>

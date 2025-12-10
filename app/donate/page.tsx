@@ -49,7 +49,7 @@ export default function DonatePage() {
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="border-[#7AB51D] focus-visible:ring-[#7AB51D]"
+                  className="border-[#085e29] focus-visible:ring-[#085e29]"
                   required
                 />
               </div>
@@ -63,7 +63,7 @@ export default function DonatePage() {
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="border-[#7AB51D] focus-visible:ring-[#7AB51D]"
+                  className="border-[#085e29] focus-visible:ring-[#085e29]"
                   required
                 />
               </div>
@@ -77,7 +77,7 @@ export default function DonatePage() {
                     id="country"
                     value={formData.country}
                     onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                    className="w-full h-9 rounded-md border border-[#7AB51D] bg-transparent px-3 py-1 text-base shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#7AB51D]"
+                    className="w-full h-9 rounded-md border border-[#085e29] bg-transparent px-3 py-1 text-base shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#085e29]"
                   >
                     <option value="United States">United States</option>
                     <option value="Uganda">Uganda</option>
@@ -97,7 +97,7 @@ export default function DonatePage() {
                     type="text"
                     value={formData.address}
                     onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                    className="border-[#7AB51D] focus-visible:ring-[#7AB51D]"
+                    className="border-[#085e29] focus-visible:ring-[#085e29]"
                   />
                 </div>
               </div>
@@ -112,7 +112,7 @@ export default function DonatePage() {
                     id="mobile-money"
                     checked={formData.donationMethod === 'mobile-money'}
                     onChange={(e) => setFormData({ ...formData, donationMethod: e.target.checked ? 'mobile-money' : '' })}
-                    className="mt-1 h-4 w-4 rounded border-gray-300 text-[#7AB51D] focus:ring-[#7AB51D]"
+                    className="mt-1 h-4 w-4 rounded border-gray-300 text-[#085e29] focus:ring-[#085e29]"
                   />
                   <label htmlFor="mobile-money" className="text-sm text-gray-700 cursor-pointer">
                     Mobile Money (075558808) Ushs
@@ -129,7 +129,7 @@ export default function DonatePage() {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   rows={4}
-                  className="w-full rounded-md border border-[#7AB51D] bg-transparent px-3 py-2 text-base shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#7AB51D] resize-none"
+                  className="w-full rounded-md border border-[#085e29] bg-transparent px-3 py-2 text-base shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#085e29] resize-none"
                 />
               </div>
 

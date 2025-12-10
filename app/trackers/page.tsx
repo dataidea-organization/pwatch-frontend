@@ -6,20 +6,20 @@ export default function TrackersPage() {
       stage: '1st Reading',
       title: 'The Forensic and Scientific Analytical Services Bill, 2025 seeks to regulate forensic and scientific analytical services, establish and designate',
       action: 'Read or Download Tabled Bill',
-      color: 'bg-[#7AB51D]'
+      color: 'bg-[#085e29]'
     },
     {
       stage: '2nd Reading',
       title: 'The Forensic and Scientific Analytical Services Bill, 2025 seeks to regulate forensic and scientific analytical services, establish and designate',
       action: 'Read or Download Committee Report',
       subAction: 'Download CEPA Analysis',
-      color: 'bg-[#7AB51D]'
+      color: 'bg-[#085e29]'
     },
     {
       stage: '3rd Reading',
       title: 'The Forensic and Scientific Analytical Services Bill, 2025 seeks to regulate forensic and scientific analytical services, establish and designate',
       action: 'Read or Download Analysis',
-      color: 'bg-[#7AB51D]'
+      color: 'bg-[#085e29]'
     }
   ];
 
@@ -29,7 +29,7 @@ export default function TrackersPage() {
 
       <main className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-          <div className="bg-[#7AB51D] rounded-3xl p-6 relative overflow-hidden">
+          <div className="bg-[#085e29] rounded-3xl p-6 relative overflow-hidden">
             <div className="relative h-96 bg-gray-800 rounded-2xl overflow-hidden">
               <div className="absolute inset-0 flex items-center justify-center">
                 <button className="w-20 h-20 bg-white bg-opacity-30 rounded-full flex items-center justify-center hover:bg-opacity-40 transition-colors">
@@ -69,14 +69,14 @@ export default function TrackersPage() {
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-4">
                 <div className="flex flex-col items-center">
-                  <div className="w-16 h-16 rounded-full bg-[#7AB51D] flex items-center justify-center text-white font-bold text-lg border-4 border-white shadow-lg">
+                  <div className="w-16 h-16 rounded-full bg-[#085e29] flex items-center justify-center text-white font-bold text-lg border-4 border-white shadow-lg">
                     1<sup className="text-xs">st</sup>
                   </div>
                   <span className="text-xs text-gray-600 mt-2">Reading</span>
                 </div>
-                <div className="h-0.5 w-12 bg-[#7AB51D]"></div>
+                <div className="h-0.5 w-12 bg-[#085e29]"></div>
                 <div className="flex flex-col items-center">
-                  <div className="w-16 h-16 rounded-full bg-[#7AB51D] flex items-center justify-center text-white font-bold text-lg border-4 border-white shadow-lg">
+                  <div className="w-16 h-16 rounded-full bg-[#085e29] flex items-center justify-center text-white font-bold text-lg border-4 border-white shadow-lg">
                     2<sup className="text-xs">nd</sup>
                   </div>
                   <span className="text-xs text-gray-600 mt-2">Reading</span>
@@ -101,7 +101,7 @@ export default function TrackersPage() {
             </div>
 
             <div className="mb-6">
-              <h1 className="text-3xl font-bold text-[#7AB51D] mb-4">BILL STATUS</h1>
+              <h1 className="text-3xl font-bold text-[#085e29] mb-4">BILL STATUS</h1>
               <p className="text-sm text-gray-600 mb-2">BILL STATUS: 1ST READING</p>
               <h2 className="text-2xl font-bold text-gray-800 mb-4">
                 Forensic and Scientific Analytical Services Bill, 2025.
@@ -138,7 +138,7 @@ export default function TrackersPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#7AB51D] font-bold">
+                  <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#085e29] font-bold">
                     {index + 1}<sup className="text-xs">st</sup>
                   </div>
                   <span className="font-bold text-xl">{reading.stage}</span>

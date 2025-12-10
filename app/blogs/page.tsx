@@ -51,7 +51,7 @@ export default function BlogsPage() {
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#7AB51D]"
+                  className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#085e29]"
                 >
                   <option value="all">Categories</option>
                   <option value="governance">Governance</option>
@@ -59,7 +59,7 @@ export default function BlogsPage() {
                   <option value="youth">Youth Powered</option>
                   <option value="accountability">Accountability</option>
                 </select>
-                <button className="bg-[#7AB51D] text-white px-6 py-2 rounded-md hover:bg-[#6a9e1a] transition-colors font-medium">
+                <button className="bg-[#085e29] text-white px-6 py-2 rounded-md hover:bg-[#064920] transition-colors font-medium">
                   SEARCH
                 </button>
               </div>
@@ -80,7 +80,7 @@ export default function BlogsPage() {
                     <h3 className="font-bold text-gray-800 text-base mb-3">
                       {post.title}
                     </h3>
-                    <a href="#" className="text-[#7AB51D] hover:text-[#6a9e1a] font-medium text-sm">
+                    <a href="#" className="text-[#085e29] hover:text-[#064920] font-medium text-sm">
                       Read More...
                     </a>
                   </div>
@@ -102,7 +102,7 @@ export default function BlogsPage() {
             </div>
 
             <div className="flex justify-center">
-              <button className="bg-[#7AB51D] text-white px-8 py-3 rounded-md hover:bg-[#6a9e1a] transition-colors font-medium flex items-center gap-2">
+              <button className="bg-[#085e29] text-white px-8 py-3 rounded-md hover:bg-[#064920] transition-colors font-medium flex items-center gap-2">
                 GO TO PAGE 2
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />

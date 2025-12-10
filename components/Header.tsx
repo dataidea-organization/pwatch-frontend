@@ -16,7 +16,7 @@ export default function Header({ variant = 'support' }: { variant?: 'support' | 
 
   return (
     <header className="w-full bg-white">
-      <div className="bg-[#7AB51D] px-4 py-2 flex items-center justify-between">
+      <div className="bg-[#085e29] px-4 py-2 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <a href="#" className="text-white hover:opacity-80">
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -79,7 +79,7 @@ export default function Header({ variant = 'support' }: { variant?: 'support' | 
           <nav className="hidden md:flex items-center gap-6">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="text-gray-700 hover:text-[#7AB51D] font-medium text-sm h-auto p-0">
+                <Button variant="ghost" className="text-gray-700 hover:text-[#085e29] font-medium text-sm h-auto p-0">
                   Trackers
                   <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -103,7 +103,7 @@ export default function Header({ variant = 'support' }: { variant?: 'support' | 
                   <Link href="/trackers/budget" className="w-full cursor-pointer">Budget Tracker</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href="/trackers/know-your-mp" className="w-full cursor-pointer">Know Your MP Tracker</Link>
+                  <Link href="/trackers/mps" className="w-full cursor-pointer">Members of Parliament</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/trackers/hansards" className="w-full cursor-pointer">Hansards Tracker</Link>
@@ -116,7 +116,7 @@ export default function Header({ variant = 'support' }: { variant?: 'support' | 
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="text-gray-700 hover:text-[#7AB51D] font-medium text-sm h-auto p-0">
+                <Button variant="ghost" className="text-gray-700 hover:text-[#085e29] font-medium text-sm h-auto p-0">
                   Multimedia
                   <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -138,7 +138,7 @@ export default function Header({ variant = 'support' }: { variant?: 'support' | 
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="text-gray-700 hover:text-[#7AB51D] font-medium text-sm h-auto p-0">
+                <Button variant="ghost" className="text-gray-700 hover:text-[#085e29] font-medium text-sm h-auto p-0">
                   Resources
                   <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -164,19 +164,19 @@ export default function Header({ variant = 'support' }: { variant?: 'support' | 
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <Link href="/citizen-voices" className="text-gray-700 hover:text-[#7AB51D] font-medium text-sm">
+            <Link href="/citizen-voices" className="text-gray-700 hover:text-[#085e29] font-medium text-sm">
               Citizen Voices
             </Link>
-            <Link href="/news" className="text-gray-700 hover:text-[#7AB51D] font-medium text-sm">
+            <Link href="/news" className="text-gray-700 hover:text-[#085e29] font-medium text-sm">
               News&Update
             </Link>
-            <Link href="/blogs" className="text-gray-700 hover:text-[#7AB51D] font-medium text-sm">
+            <Link href="/blogs" className="text-gray-700 hover:text-[#085e29] font-medium text-sm">
               Blogs
             </Link>
-            <Link href="/contact" className="text-gray-700 hover:text-[#7AB51D] font-medium text-sm">
+            <Link href="/contact" className="text-gray-700 hover:text-[#085e29] font-medium text-sm">
               Contact
             </Link>
-            <Link href="/about" className="text-gray-700 hover:text-[#7AB51D] font-medium text-sm">
+            <Link href="/about" className="text-gray-700 hover:text-[#085e29] font-medium text-sm">
               About Us
             </Link>
           </nav>

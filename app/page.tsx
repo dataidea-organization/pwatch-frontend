@@ -65,7 +65,7 @@ export default function Home() {
                   <br />
                   <span className="relative inline-block">
                     Parliament
-                    <div className="absolute -bottom-2 left-0 w-32 h-1 bg-[#7AB51D]" />
+                    <div className="absolute -bottom-2 left-0 w-32 h-1 bg-[#085e29]" />
                   </span>
                 </h2>
                 <Button variant="green" size="lg" className="mt-6">
@@ -87,7 +87,7 @@ export default function Home() {
         <div className="mt-8">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-2xl font-bold text-gray-800">News and Updates</h3>
-            <Button variant="ghost" className="text-[#7AB51D] hover:text-[#6a9e1a] font-medium h-auto p-0">
+            <Button variant="ghost" className="text-[#085e29] hover:text-[#064920] font-medium h-auto p-0">
               View All
             </Button>
           </div>
@@ -101,7 +101,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="p-4 bg-white">
-                  <span className="text-xs font-semibold text-[#7AB51D] uppercase">
+                  <span className="text-xs font-semibold text-[#085e29] uppercase">
                     {item.category}
                   </span>
                   <h4 className="mt-2 text-sm font-semibold text-gray-800 line-clamp-2">
@@ -114,7 +114,7 @@ export default function Home() {
         </div>
       </main>
 
-      <div className="fixed bottom-0 left-0 right-0 bg-[#7AB51D] text-white py-3 overflow-hidden z-50 shadow-lg">
+      <div className="fixed bottom-0 left-0 right-0 bg-[#085e29] text-white py-3 overflow-hidden z-50 shadow-lg">
         <div className="animate-marquee whitespace-nowrap">
           <span className="text-sm font-medium mx-8">
             <span className="font-bold">Top Stories:</span> Power transition underway;Museveni confirms
