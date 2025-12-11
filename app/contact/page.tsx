@@ -2,6 +2,8 @@
 
 import Header from '@/components/Header';
 import { useState } from 'react';
+import { Mail, Phone, MapPin, Clock, CheckCircle, AlertCircle } from 'lucide-react';
+import { submitContactForm } from '@/lib/api';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -10,117 +12,225 @@ export default function ContactPage() {
     subject: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: 'success' | 'error' | null;
+    message: string;
+  }>({ type: null, message: '' });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: '' });
+
+    try {
+      const response = await submitContactForm(formData);
+      setSubmitStatus({
+        type: 'success',
+        message: response.message || 'Thank you for contacting us! We will respond within 48 hours.',
+      });
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
+    } catch (error) {
+      setSubmitStatus({
+        type: 'error',
+        message: error instanceof Error ? error.message : 'Failed to submit your message. Please try again.',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      <Header variant="donate" />
+    <div className="min-h-screen bg-gray-50">
+      <Header variant="support" />
 
-      <section className="bg-gradient-to-r from-gray-100 to-gray-50 py-12">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <div className="relative h-[400px] rounded-lg overflow-hidden">
-              <div className="absolute inset-0 bg-gray-300 flex items-center justify-center">
-                <span className="text-gray-500">Team Photo</span>
+      <main className="max-w-7xl mx-auto px-4 py-8">
+        <div className="mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900">Contact Us</h1>
+          <p className="text-gray-600 mt-2">Get in touch with the Centre for Policy Analysis team</p>
+        </div>
+
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Contact Form */}
+          <div className="lg:col-span-2 bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Send us a Message</h2>
+            <p className="text-gray-600 mb-6">
+              Fill out the form below and we will get back to you within 48 hours.
+            </p>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Status Messages */}
+              {submitStatus.type && (
+                <div
+                  className={`p-4 rounded-md flex items-start gap-3 ${
+                    submitStatus.type === 'success'
+                      ? 'bg-green-50 border border-green-200'
+                      : 'bg-red-50 border border-red-200'
+                  }`}
+                >
+                  {submitStatus.type === 'success' ? (
+                    <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                  ) : (
+                    <AlertCircle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
+                  )}
+                  <p
+                    className={`text-sm ${
+                      submitStatus.type === 'success' ? 'text-green-800' : 'text-red-800'
+                    }`}
+                  >
+                    {submitStatus.message}
+                  </p>
+                </div>
+              )}
+
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                  Full Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  disabled={isSubmitting}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#085e29] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  placeholder="Enter your full name"
+                />
               </div>
-            </div>
 
-            <div className="bg-white p-8 rounded-lg shadow-lg">
-              <h2 className="text-3xl font-bold text-gray-800 mb-4">
-                WOULD YOU LIKE TO HAVE A CHAT
-              </h2>
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                  Email Address <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  disabled={isSubmitting}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#085e29] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  placeholder="your.email@example.com"
+                />
+              </div>
 
-              <div className="mb-6">
-                <h3 className="font-bold text-gray-700 mb-2">WRITE TO US:</h3>
-                <p className="text-sm text-gray-600 mb-4">
-                  Send us a note to know more about our work, for more or clarifications on specific documents and resources on our website.
-                </p>
-                <p className="text-sm text-gray-600 mb-4">
-                  You may use any of the details below to reach out to us and we will get back to you.
-                </p>
+              <div>
+                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+                  Subject <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="subject"
+                  required
+                  value={formData.subject}
+                  onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                  disabled={isSubmitting}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#085e29] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  placeholder="What is this regarding?"
+                />
+              </div>
 
-                <div className="flex gap-3 mb-6">
-                  <a href="#" className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center text-white hover:bg-gray-600">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                    </svg>
-                  </a>
-                  <a href="#" className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center text-white hover:bg-gray-600">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                    </svg>
-                  </a>
-                  <a href="#" className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center text-white hover:bg-gray-600">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                    </svg>
-                  </a>
-                  <a href="#" className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center text-white hover:bg-gray-600">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"/>
-                    </svg>
-                  </a>
-                  <a href="#" className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center text-white hover:bg-gray-600">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                    </svg>
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                  Message <span className="text-red-500">*</span>
+                </label>
+                <textarea
+                  id="message"
+                  required
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  disabled={isSubmitting}
+                  rows={6}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#085e29] focus:border-transparent resize-none disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  placeholder="Please provide details about your inquiry..."
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-[#085e29] text-white py-3 rounded-md hover:bg-[#064920] transition-colors font-medium shadow-sm disabled:bg-gray-400 disabled:cursor-not-allowed disabled:hover:bg-gray-400"
+              >
+                {isSubmitting ? 'Sending...' : 'Send Message'}
+              </button>
+            </form>
+          </div>
+
+          {/* Contact Information Cards - Vertical */}
+          <div className="space-y-6">
+            <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0">
+                  <Mail className="text-[#085e29]" size={32} />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-gray-900 mb-2">Email</h3>
+                  <a href="mailto:info@cepa.or.ug" className="text-gray-600 hover:text-[#085e29] transition-colors text-sm">
+                    info@cepa.or.ug
                   </a>
                 </div>
               </div>
+            </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <h3 className="font-bold text-gray-700 mb-4">DROP US A LINE</h3>
-                <p className="text-sm text-gray-600 mb-4">
-                  Fill in this form here and we promise to respond in less than 48 hours.
-                </p>
+            <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0">
+                  <Phone className="text-[#085e29]" size={32} />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-gray-900 mb-2">Phone</h3>
+                  <a href="tel:+256414237498" className="text-gray-600 hover:text-[#085e29] transition-colors text-sm block">
+                    +256 414 237 498
+                  </a>
+                  <a href="tel:+256772626266" className="text-gray-600 hover:text-[#085e29] transition-colors text-sm block">
+                    +256 772 626 266
+                  </a>
+                </div>
+              </div>
+            </div>
 
-                <input
-                  type="text"
-                  placeholder="Name"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#085e29]"
-                />
+            <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0">
+                  <MapPin className="text-[#085e29]" size={32} />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-gray-900 mb-2">Address</h3>
+                  <p className="text-gray-600 text-sm">
+                    Plot 18, Kanjokya Street,<br />
+                    Kamwokya, Kampala<br />
+                    Uganda
+                  </p>
+                </div>
+              </div>
+            </div>
 
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#085e29]"
-                />
-
-                <input
-                  type="text"
-                  placeholder="Subject"
-                  value={formData.subject}
-                  onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#085e29]"
-                />
-
-                <textarea
-                  placeholder="Message"
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  rows={4}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#085e29]"
-                />
-
-                <button
-                  type="submit"
-                  className="w-full bg-[#085e29] text-white py-3 rounded-md hover:bg-[#064920] transition-colors font-medium"
-                >
-                  Send Message
-                </button>
-              </form>
+            <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0">
+                  <Clock className="text-[#085e29]" size={32} />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-gray-900 mb-2">Office Hours</h3>
+                  <p className="text-gray-600 text-sm">
+                    Monday - Friday<br />
+                    8:00 AM - 5:00 PM<br />
+                    EAT (UTC+3)
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </section>
+      </main>
     </div>
   );
 }

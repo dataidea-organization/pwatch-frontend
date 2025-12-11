@@ -322,3 +322,259 @@ export async function fetchXSpace(id: string): Promise<XSpace> {
   }
   return response.json();
 }
+
+// Podcasts API
+export interface Podcast {
+  id: number;
+  title: string;
+  description: string;
+  host: string;
+  guest: string;
+  youtube_url: string;
+  thumbnail: string | null;
+  duration: number | null;
+  published_date: string;
+  episode_number: number | null;
+  category: string;
+  tags: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface PodcastPaginatedResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Podcast[];
+}
+
+export async function fetchPodcasts(
+  page: number = 1,
+  pageSize: number = 12,
+  filters?: {
+    category?: string;
+    search?: string;
+    ordering?: string;
+  }
+): Promise<PodcastPaginatedResponse> {
+  const params = new URLSearchParams({
+    page: page.toString(),
+    page_size: pageSize.toString(),
+  });
+
+  if (filters?.category) params.append('category', filters.category);
+  if (filters?.search) params.append('search', filters.search);
+  if (filters?.ordering) params.append('ordering', filters.ordering);
+
+  const response = await fetch(`${API_BASE_URL}/multimedia/podcasts/?${params.toString()}`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch podcasts');
+  }
+  return response.json();
+}
+
+export async function fetchPodcast(id: string): Promise<Podcast> {
+  const response = await fetch(`${API_BASE_URL}/multimedia/podcasts/${id}/`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch podcast');
+  }
+  return response.json();
+}
+
+// Gallery API
+export interface GalleryImage {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  category: string;
+  event_date: string | null;
+  photographer: string;
+  tags: string;
+  featured: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface GalleryPaginatedResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: GalleryImage[];
+}
+
+export async function fetchGalleryImages(
+  page: number = 1,
+  pageSize: number = 20,
+  filters?: {
+    category?: string;
+    featured?: boolean;
+    search?: string;
+    ordering?: string;
+  }
+): Promise<GalleryPaginatedResponse> {
+  const params = new URLSearchParams({
+    page: page.toString(),
+    page_size: pageSize.toString(),
+  });
+
+  if (filters?.category) params.append('category', filters.category);
+  if (filters?.featured !== undefined) params.append('featured', filters.featured.toString());
+  if (filters?.search) params.append('search', filters.search);
+  if (filters?.ordering) params.append('ordering', filters.ordering);
+
+  const response = await fetch(`${API_BASE_URL}/multimedia/gallery/?${params.toString()}`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch gallery images');
+  }
+  return response.json();
+}
+
+export async function fetchGalleryImage(id: string): Promise<GalleryImage> {
+  const response = await fetch(`${API_BASE_URL}/multimedia/gallery/${id}/`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch gallery image');
+  }
+  return response.json();
+}
+
+// Polls API
+export interface PollOption {
+  id: number;
+  text: string;
+  order: number;
+  vote_count: number;
+  vote_percentage: number;
+  created_at: string;
+}
+
+export interface Poll {
+  id: number;
+  title: string;
+  description: string;
+  category: string;
+  status: 'draft' | 'active' | 'closed';
+  status_display: string;
+  start_date: string | null;
+  end_date: string | null;
+  allow_multiple_votes: boolean;
+  show_results_before_voting: boolean;
+  featured: boolean;
+  options: PollOption[];
+  total_votes: number;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface PollPaginatedResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Poll[];
+}
+
+export interface PollResults {
+  poll_id: number;
+  poll_title: string;
+  total_votes: number;
+  results: {
+    option_id: number;
+    text: string;
+    vote_count: number;
+    percentage: number;
+  }[];
+}
+
+export async function fetchPolls(
+  page: number = 1,
+  pageSize: number = 10,
+  filters?: {
+    status?: string;
+    category?: string;
+    featured?: boolean;
+    search?: string;
+    ordering?: string;
+  }
+): Promise<PollPaginatedResponse> {
+  const params = new URLSearchParams({
+    page: page.toString(),
+    page_size: pageSize.toString(),
+  });
+
+  if (filters?.status) params.append('status', filters.status);
+  if (filters?.category) params.append('category', filters.category);
+  if (filters?.featured !== undefined) params.append('featured', filters.featured.toString());
+  if (filters?.search) params.append('search', filters.search);
+  if (filters?.ordering) params.append('ordering', filters.ordering);
+
+  const response = await fetch(`${API_BASE_URL}/multimedia/polls/?${params.toString()}`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch polls');
+  }
+  return response.json();
+}
+
+export async function fetchPoll(id: string): Promise<Poll> {
+  const response = await fetch(`${API_BASE_URL}/multimedia/polls/${id}/`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch poll');
+  }
+  return response.json();
+}
+
+export async function voteOnPoll(pollId: number, optionId: number): Promise<any> {
+  const response = await fetch(`${API_BASE_URL}/multimedia/polls/${pollId}/vote/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ option_id: optionId }),
+  });
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error || 'Failed to submit vote');
+  }
+  return response.json();
+}
+
+export async function fetchPollResults(pollId: number): Promise<PollResults> {
+  const response = await fetch(`${API_BASE_URL}/multimedia/polls/${pollId}/results/`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch poll results');
+  }
+  return response.json();
+}
+
+// Contact API
+export interface ContactSubmission {
+  id?: number;
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  created_at?: string;
+}
+
+export interface ContactSubmissionResponse {
+  success: boolean;
+  message: string;
+  id?: number;
+}
+
+export async function submitContactForm(data: ContactSubmission): Promise<ContactSubmissionResponse> {
+  const response = await fetch(`${API_BASE_URL}/contact/submissions/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || error.detail || 'Failed to submit contact form');
+  }
+
+  return response.json();
+}
