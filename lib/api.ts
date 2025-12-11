@@ -46,10 +46,36 @@ export interface BillList {
   created_at: string;
 }
 
-export async function fetchBills(): Promise<BillList[]> {
-  const response = await fetch(`${API_BASE_URL}/trackers/bills/`);
+export async function fetchBills(
+  search?: string,
+  ordering?: string
+): Promise<BillList[]> {
+  const params = new URLSearchParams();
+  if (search) params.append('search', search);
+  if (ordering) params.append('ordering', ordering);
+
+  const url = `${API_BASE_URL}/trackers/bills/${params.toString() ? `?${params.toString()}` : ''}`;
+  const response = await fetch(url);
   if (!response.ok) {
     throw new Error('Failed to fetch bills');
+  }
+  return response.json();
+}
+
+export interface BillSummary {
+  '1st_reading': number;
+  '2nd_reading': number;
+  '3rd_reading': number;
+  passed: number;
+  assented: number;
+  withdrawn: number;
+  total: number;
+}
+
+export async function fetchBillSummary(): Promise<BillSummary> {
+  const response = await fetch(`${API_BASE_URL}/trackers/bills/summary/`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch bills summary');
   }
   return response.json();
 }
@@ -184,6 +210,7 @@ export async function fetchMPs(
     district?: string;
     constituency?: string;
     search?: string;
+    ordering?: string;
   }
 ): Promise<MPPaginatedResponse> {
   const params = new URLSearchParams({
@@ -195,6 +222,7 @@ export async function fetchMPs(
   if (filters?.district) params.append('district', filters.district);
   if (filters?.constituency) params.append('constituency', filters.constituency);
   if (filters?.search) params.append('search', filters.search);
+  if (filters?.ordering) params.append('ordering', filters.ordering);
 
   const response = await fetch(`${API_BASE_URL}/trackers/mps/?${params.toString()}`);
   if (!response.ok) {
@@ -203,8 +231,25 @@ export async function fetchMPs(
   return response.json();
 }
 
-export async function fetchMPSummary(): Promise<MPSummary> {
-  const response = await fetch(`${API_BASE_URL}/trackers/mps/summary/`);
+export async function fetchMPSummary(
+  filters?: {
+    party?: string;
+    district?: string;
+    constituency?: string;
+    search?: string;
+  }
+): Promise<MPSummary> {
+  const params = new URLSearchParams();
+
+  if (filters?.party) params.append('party', filters.party);
+  if (filters?.district) params.append('district', filters.district);
+  if (filters?.constituency) params.append('constituency', filters.constituency);
+  if (filters?.search) params.append('search', filters.search);
+
+  const query = params.toString();
+  const response = await fetch(
+    `${API_BASE_URL}/trackers/mps/summary/${query ? `?${query}` : ''}`
+  );
   if (!response.ok) {
     throw new Error('Failed to fetch MPs summary');
   }
@@ -215,6 +260,65 @@ export async function fetchMP(id: string): Promise<MPDetail> {
   const response = await fetch(`${API_BASE_URL}/trackers/mps/${id}/`);
   if (!response.ok) {
     throw new Error('Failed to fetch MP');
+  }
+  return response.json();
+}
+
+// X Spaces API
+export interface XSpace {
+  id: number;
+  title: string;
+  description: string;
+  host: string;
+  scheduled_date: string;
+  duration: number | null;
+  x_space_url: string;
+  recording_url: string | null;
+  thumbnail: string | null;
+  status: string;
+  status_display: string;
+  topics: string;
+  speakers: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface XSpacePaginatedResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: XSpace[];
+}
+
+export async function fetchXSpaces(
+  page: number = 1,
+  pageSize: number = 12,
+  filters?: {
+    status?: string;
+    search?: string;
+    ordering?: string;
+  }
+): Promise<XSpacePaginatedResponse> {
+  const params = new URLSearchParams({
+    page: page.toString(),
+    page_size: pageSize.toString(),
+  });
+
+  if (filters?.status) params.append('status', filters.status);
+  if (filters?.search) params.append('search', filters.search);
+  if (filters?.ordering) params.append('ordering', filters.ordering);
+
+  const response = await fetch(`${API_BASE_URL}/multimedia/x-spaces/?${params.toString()}`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch X Spaces');
+  }
+  return response.json();
+}
+
+export async function fetchXSpace(id: string): Promise<XSpace> {
+  const response = await fetch(`${API_BASE_URL}/multimedia/x-spaces/${id}/`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch X Space');
   }
   return response.json();
 }

@@ -1,16 +1,150 @@
-import Header from '@/components/Header';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { fetchBills } from '@/lib/api';
+'use client';
 
-export default async function BillsTrackerPage() {
-  let bills = [];
-  try {
-    bills = await fetchBills();
-  } catch (error) {
-    console.error('Failed to fetch bills:', error);
-  }
+import { useState, useEffect, useMemo } from 'react';
+import Header from '@/components/Header';
+import Link from 'next/link';
+import { fetchBills, BillList } from '@/lib/api';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+
+type SortField = 'title' | 'year_introduced' | 'created_at' | 'bill_type' | 'status' | 'mover' | null;
+type SortDirection = 'asc' | 'desc';
+
+export default function BillsTrackerPage() {
+  // Store all bills loaded from the server
+  const [allBills, setAllBills] = useState<BillList[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortField, setSortField] = useState<SortField>(null);
+  const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+
+  useEffect(() => {
+    loadAllBills();
+  }, []);
+
+  const loadAllBills = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      // Fetch all bills without filters
+      const data = await fetchBills();
+      setAllBills(data);
+    } catch (err) {
+      setError('Failed to load bills. Please try again later.');
+      console.error('Error fetching bills:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Client-side filtering - filter allBills based on search query
+  const filteredBills = useMemo(() => {
+    if (!searchQuery.trim()) return allBills;
+
+    const query = searchQuery.toLowerCase();
+    return allBills.filter((bill) => {
+      return (
+        bill.title.toLowerCase().includes(query) ||
+        bill.mover.toLowerCase().includes(query) ||
+        bill.bill_type_display.toLowerCase().includes(query) ||
+        bill.status_display.toLowerCase().includes(query)
+      );
+    });
+  }, [allBills, searchQuery]);
+
+  // Client-side sorting - sort the filtered bills array
+  const sortedBills = useMemo(() => {
+    if (!sortField) return filteredBills;
+
+    const sorted = [...filteredBills].sort((a, b) => {
+      let aValue: string | number;
+      let bValue: string | number;
+
+      switch (sortField) {
+        case 'title':
+          aValue = a.title.toLowerCase();
+          bValue = b.title.toLowerCase();
+          break;
+        case 'bill_type':
+          aValue = (a.bill_type_display || '').toLowerCase();
+          bValue = (b.bill_type_display || '').toLowerCase();
+          break;
+        case 'status':
+          aValue = (a.status_display || '').toLowerCase();
+          bValue = (b.status_display || '').toLowerCase();
+          break;
+        case 'year_introduced':
+          aValue = parseInt(a.year_introduced) || 0;
+          bValue = parseInt(b.year_introduced) || 0;
+          break;
+        case 'mover':
+          aValue = (a.mover || '').toLowerCase();
+          bValue = (b.mover || '').toLowerCase();
+          break;
+        case 'created_at':
+          aValue = new Date(a.created_at).getTime();
+          bValue = new Date(b.created_at).getTime();
+          break;
+        default:
+          return 0;
+      }
+
+      if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
+      if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+    return sorted;
+  }, [filteredBills, sortField, sortDirection]);
+
+  // Calculate summary from filtered results
+  const summary = useMemo(() => {
+    const statusCounts = {
+      '1st_reading': 0,
+      '2nd_reading': 0,
+      '3rd_reading': 0,
+      passed: 0,
+      assented: 0,
+      withdrawn: 0,
+    };
+
+    filteredBills.forEach((bill) => {
+      const status = bill.status;
+      if (status in statusCounts) {
+        statusCounts[status as keyof typeof statusCounts]++;
+      }
+    });
+
+    return {
+      '1st_reading': statusCounts['1st_reading'],
+      '2nd_reading': statusCounts['2nd_reading'],
+      '3rd_reading': statusCounts['3rd_reading'],
+      passed: statusCounts.passed,
+      assented: statusCounts.assented,
+      withdrawn: statusCounts.withdrawn,
+      total: filteredBills.length,
+    };
+  }, [filteredBills]);
+
+  const handleSort = (field: SortField) => {
+    if (sortField === field) {
+      // Toggle direction if same field
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      // New field, default to ascending
+      setSortField(field);
+      setSortDirection('asc');
+    }
+  };
   const steps = [
     {
       step: 1,
@@ -74,54 +208,239 @@ export default async function BillsTrackerPage() {
             <p className="text-slate-600">Browse all bills currently in the legislative process</p>
           </div>
 
-          {bills.length > 0 ? (
-            <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {bills.map((bill) => (
-                  <div key={bill.id} className="bg-white rounded-lg border border-slate-200 hover:border-slate-300 transition-all duration-200 hover:shadow-lg overflow-hidden">
-                    <div className="p-6">
-                      <div className="flex items-start justify-between mb-4">
-                        <span className={`inline-flex items-center px-3 py-1 rounded-md text-xs font-medium ${
+          {/* Statistics Cards */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
+            <div className="bg-white rounded-lg shadow-sm p-5 border border-gray-200">
+              <p className="text-sm text-gray-500">1st Reading</p>
+              {loading ? (
+                <div className="h-8 w-20 mt-2 bg-gray-200 animate-pulse rounded" />
+              ) : (
+                <p className="text-3xl font-bold text-gray-900 mt-1">{summary?.['1st_reading'] ?? 0}</p>
+              )}
+            </div>
+            <div className="bg-white rounded-lg shadow-sm p-5 border border-gray-200">
+              <p className="text-sm text-gray-500">2nd Reading</p>
+              {loading ? (
+                <div className="h-8 w-20 mt-2 bg-gray-200 animate-pulse rounded" />
+              ) : (
+                <p className="text-3xl font-bold text-gray-900 mt-1">{summary?.['2nd_reading'] ?? 0}</p>
+              )}
+            </div>
+            <div className="bg-white rounded-lg shadow-sm p-5 border border-gray-200">
+              <p className="text-sm text-gray-500">3rd Reading</p>
+              {loading ? (
+                <div className="h-8 w-20 mt-2 bg-gray-200 animate-pulse rounded" />
+              ) : (
+                <p className="text-3xl font-bold text-gray-900 mt-1">{summary?.['3rd_reading'] ?? 0}</p>
+              )}
+            </div>
+            <div className="bg-white rounded-lg shadow-sm p-5 border border-gray-200">
+              <p className="text-sm text-gray-500">Waiting Assent</p>
+              {loading ? (
+                <div className="h-8 w-20 mt-2 bg-gray-200 animate-pulse rounded" />
+              ) : (
+                <p className="text-3xl font-bold text-gray-900 mt-1">{summary?.passed ?? 0}</p>
+              )}
+            </div>
+            <div className="bg-white rounded-lg shadow-sm p-5 border border-gray-200">
+              <p className="text-sm text-gray-500">Assented</p>
+              {loading ? (
+                <div className="h-8 w-20 mt-2 bg-gray-200 animate-pulse rounded" />
+              ) : (
+                <p className="text-3xl font-bold text-gray-900 mt-1">{summary?.assented ?? 0}</p>
+              )}
+            </div>
+            <div className="bg-white rounded-lg shadow-sm p-5 border border-gray-200">
+              <p className="text-sm text-gray-500">Withdrawn</p>
+              {loading ? (
+                <div className="h-8 w-20 mt-2 bg-gray-200 animate-pulse rounded" />
+              ) : (
+                <p className="text-3xl font-bold text-gray-900 mt-1">{summary?.withdrawn ?? 0}</p>
+              )}
+            </div>
+          </div>
+
+          {/* Search Section */}
+          <div className="mb-6">
+            <div className="flex gap-3 items-center">
+              <div className="w-80">
+                <Input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search bills by title..."
+                  className="w-full text-gray-900 placeholder:text-gray-400"
+                  style={{ color: '#111827' }}
+                />
+              </div>
+              {searchQuery && (
+                <Button
+                  variant="outline"
+                  onClick={() => setSearchQuery('')}
+                  className="bg-gray-200 text-gray-700 hover:bg-gray-300 border-gray-300"
+                >
+                  Clear
+                </Button>
+              )}
+            </div>
+          </div>
+
+          {loading ? (
+            <div className="text-center py-12">
+              <p className="text-gray-600">Loading bills...</p>
+            </div>
+          ) : error ? (
+            <div className="text-center py-12">
+              <p className="text-red-600">{error}</p>
+              <Button
+                onClick={() => loadAllBills()}
+                className="mt-4"
+                variant="green"
+              >
+                Try Again
+              </Button>
+            </div>
+          ) : sortedBills.length > 0 ? (
+            <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader className="bg-gray-50">
+                    <TableRow>
+                      <TableHead 
+                        className="cursor-pointer hover:bg-gray-100 transition-colors group text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        onClick={() => handleSort('title')}
+                        title="Click to sort"
+                      >
+                      <div className="flex items-center gap-2">
+                        Title
+                        <span className={`text-gray-400 group-hover:text-[#085e29] transition-colors text-xs ${
+                          sortField === 'title' ? 'text-[#085e29]' : ''
+                        }`}>
+                          {sortField === 'title' 
+                            ? (sortDirection === 'asc' ? '↑' : '↓')
+                            : '↕'
+                          }
+                        </span>
+                      </div>
+                    </TableHead>
+                      <TableHead 
+                        className="cursor-pointer hover:bg-gray-100 transition-colors group text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        onClick={() => handleSort('bill_type')}
+                        title="Click to sort"
+                      >
+                        <div className="flex items-center gap-2">
+                          Type
+                          <span className={`text-gray-400 group-hover:text-[#085e29] transition-colors text-xs ${
+                            sortField === 'bill_type' ? 'text-[#085e29]' : ''
+                          }`}>
+                            {sortField === 'bill_type' 
+                              ? (sortDirection === 'asc' ? '↑' : '↓')
+                              : '↕'
+                            }
+                          </span>
+                        </div>
+                      </TableHead>
+                      <TableHead 
+                        className="cursor-pointer hover:bg-gray-100 transition-colors group text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        onClick={() => handleSort('status')}
+                        title="Click to sort"
+                      >
+                        <div className="flex items-center gap-2">
+                          Status
+                          <span className={`text-gray-400 group-hover:text-[#085e29] transition-colors text-xs ${
+                            sortField === 'status' ? 'text-[#085e29]' : ''
+                          }`}>
+                            {sortField === 'status' 
+                              ? (sortDirection === 'asc' ? '↑' : '↓')
+                              : '↕'
+                            }
+                          </span>
+                        </div>
+                      </TableHead>
+                      <TableHead 
+                        className="cursor-pointer hover:bg-gray-100 transition-colors group text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        onClick={() => handleSort('year_introduced')}
+                        title="Click to sort"
+                      >
+                        <div className="flex items-center gap-2">
+                          Year Introduced
+                          <span className={`text-gray-400 group-hover:text-[#085e29] transition-colors text-xs ${
+                            sortField === 'year_introduced' ? 'text-[#085e29]' : ''
+                          }`}>
+                            {sortField === 'year_introduced' 
+                              ? (sortDirection === 'asc' ? '↑' : '↓')
+                              : '↕'
+                            }
+                          </span>
+                        </div>
+                      </TableHead>
+                      <TableHead 
+                        className="cursor-pointer hover:bg-gray-100 transition-colors group text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        onClick={() => handleSort('mover')}
+                        title="Click to sort"
+                      >
+                        <div className="flex items-center gap-2">
+                          Mover
+                          <span className={`text-gray-400 group-hover:text-[#085e29] transition-colors text-xs ${
+                            sortField === 'mover' ? 'text-[#085e29]' : ''
+                          }`}>
+                            {sortField === 'mover' 
+                              ? (sortDirection === 'asc' ? '↑' : '↓')
+                              : '↕'
+                            }
+                          </span>
+                        </div>
+                      </TableHead>
+                      <TableHead className="text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</TableHead>
+                  </TableRow>
+                  </TableHeader>
+                  <TableBody className="bg-white divide-y divide-gray-200">
+                    {sortedBills.map((bill) => (
+                      <TableRow key={bill.id} className="hover:bg-gray-50 transition-colors">
+                      <TableCell>
+                        <div className="text-sm font-medium text-gray-900 max-w-md">
+                          {bill.title}
+                        </div>
+                      </TableCell>
+                      <TableCell className="whitespace-nowrap">
+                        <div className="text-sm text-gray-900">{bill.bill_type_display}</div>
+                      </TableCell>
+                      <TableCell className="whitespace-nowrap">
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                           bill.status === 'assented'
-                            ? 'bg-slate-100 text-slate-700'
+                            ? 'bg-gray-100 text-gray-700'
                             : 'bg-emerald-50 text-[#085e29]'
                         }`}>
                           {bill.status_display}
                         </span>
-                      </div>
-
-                      <h3 className="text-lg font-semibold text-slate-900 mb-4 line-clamp-2 leading-tight">
-                        {bill.title}
-                      </h3>
-
-                      <div className="space-y-2 mb-6">
-                        <div className="flex items-start text-sm">
-                          <span className="text-slate-500 w-32 flex-shrink-0">Type:</span>
-                          <span className="text-slate-700 font-medium">{bill.bill_type_display}</span>
-                        </div>
-                        <div className="flex items-start text-sm">
-                          <span className="text-slate-500 w-32 flex-shrink-0">Introduced:</span>
-                          <span className="text-slate-700 font-medium">{bill.year_introduced}</span>
-                        </div>
-                        <div className="flex items-start text-sm">
-                          <span className="text-slate-500 w-32 flex-shrink-0">Mover:</span>
-                          <span className="text-slate-700 font-medium">{bill.mover}</span>
-                        </div>
-                      </div>
-
-                      <Link href={`/trackers/bills/${bill.id}`}>
-                        <Button className="w-full bg-[#085e29] hover:bg-[#064920] text-white">
+                      </TableCell>
+                      <TableCell className="whitespace-nowrap">
+                        <div className="text-sm text-gray-900">{bill.year_introduced}</div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="text-sm text-gray-900 max-w-xs">{bill.mover}</div>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <Link
+                          href={`/trackers/bills/${bill.id}`}
+                          className="text-[#085e29] hover:text-[#064920] font-medium"
+                        >
                           View Details
-                        </Button>
-                      </Link>
-                    </div>
-                  </div>
-                ))}
+                        </Link>
+                      </TableCell>
+                    </TableRow>
+                      ))}
+                  </TableBody>
+                </Table>
               </div>
-            </>
+            </div>
           ) : (
             <div className="text-center py-16 bg-white rounded-lg border border-slate-200">
-              <p className="text-slate-600">No bills found. Please check back later.</p>
+              <p className="text-slate-600">
+                {searchQuery 
+                  ? `No bills found matching "${searchQuery}". Try a different search term.`
+                  : 'No bills found. Please check back later.'}
+              </p>
             </div>
           )}
         </div>

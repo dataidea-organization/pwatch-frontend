@@ -1,9 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import { ArrowLeft, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Download, FileText } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 interface Hansard {
   id: number;
@@ -21,40 +23,57 @@ interface PaginatedResponse {
   results: Hansard[];
 }
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+
 export default function HansardsTrackerPage() {
-  const [hansards, setHansards] = useState<Hansard[]>([]);
+  // Store all hansards loaded from the server
+  const [allHansards, setAllHansards] = useState<Hansard[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [totalCount, setTotalCount] = useState(0);
+  const [sortField, setSortField] = useState<'name' | 'date' | 'created_at' | null>(null);
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   const pageSize = 15;
 
   useEffect(() => {
-    fetchHansards();
-  }, [page, searchQuery]);
+    loadAllHansards();
+  }, []);
 
-  const fetchHansards = async () => {
+  // Reset to page 1 when search query changes
+  useEffect(() => {
+    setPage(1);
+  }, [searchQuery]);
+
+  const loadAllHansards = async () => {
     try {
       setLoading(true);
-      const params = new URLSearchParams({
-        page: page.toString(),
-        page_size: pageSize.toString(),
-      });
-      if (searchQuery) {
-        params.append('search', searchQuery);
+      setError(null);
+      
+      // Fetch all hansards by requesting a large page size
+      // The backend max_page_size is 100, so we'll fetch in chunks if needed
+      let allResults: Hansard[] = [];
+      let currentPage = 1;
+      let hasMore = true;
+
+      while (hasMore) {
+        const params = new URLSearchParams({
+          page: currentPage.toString(),
+          page_size: '100', // Use max page size
+        });
+
+        const response = await fetch(`${API_BASE_URL}/trackers/hansards/?${params}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch hansards');
+        }
+        
+        const data: PaginatedResponse = await response.json();
+        allResults = [...allResults, ...data.results];
+        hasMore = data.next !== null;
+        currentPage++;
       }
 
-      const response = await fetch(`http://localhost:8000/api/trackers/hansards/?${params}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch hansards');
-      }
-      const data: PaginatedResponse = await response.json();
-      setHansards(data.results);
-      setTotalCount(data.count);
-      setTotalPages(Math.ceil(data.count / pageSize));
-      setError(null);
+      setAllHansards(allResults);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
       console.error('Error fetching hansards:', err);
@@ -63,10 +82,68 @@ export default function HansardsTrackerPage() {
     }
   };
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    setPage(1);
-    fetchHansards();
+  // Client-side filtering - filter allHansards based on search query
+  const filteredHansards = useMemo(() => {
+    if (!searchQuery.trim()) return allHansards;
+
+    const query = searchQuery.toLowerCase();
+    return allHansards.filter((hansard) => {
+      return hansard.name.toLowerCase().includes(query);
+    });
+  }, [allHansards, searchQuery]);
+
+  // Client-side sorting - sort the filtered hansards array
+  const sortedHansards = useMemo(() => {
+    if (!sortField) return filteredHansards;
+
+    const sorted = [...filteredHansards].sort((a, b) => {
+      let aValue: string | number;
+      let bValue: string | number;
+
+      switch (sortField) {
+        case 'name':
+          aValue = a.name.toLowerCase();
+          bValue = b.name.toLowerCase();
+          break;
+        case 'date':
+          aValue = a.date ? new Date(a.date).getTime() : 0;
+          bValue = b.date ? new Date(b.date).getTime() : 0;
+          break;
+        case 'created_at':
+          aValue = new Date(a.created_at).getTime();
+          bValue = new Date(b.created_at).getTime();
+          break;
+        default:
+          return 0;
+      }
+
+      if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
+      if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+    return sorted;
+  }, [filteredHansards, sortField, sortDirection]);
+
+  // Client-side pagination - paginate the sorted results
+  const paginatedHansards = useMemo(() => {
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    return sortedHansards.slice(startIndex, endIndex);
+  }, [sortedHansards, page, pageSize]);
+
+  const totalPages = Math.ceil(sortedHansards.length / pageSize);
+  const totalCount = sortedHansards.length;
+
+  const handleSort = (field: 'name' | 'date' | 'created_at') => {
+    if (sortField === field) {
+      // Toggle direction if same field
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      // New field, default to ascending
+      setSortField(field);
+      setSortDirection('asc');
+    }
   };
 
   const formatDate = (dateString: string | null) => {
@@ -78,7 +155,7 @@ export default function HansardsTrackerPage() {
     });
   };
 
-  if (loading && hansards.length === 0) {
+  if (loading && allHansards.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50">
         <Header variant="support" />
@@ -92,19 +169,20 @@ export default function HansardsTrackerPage() {
     );
   }
 
-  if (error && hansards.length === 0) {
+  if (error && allHansards.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50">
         <Header variant="support" />
         <main className="max-w-7xl mx-auto px-4 py-8">
           <div className="bg-red-50 border border-red-200 rounded-lg p-4">
             <p className="text-red-800">Error: {error}</p>
-            <button
-              onClick={() => window.location.reload()}
-              className="mt-4 bg-[#085e29] text-white px-6 py-2 rounded-md hover:bg-[#064920] transition-colors"
+            <Button
+              onClick={() => loadAllHansards()}
+              className="mt-4"
+              variant="green"
             >
               Try Again
-            </button>
+            </Button>
           </div>
         </main>
       </div>
@@ -135,36 +213,76 @@ export default function HansardsTrackerPage() {
         {/* Main Content */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           {/* Search */}
-          <form onSubmit={handleSearch} className="mb-6">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type="text"
-                placeholder={`Search through ${totalCount} hansards...`}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#085e29] focus:border-transparent"
-              />
+          <div className="mb-6">
+            <div className="flex gap-3 items-center">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 z-10" />
+                <Input
+                  type="text"
+                  placeholder={`Search through ${totalCount} hansards...`}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-10 pr-4 text-gray-900 placeholder:text-gray-400"
+                  style={{ color: '#111827' }}
+                />
+              </div>
+              {searchQuery && (
+                <Button
+                  variant="outline"
+                  onClick={() => setSearchQuery('')}
+                  className="bg-gray-200 text-gray-700 hover:bg-gray-300 border-gray-300"
+                >
+                  Clear
+                </Button>
+              )}
             </div>
-          </form>
+          </div>
 
           {/* Table */}
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-100">
                 <tr>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">
+                  <th 
+                    className="px-6 py-4 text-left text-sm font-semibold text-gray-700 cursor-pointer hover:bg-gray-200 transition-colors group"
+                    onClick={() => handleSort('name')}
+                    title="Click to sort"
+                  >
                     <div className="flex items-center gap-2">
                       <FileText className="w-4 h-4" />
                       Document Name
+                      <span className={`text-gray-400 group-hover:text-[#085e29] transition-colors text-xs ${
+                        sortField === 'name' ? 'text-[#085e29]' : ''
+                      }`}>
+                        {sortField === 'name' 
+                          ? (sortDirection === 'asc' ? '↑' : '↓')
+                          : '↕'
+                        }
+                      </span>
                     </div>
                   </th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Date</th>
+                  <th 
+                    className="px-6 py-4 text-left text-sm font-semibold text-gray-700 cursor-pointer hover:bg-gray-200 transition-colors group"
+                    onClick={() => handleSort('date')}
+                    title="Click to sort"
+                  >
+                    <div className="flex items-center gap-2">
+                      Date
+                      <span className={`text-gray-400 group-hover:text-[#085e29] transition-colors text-xs ${
+                        sortField === 'date' ? 'text-[#085e29]' : ''
+                      }`}>
+                        {sortField === 'date' 
+                          ? (sortDirection === 'asc' ? '↑' : '↓')
+                          : '↕'
+                        }
+                      </span>
+                    </div>
+                  </th>
                   <th className="px-6 py-4 text-center text-sm font-semibold text-gray-700">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {hansards.map((hansard) => (
+                {paginatedHansards.map((hansard) => (
                   <tr key={hansard.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
@@ -182,7 +300,7 @@ export default function HansardsTrackerPage() {
                     <td className="px-6 py-4">
                       <div className="flex items-center justify-center gap-2">
                         <a
-                          href={`http://localhost:8000${hansard.file}`}
+                          href={`${API_BASE_URL.replace('/api', '')}${hansard.file}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-2 px-4 py-2 bg-[#085e29] text-white text-sm font-medium rounded-md hover:bg-[#064920] transition-colors"
@@ -199,7 +317,7 @@ export default function HansardsTrackerPage() {
           </div>
 
           {/* Empty State */}
-          {hansards.length === 0 && !loading && (
+          {sortedHansards.length === 0 && !loading && (
             <div className="text-center py-12">
               <FileText className="w-16 h-16 text-gray-300 mx-auto mb-4" />
               <p className="text-gray-500 text-lg">No hansards found</p>
@@ -210,7 +328,7 @@ export default function HansardsTrackerPage() {
           )}
 
           {/* Pagination */}
-          {hansards.length > 0 && (
+          {sortedHansards.length > 0 && (
             <div className="mt-6 flex items-center justify-between border-t border-gray-200 pt-6">
               <div className="text-sm text-gray-600">
                 Showing {((page - 1) * pageSize) + 1} to {Math.min(page * pageSize, totalCount)} of {totalCount} hansards
