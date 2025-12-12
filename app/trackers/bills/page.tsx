@@ -165,7 +165,7 @@ export default function BillsTrackerPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header variant="support" />
+      <Header />
 
       <main className="relative">
 
@@ -426,10 +426,10 @@ export default function BillsTrackerPage() {
                           className="text-[#085e29] hover:text-[#064920] font-medium"
                         >
                           View Details
-                        </Link>
+                      </Link>
                       </TableCell>
                     </TableRow>
-                      ))}
+                ))}
                   </TableBody>
                 </Table>
               </div>

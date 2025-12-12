@@ -28,7 +28,7 @@ export default async function BillDetailsPage({
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header variant="support" />
+      <Header />
 
       {/* Page Header */}
       <div className="bg-white border-b">

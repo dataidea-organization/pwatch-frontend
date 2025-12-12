@@ -48,7 +48,7 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header variant="support" />
+      <Header />
 
       <main className="max-w-7xl mx-auto px-4 py-8">
         <div className="mb-8">
@@ -189,7 +189,7 @@ export default function ContactPage() {
                   <h3 className="font-semibold text-gray-900 mb-2">Phone</h3>
                   <a href="tel:+256414237498" className="text-gray-600 hover:text-[#085e29] transition-colors text-sm block">
                     +256 414 237 498
-                  </a>
+                </a>
                   <a href="tel:+256772626266" className="text-gray-600 hover:text-[#085e29] transition-colors text-sm block">
                     +256 772 626 266
                   </a>

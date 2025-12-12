@@ -12,7 +12,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-export default function Header({ variant = 'support' }: { variant?: 'support' | 'donate' }) {
+export default function Header() {
   const [searchQuery, setSearchQuery] = useState('');
 
   return (
@@ -44,7 +44,7 @@ export default function Header({ variant = 'support' }: { variant?: 'support' | 
         <div className="flex items-center gap-4">
           <Link href="/donate">
             <Button variant="ghost" className="text-white hover:bg-white/20 hover:text-white">
-              {variant === 'support' ? 'Support Us' : 'Donate'}
+              Support Us
             </Button>
           </Link>
           <div className="relative">
@@ -165,8 +165,8 @@ export default function Header({ variant = 'support' }: { variant?: 'support' | 
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <Link href="/citizen-voices" className="text-gray-700 hover:text-[#085e29] font-medium text-sm">
-              Citizen Voices
+            <Link href="/citizens-voice" className="text-gray-700 hover:text-[#085e29] font-medium text-sm">
+              Citizens' Voice
             </Link>
             <Link href="/news" className="text-gray-700 hover:text-[#085e29] font-medium text-sm">
               News&Update

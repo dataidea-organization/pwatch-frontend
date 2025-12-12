@@ -161,6 +161,19 @@ export async function fetchNewsArticle(slug: string): Promise<NewsDetail> {
   return response.json();
 }
 
+// Home page news summary - optimized and cached
+export interface HomeNewsSummaryResponse {
+  results: NewsArticle[];
+}
+
+export async function fetchHomeNewsSummary(): Promise<HomeNewsSummaryResponse> {
+  const response = await fetch(`${API_BASE_URL}/news/home-summary/`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch home news summary');
+  }
+  return response.json();
+}
+
 // MPs API
 export interface MP {
   id: number;
@@ -260,6 +273,51 @@ export async function fetchMP(id: string): Promise<MPDetail> {
   const response = await fetch(`${API_BASE_URL}/trackers/mps/${id}/`);
   if (!response.ok) {
     throw new Error('Failed to fetch MP');
+  }
+  return response.json();
+}
+
+// Home page trackers summary
+export interface HomeTrackersSummary {
+  mps: Array<{
+    id: number;
+    name: string;
+    party: string;
+    constituency: string;
+  }>;
+  bills: Array<{
+    id: number;
+    title: string;
+  }>;
+  loans: Array<{
+    id: number;
+    label: string;
+    sector_display: string;
+    source_display: string;
+  }>;
+  budgets: Array<{
+    id: number;
+    name: string;
+    financial_year: string;
+    file: string | null;
+  }>;
+  hansards: Array<{
+    id: number;
+    name: string;
+    date: string | null;
+    file: string | null;
+  }>;
+  order_papers: Array<{
+    id: number;
+    name: string;
+    file: string | null;
+  }>;
+}
+
+export async function fetchHomeTrackersSummary(): Promise<HomeTrackersSummary> {
+  const response = await fetch(`${API_BASE_URL}/trackers/home-summary/`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch home trackers summary');
   }
   return response.json();
 }
@@ -668,4 +726,36 @@ export async function fetchHeadlines(): Promise<Headline[]> {
   const data = await response.json();
   // Handle both array response and paginated response
   return Array.isArray(data) ? data : data.results || [];
+}
+
+// Home page resources summary
+export interface HomeResourcesSummary {
+  explainers: Array<{
+    id: number;
+    name: string;
+    file: string | null;
+  }>;
+  reports: Array<{
+    id: number;
+    name: string;
+    file: string | null;
+  }>;
+  partner_publications: Array<{
+    id: number;
+    name: string;
+    file: string | null;
+  }>;
+  statements: Array<{
+    id: number;
+    name: string;
+    file: string | null;
+  }>;
+}
+
+export async function fetchHomeResourcesSummary(): Promise<HomeResourcesSummary> {
+  const response = await fetch(`${API_BASE_URL}/resources/home-summary/`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch home resources summary');
+  }
+  return response.json();
 }

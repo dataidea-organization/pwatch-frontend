@@ -84,7 +84,7 @@ export default function PartnerPublicationsPage() {
   if (loading && publications.length === 0) {
     return (
       <>
-        <Header variant="support" />
+        <Header />
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
           <div className="flex flex-col items-center gap-4">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#085e29]"></div>
@@ -98,7 +98,7 @@ export default function PartnerPublicationsPage() {
   if (error) {
     return (
       <>
-        <Header variant="support" />
+        <Header />
         <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
           <div className="bg-red-50 border border-red-200 text-red-800 rounded-lg p-6 max-w-md w-full">
             <h2 className="text-lg font-semibold mb-2">Error Loading Partner Publications</h2>
@@ -117,7 +117,7 @@ export default function PartnerPublicationsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header variant="support" />
+      <Header />
       <main className="max-w-7xl mx-auto px-4 py-8">
         <div className="mb-8">
           <Link href="/resources" className="inline-flex items-center text-[#085e29] hover:text-[#064920] mb-4 transition-colors">

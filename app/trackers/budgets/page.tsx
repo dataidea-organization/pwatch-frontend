@@ -58,17 +58,17 @@ export default function BudgetsPage() {
       let hasMore = true
 
       while (hasMore) {
-        const params = new URLSearchParams({
+      const params = new URLSearchParams({
           page: currentPage.toString(),
           page_size: '100', // Use max page size
-        })
+      })
 
         const response = await fetch(`${API_BASE_URL}/trackers/budgets/?${params}`)
-        if (!response.ok) {
-          throw new Error('Failed to fetch budgets')
-        }
+      if (!response.ok) {
+        throw new Error('Failed to fetch budgets')
+      }
 
-        const data: PaginatedResponse = await response.json()
+      const data: PaginatedResponse = await response.json()
         allResults = [...allResults, ...data.results]
         hasMore = data.next !== null
         currentPage++
@@ -165,7 +165,7 @@ export default function BudgetsPage() {
   if (loading && allBudgets.length === 0) {
     return (
       <>
-        <Header variant="support" />
+        <Header />
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
           <div className="flex flex-col items-center gap-4">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#085e29]"></div>
@@ -179,7 +179,7 @@ export default function BudgetsPage() {
   if (error) {
     return (
       <>
-        <Header variant="support" />
+        <Header />
         <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
           <div className="bg-red-50 border border-red-200 text-red-800 rounded-lg p-6 max-w-md w-full">
             <h2 className="text-lg font-semibold mb-2">Error Loading Budgets</h2>
@@ -198,7 +198,7 @@ export default function BudgetsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header variant="support" />
+      <Header />
       <main className="max-w-7xl mx-auto px-4 py-8">
         <div className="mb-6">
           <Link
@@ -218,10 +218,10 @@ export default function BudgetsPage() {
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10" size={20} />
                 <Input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder={`Search through ${totalCount} budget records...`}
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={`Search through ${totalCount} budget records...`}
                   className="w-full pl-10 pr-4 text-gray-900 placeholder:text-gray-400"
                   style={{ color: '#111827' }}
                 />
@@ -266,7 +266,7 @@ export default function BudgetsPage() {
                     title="Click to sort"
                   >
                     <div className="flex items-center gap-2">
-                      Financial Year
+                    Financial Year
                       <span className={`text-gray-400 group-hover:text-[#085e29] transition-colors text-xs ${
                         sortField === 'financial_year' ? 'text-[#085e29]' : ''
                       }`}>
@@ -283,7 +283,7 @@ export default function BudgetsPage() {
                     title="Click to sort"
                   >
                     <div className="flex items-center gap-2">
-                      Total Amount
+                    Total Amount
                       <span className={`text-gray-400 group-hover:text-[#085e29] transition-colors text-xs ${
                         sortField === 'budget_total_amount' ? 'text-[#085e29]' : ''
                       }`}>

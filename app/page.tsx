@@ -4,11 +4,14 @@ import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { fetchHeroImages, fetchHeadlines, fetchNews, HeroImage, Headline, NewsArticle } from '@/lib/api';
+import { ChevronLeft, ChevronRight, Folder } from 'lucide-react';
+import { fetchHeroImages, fetchHeadlines, fetchHomeNewsSummary, fetchHomeTrackersSummary, fetchHomeResourcesSummary, HeroImage, Headline, NewsArticle, HomeTrackersSummary, HomeResourcesSummary } from '@/lib/api';
 import Link from 'next/link';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+
+type TrackerTab = 'mps' | 'bills' | 'loans' | 'budgets' | 'hansards' | 'order-paper';
+type ResourceTab = 'explainers' | 'reports' | 'partner-publications' | 'statements';
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -16,9 +19,21 @@ export default function Home() {
   const [headlines, setHeadlines] = useState<Headline[]>([]);
   const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
   const [loading, setLoading] = useState(true);
+  
+  // Trackers section state
+  const [activeTab, setActiveTab] = useState<TrackerTab>('bills');
+  const [trackersData, setTrackersData] = useState<HomeTrackersSummary | null>(null);
+  const [trackersLoading, setTrackersLoading] = useState(true);
+  
+  // Resources section state
+  const [activeResourceTab, setActiveResourceTab] = useState<ResourceTab>('explainers');
+  const [resourcesData, setResourcesData] = useState<HomeResourcesSummary | null>(null);
+  const [resourcesLoading, setResourcesLoading] = useState(true);
 
   useEffect(() => {
     loadData();
+    loadTrackersData();
+    loadResourcesData();
   }, []);
 
   const loadData = async () => {
@@ -57,9 +72,9 @@ export default function Home() {
       setHeadlines([]);
     }
     
-    // Fetch latest 3 news articles
+    // Fetch latest 3 news articles (optimized cached endpoint)
     try {
-      const newsData = await fetchNews(1, 3);
+      const newsData = await fetchHomeNewsSummary();
       setNewsArticles(newsData.results || []);
     } catch (error) {
       console.error('Error loading news:', error);
@@ -67,6 +82,34 @@ export default function Home() {
     }
     
     setLoading(false);
+  };
+
+  const loadTrackersData = async () => {
+    setTrackersLoading(true);
+    
+    try {
+      const data = await fetchHomeTrackersSummary();
+      setTrackersData(data);
+    } catch (error) {
+      console.error('Error loading trackers data:', error);
+      setTrackersData(null);
+    } finally {
+      setTrackersLoading(false);
+    }
+  };
+
+  const loadResourcesData = async () => {
+    setResourcesLoading(true);
+    
+    try {
+      const data = await fetchHomeResourcesSummary();
+      setResourcesData(data);
+    } catch (error) {
+      console.error('Error loading resources data:', error);
+      setResourcesData(null);
+    } finally {
+      setResourcesLoading(false);
+    }
   };
 
   // Auto-slide functionality
@@ -96,7 +139,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header variant="support" />
+      <Header />
 
       <main className="max-w-7xl mx-auto px-4 py-6 pb-20">
         <div className="">
@@ -188,6 +231,7 @@ export default function Home() {
           </div>
         </div>
 
+              {/* News and Updates Section */}
         <div className="mt-8">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-2xl font-bold text-gray-800">News and Updates</h3>
@@ -239,6 +283,532 @@ export default function Home() {
             </div>
           )}
         </div>
+
+        {/* Trackers Section */}
+        <div className="mt-12 bg-gray-100 rounded-lg overflow-hidden">
+          {/* Tabs */}
+          <div className="bg-gray-200 px-4 py-2 flex flex-wrap gap-2 border-b border-gray-300">
+            <button
+              onClick={() => setActiveTab('mps')}
+              className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
+                activeTab === 'mps'
+                  ? 'bg-white text-gray-900'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              + Members of Parliament
+            </button>
+            <button
+              onClick={() => setActiveTab('bills')}
+              className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
+                activeTab === 'bills'
+                  ? 'bg-white text-gray-900'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              + Bills Tracker
+            </button>
+            <button
+              onClick={() => setActiveTab('loans')}
+              className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
+                activeTab === 'loans'
+                  ? 'bg-white text-gray-900'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              + Loans Tracker
+            </button>
+            <button
+              onClick={() => setActiveTab('budgets')}
+              className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
+                activeTab === 'budgets'
+                  ? 'bg-white text-gray-900'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              + Budget Tracker
+            </button>
+            <button
+              onClick={() => setActiveTab('hansards')}
+              className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
+                activeTab === 'hansards'
+                  ? 'bg-white text-gray-900'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              + Hansards Tracker
+            </button>
+            <button
+              onClick={() => setActiveTab('order-paper')}
+              className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
+                activeTab === 'order-paper'
+                  ? 'bg-white text-gray-900'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              + Order Paper Tracker
+            </button>
+          </div>
+
+          {/* Content Area */}
+          <div className="bg-white p-4">
+            {trackersLoading ? (
+              <div className="text-center py-8">
+                <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-[#085e29]"></div>
+                <p className="mt-2 text-gray-500 text-sm">Loading...</p>
+              </div>
+            ) : (
+              <>
+                {/* MPs Table */}
+                {activeTab === 'mps' && (
+                  <div>
+                    {!trackersData || trackersData.mps.length === 0 ? (
+                      <div className="text-center py-8 text-gray-500">
+                        <p>No MPs data available</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-2">
+                        {trackersData.mps.map((mp) => (
+                          <Link
+                            key={mp.id}
+                            href={`/trackers/mps/${mp.id}`}
+                            className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0 hover:bg-gray-50 transition-colors cursor-pointer"
+                          >
+                            <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm text-gray-800 truncate">
+                                {mp.name} - {mp.party} ({mp.constituency})
+                              </p>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                    <div className="mt-4 text-left">
+                      <Link href="/trackers/mps">
+                        <Button className="bg-[#085e29] hover:bg-[#064920] text-white">
+                          See all MPs
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                )}
+
+                {/* Bills Table */}
+                {activeTab === 'bills' && (
+                  <div>
+                    {!trackersData || trackersData.bills.length === 0 ? (
+                      <div className="text-center py-8 text-gray-500">
+                        <p>No bills data available</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-2">
+                        {trackersData.bills.map((bill) => (
+                          <Link
+                            key={bill.id}
+                            href={`/trackers/bills/${bill.id}`}
+                            className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0 hover:bg-gray-50 transition-colors cursor-pointer"
+                          >
+                            <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm text-gray-800 truncate">
+                                {bill.title}
+                              </p>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                    <div className="mt-4 text-left">
+                      <Link href="/trackers/bills">
+                        <Button className="bg-[#085e29] hover:bg-[#064920] text-white">
+                          See all Bills
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                )}
+
+                {/* Loans Table */}
+                {activeTab === 'loans' && (
+                  <div>
+                    {!trackersData || trackersData.loans.length === 0 ? (
+                      <div className="text-center py-8 text-gray-500">
+                        <p>No loans data available</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-2">
+                        {trackersData.loans.map((loan) => (
+                          <div key={loan.id} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
+                            <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm text-gray-800 truncate">
+                                {loan.label} - {loan.sector_display} ({loan.source_display})
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <div className="mt-4 text-left">
+                      <Link href="/trackers/loans">
+                        <Button className="bg-[#085e29] hover:bg-[#064920] text-white">
+                          See all Loans
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                )}
+
+                {/* Budgets Table */}
+                {activeTab === 'budgets' && (
+                  <div>
+                    {!trackersData || trackersData.budgets.length === 0 ? (
+                      <div className="text-center py-8 text-gray-500">
+                        <p>No budgets data available</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-2">
+                        {trackersData.budgets.map((budget) => (
+                          <div key={budget.id} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
+                            <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              {budget.file ? (
+                                <a
+                                  href={`${API_BASE_URL.replace('/api', '')}${budget.file}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-sm text-gray-800 truncate hover:text-[#085e29] transition-colors cursor-pointer block"
+                                >
+                                  {budget.name} ({budget.financial_year})
+                                </a>
+                              ) : (
+                                <p className="text-sm text-gray-800 truncate">
+                                  {budget.name} ({budget.financial_year})
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <div className="mt-4 text-left">
+                      <Link href="/trackers/budgets">
+                        <Button className="bg-[#085e29] hover:bg-[#064920] text-white">
+                          See all Budgets
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                )}
+
+                {/* Hansards Table */}
+                {activeTab === 'hansards' && (
+                  <div>
+                    {!trackersData || trackersData.hansards.length === 0 ? (
+                      <div className="text-center py-8 text-gray-500">
+                        <p>No hansards data available</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-2">
+                        {trackersData.hansards.map((hansard) => (
+                          <div key={hansard.id} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
+                            <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              {hansard.file ? (
+                                <a
+                                  href={`${API_BASE_URL.replace('/api', '')}${hansard.file}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-sm text-gray-800 truncate hover:text-[#085e29] transition-colors cursor-pointer block"
+                                >
+                                  {hansard.name} {hansard.date && `(${new Date(hansard.date).toLocaleDateString()})`}
+                                </a>
+                              ) : (
+                                <p className="text-sm text-gray-800 truncate">
+                                  {hansard.name} {hansard.date && `(${new Date(hansard.date).toLocaleDateString()})`}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <div className="mt-4 text-left">
+                      <Link href="/trackers/hansards">
+                        <Button className="bg-[#085e29] hover:bg-[#064920] text-white">
+                          See all Hansards
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                )}
+
+                {/* Order Papers Table */}
+                {activeTab === 'order-paper' && (
+                  <div>
+                    {!trackersData || trackersData.order_papers.length === 0 ? (
+                      <div className="text-center py-8 text-gray-500">
+                        <p>No order papers data available</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-2">
+                        {trackersData.order_papers.map((paper) => (
+                          <div key={paper.id} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
+                            <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              {paper.file ? (
+                                <a
+                                  href={`${API_BASE_URL.replace('/api', '')}${paper.file}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-sm text-gray-800 truncate hover:text-[#085e29] transition-colors cursor-pointer block"
+                                >
+                                  {paper.name}
+                                </a>
+                              ) : (
+                                <p className="text-sm text-gray-800 truncate">
+                                  {paper.name}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <div className="mt-4 text-left">
+                      <Link href="/trackers/order-paper">
+                        <Button className="bg-[#085e29] hover:bg-[#064920] text-white">
+                          See all Order Papers
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* Resources Section */}
+        <div className="mt-12 bg-gray-100 rounded-lg overflow-hidden">
+          {/* Tabs */}
+          <div className="bg-gray-200 px-4 py-2 flex flex-wrap gap-2 border-b border-gray-300">
+            <button
+              onClick={() => setActiveResourceTab('explainers')}
+              className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
+                activeResourceTab === 'explainers'
+                  ? 'bg-white text-gray-900'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              + Explainers
+            </button>
+            <button
+              onClick={() => setActiveResourceTab('reports')}
+              className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
+                activeResourceTab === 'reports'
+                  ? 'bg-white text-gray-900'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              + Reports
+            </button>
+            <button
+              onClick={() => setActiveResourceTab('partner-publications')}
+              className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
+                activeResourceTab === 'partner-publications'
+                  ? 'bg-white text-gray-900'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              + Partner Publications
+            </button>
+            <button
+              onClick={() => setActiveResourceTab('statements')}
+              className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
+                activeResourceTab === 'statements'
+                  ? 'bg-white text-gray-900'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              + Statements
+            </button>
+          </div>
+
+          {/* Content Area */}
+          <div className="bg-white p-4">
+            {resourcesLoading ? (
+              <div className="text-center py-8">
+                <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-[#085e29]"></div>
+                <p className="mt-2 text-gray-500 text-sm">Loading...</p>
+              </div>
+            ) : (
+              <>
+                {/* Explainers Table */}
+                {activeResourceTab === 'explainers' && (
+                  <div>
+                    {!resourcesData || resourcesData.explainers.length === 0 ? (
+                      <div className="text-center py-8 text-gray-500">
+                        <p>No explainers available</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-2">
+                        {resourcesData.explainers.map((explainer) => (
+                          <div key={explainer.id} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
+                            <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              {explainer.file ? (
+                                <a
+                                  href={`${API_BASE_URL.replace('/api', '')}${explainer.file}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-sm text-gray-800 truncate hover:text-[#085e29] transition-colors cursor-pointer block"
+                                >
+                                  {explainer.name}
+                                </a>
+                              ) : (
+                                <p className="text-sm text-gray-800 truncate">{explainer.name}</p>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <div className="mt-4 text-left">
+                      <Link href="/resources">
+                        <Button className="bg-[#085e29] hover:bg-[#064920] text-white">
+                          See all Explainers
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                )}
+
+                {/* Reports Table */}
+                {activeResourceTab === 'reports' && (
+                  <div>
+                    {!resourcesData || resourcesData.reports.length === 0 ? (
+                      <div className="text-center py-8 text-gray-500">
+                        <p>No reports available</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-2">
+                        {resourcesData.reports.map((report) => (
+                          <div key={report.id} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
+                            <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              {report.file ? (
+                                <a
+                                  href={`${API_BASE_URL.replace('/api', '')}${report.file}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-sm text-gray-800 truncate hover:text-[#085e29] transition-colors cursor-pointer block"
+                                >
+                                  {report.name}
+                                </a>
+                              ) : (
+                                <p className="text-sm text-gray-800 truncate">{report.name}</p>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <div className="mt-4 text-left">
+                      <Link href="/resources">
+                        <Button className="bg-[#085e29] hover:bg-[#064920] text-white">
+                          See all Reports
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                )}
+
+                {/* Partner Publications Table */}
+                {activeResourceTab === 'partner-publications' && (
+                  <div>
+                    {!resourcesData || resourcesData.partner_publications.length === 0 ? (
+                      <div className="text-center py-8 text-gray-500">
+                        <p>No partner publications available</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-2">
+                        {resourcesData.partner_publications.map((publication) => (
+                          <div key={publication.id} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
+                            <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              {publication.file ? (
+                                <a
+                                  href={`${API_BASE_URL.replace('/api', '')}${publication.file}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-sm text-gray-800 truncate hover:text-[#085e29] transition-colors cursor-pointer block"
+                                >
+                                  {publication.name}
+                                </a>
+                              ) : (
+                                <p className="text-sm text-gray-800 truncate">{publication.name}</p>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <div className="mt-4 text-left">
+                      <Link href="/resources">
+                        <Button className="bg-[#085e29] hover:bg-[#064920] text-white">
+                          See all Partner Publications
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                )}
+
+                {/* Statements Table */}
+                {activeResourceTab === 'statements' && (
+                  <div>
+                    {!resourcesData || resourcesData.statements.length === 0 ? (
+                      <div className="text-center py-8 text-gray-500">
+                        <p>No statements available</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-2">
+                        {resourcesData.statements.map((statement) => (
+                          <div key={statement.id} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
+                            <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              {statement.file ? (
+                                <a
+                                  href={`${API_BASE_URL.replace('/api', '')}${statement.file}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-sm text-gray-800 truncate hover:text-[#085e29] transition-colors cursor-pointer block"
+                                >
+                                  {statement.name}
+                                </a>
+                              ) : (
+                                <p className="text-sm text-gray-800 truncate">{statement.name}</p>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <div className="mt-4 text-left">
+                      <Link href="/resources">
+                        <Button className="bg-[#085e29] hover:bg-[#064920] text-white">
+                          See all Statements
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        </div>
+
       </main>
 
       {headlines.length > 0 && (

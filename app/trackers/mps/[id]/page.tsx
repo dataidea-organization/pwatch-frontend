@@ -36,7 +36,7 @@ export default function MPDetailPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Header variant="support" />
+        <Header />
         <main className="max-w-5xl mx-auto px-4 py-8">
           <div className="text-center">
             <p className="text-gray-600">Loading MP details...</p>
@@ -49,7 +49,7 @@ export default function MPDetailPage() {
   if (error || !mp) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Header variant="support" />
+        <Header />
         <main className="max-w-5xl mx-auto px-4 py-8">
           <div className="text-center">
             <p className="text-red-600">{error || 'MP not found'}</p>
@@ -75,7 +75,7 @@ export default function MPDetailPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header variant="support" />
+      <Header />
 
       <main className="max-w-5xl mx-auto px-4 py-8">
         {/* Back Button */}
