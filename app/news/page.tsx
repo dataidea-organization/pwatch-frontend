@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import Header from '@/components/Header';
 import { fetchNews, NewsArticle } from '@/lib/api';
 
@@ -115,9 +116,10 @@ export default function NewsPage() {
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {newsArticles.map((article) => (
-                  <div
+                  <Link
                     key={article.id}
-                    className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+                    href={`/news/${article.slug}`}
+                    className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
                   >
                     <div className="relative h-48 bg-gradient-to-br from-orange-400 to-pink-500">
                       {article.image ? (
@@ -174,7 +176,7 @@ export default function NewsPage() {
                         <span>{article.author}</span>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
 
