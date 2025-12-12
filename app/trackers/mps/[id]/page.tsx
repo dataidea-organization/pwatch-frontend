@@ -127,7 +127,7 @@ export default function MPDetailPage() {
                 <h1 className="text-3xl md:text-4xl font-bold mb-2">{mp.name}</h1>
                 <div className="flex flex-wrap gap-2 justify-center md:justify-start mb-4">
                   <span className="px-3 py-1 bg-white/20 rounded-full text-sm font-medium">
-                    {mp.party_display}
+                    {mp.party}
                   </span>
                 </div>
                 <div className="space-y-2 text-white/90">
@@ -245,7 +245,7 @@ export default function MPDetailPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="p-4 bg-gray-50 rounded-lg">
                   <p className="text-sm font-medium text-gray-600 mb-1">Party</p>
-                  <p className="text-gray-800 font-semibold">{mp.party_display}</p>
+                  <p className="text-gray-800 font-semibold">{mp.party}</p>
                 </div>
                 <div className="p-4 bg-gray-50 rounded-lg">
                   <p className="text-sm font-medium text-gray-600 mb-1">Constituency</p>

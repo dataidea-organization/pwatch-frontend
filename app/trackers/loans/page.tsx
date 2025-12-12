@@ -36,6 +36,7 @@ interface SourceSummary {
   name: string;
   count: number;
   percentage: number;
+  [key: string]: string | number;
 }
 
 const COLORS = ['#085e29', '#f97316', '#dc2626', '#3b82f6', '#8b5cf6', '#ec4899'];
@@ -419,7 +420,10 @@ export default function LoansTrackerPage() {
                       fill="#8884d8"
                       paddingAngle={2}
                       dataKey="percentage"
-                      label={({ percentage }) => `${percentage}%`}
+                      label={(props: any) => {
+                        const { percentage } = props.payload || {};
+                        return `${percentage}%`;
+                      }}
                     >
                       {sourcesSummary.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
