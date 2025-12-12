@@ -206,8 +206,8 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {newsArticles.map((article) => (
                 <Link key={article.id} href={`/news/${article.slug}`}>
-                  <div className="rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer">
-                    <div className="relative h-48 bg-gray-200">
+                  <div className="h-full flex flex-col rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer">
+                    <div className="relative h-48 bg-gray-200 flex-shrink-0">
                       {article.image ? (
                         <img
                           src={article.image.startsWith('http') ? article.image : `${API_BASE_URL.replace('/api', '')}${article.image}`}
@@ -220,7 +220,7 @@ export default function Home() {
                         </div>
                       )}
                     </div>
-                    <div className="p-4 bg-white">
+                    <div className="p-4 bg-white flex-1 flex flex-col">
                       <span className="text-xs font-semibold text-[#085e29] uppercase">
                         {article.category_display || article.category}
                       </span>
@@ -228,7 +228,7 @@ export default function Home() {
                         {article.title}
                       </h4>
                       {article.excerpt && (
-                        <p className="mt-2 text-xs text-gray-600 line-clamp-2">
+                        <p className="mt-2 text-xs text-gray-600 line-clamp-2 flex-1">
                           {article.excerpt}
                         </p>
                       )}
