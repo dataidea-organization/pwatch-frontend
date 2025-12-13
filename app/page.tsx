@@ -262,17 +262,14 @@ export default function Home() {
                 <Link key={article.id} href={`/news/${article.slug}`}>
                   <div className="h-full flex flex-col rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer">
                     <div className="relative h-48 bg-gray-200 flex-shrink-0">
-                      {article.image ? (
-                        <img
-                          src={article.image.startsWith('http') ? article.image : `${API_BASE_URL.replace('/api', '')}${article.image}`}
-                          alt={article.title}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <div className="absolute inset-0 flex items-center justify-center text-gray-400">
-                          No Image
-                        </div>
-                      )}
+                      <img
+                        src={article.image 
+                          ? (article.image.startsWith('http') ? article.image : `${API_BASE_URL.replace('/api', '')}${article.image}`)
+                          : '/images/default-news.jpg'
+                        }
+                        alt={article.title}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <div className="p-4 bg-white flex-1 flex flex-col">
                       <span className="text-xs font-semibold text-[#085e29] uppercase">
@@ -845,17 +842,14 @@ export default function Home() {
                 <Link key={post.id} href={`/blogs/${post.slug}`}>
                   <div className="h-full flex flex-col rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer">
                     <div className="relative h-48 bg-gray-200 flex-shrink-0">
-                      {post.image ? (
-                        <img
-                          src={post.image.startsWith('http') ? post.image : `${API_BASE_URL.replace('/api', '')}${post.image}`}
-                          alt={post.title}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <div className="absolute inset-0 flex items-center justify-center text-gray-400">
-                          No Image
-                        </div>
-                      )}
+                      <img
+                        src={post.image 
+                          ? (post.image.startsWith('http') ? post.image : `${API_BASE_URL.replace('/api', '')}${post.image}`)
+                          : '/images/default-blog.jpg'
+                        }
+                        alt={post.title}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <div className="p-4 bg-white flex-1 flex flex-col">
                       <div className="flex items-center justify-between mb-2">

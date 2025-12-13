@@ -237,15 +237,16 @@ export default function SearchPage() {
                           className="block p-4 border border-gray-200 rounded-lg hover:border-[#085e29] hover:shadow-md transition-all"
                         >
                           <div className="flex gap-4">
-                            {result.image && (
-                              <div className="w-24 h-24 flex-shrink-0 rounded overflow-hidden bg-gray-200">
-                                <img
-                                  src={result.image.startsWith('http') ? result.image : `${API_BASE_URL.replace('/api', '')}${result.image}`}
-                                  alt={getResultTitle(result)}
-                                  className="w-full h-full object-cover"
-                                />
-                              </div>
-                            )}
+                            <div className="w-24 h-24 flex-shrink-0 rounded overflow-hidden bg-gray-200">
+                              <img
+                                src={result.image 
+                                  ? (result.image.startsWith('http') ? result.image : `${API_BASE_URL.replace('/api', '')}${result.image}`)
+                                  : (type === 'news' ? '/images/default-news.jpg' : '/images/default-blog.jpg')
+                                }
+                                alt={getResultTitle(result)}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
                             <div className="flex-1">
                               <div className="flex items-center gap-2 mb-1">
                                 <span className="text-xs font-semibold text-[#085e29] uppercase">

@@ -115,15 +115,16 @@ export default function NewsDetailPage() {
         {/* News Article */}
         <article className="bg-white rounded-lg shadow-md overflow-hidden">
           {/* Header Image */}
-          {article.image && (
-            <div className="relative h-96 bg-gray-200">
-              <img
-                src={article.image.startsWith('http') ? article.image : `${API_BASE_URL.replace('/api', '')}${article.image}`}
-                alt={article.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          )}
+          <div className="relative h-96 bg-gray-200">
+            <img
+              src={article.image 
+                ? (article.image.startsWith('http') ? article.image : `${API_BASE_URL.replace('/api', '')}${article.image}`)
+                : '/images/default-news.jpg'
+              }
+              alt={article.title}
+              className="w-full h-full object-cover"
+            />
+          </div>
 
           {/* Content */}
           <div className="p-8">

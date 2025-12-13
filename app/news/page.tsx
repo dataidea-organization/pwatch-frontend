@@ -122,17 +122,14 @@ export default function NewsPage() {
                     className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
                   >
                     <div className="relative h-48 bg-gradient-to-br from-orange-400 to-pink-500">
-                      {article.image ? (
-                        <img
-                          src={article.image}
-                          alt={article.title}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <div className="absolute inset-0 flex items-center justify-center text-white text-sm">
-                          News Image
-                        </div>
-                      )}
+                      <img
+                        src={article.image 
+                          ? (article.image.startsWith('http') ? article.image : `${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:8000'}${article.image}`)
+                          : '/images/default-news.jpg'
+                        }
+                        alt={article.title}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <div className="p-4">
                       <h3 className="font-bold text-gray-800 text-sm mb-3 line-clamp-3">

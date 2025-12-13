@@ -115,15 +115,16 @@ export default function BlogDetailPage() {
         {/* Blog Post */}
         <article className="bg-white rounded-lg shadow-md overflow-hidden">
           {/* Header Image */}
-          {blog.image && (
-            <div className="relative h-96 bg-gray-200">
-              <img
-                src={blog.image.startsWith('http') ? blog.image : `${API_BASE_URL.replace('/api', '')}${blog.image}`}
-                alt={blog.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          )}
+          <div className="relative h-96 bg-gray-200">
+            <img
+              src={blog.image 
+                ? (blog.image.startsWith('http') ? blog.image : `${API_BASE_URL.replace('/api', '')}${blog.image}`)
+                : '/images/default-blog.jpg'
+              }
+              alt={blog.title}
+              className="w-full h-full object-cover"
+            />
+          </div>
 
           {/* Content */}
           <div className="p-8">
