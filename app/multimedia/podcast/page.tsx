@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
-import Header from '@/components/Header';
 import { ArrowLeft, Search, Calendar, Clock, User, ExternalLink, Play } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -175,7 +174,6 @@ export default function PodcastPage() {
   if (loading && allPodcasts.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Header />
         <main className="max-w-7xl mx-auto px-4 py-8">
           <div className="text-center">
             <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#085e29]"></div>
@@ -189,7 +187,6 @@ export default function PodcastPage() {
   if (error && allPodcasts.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Header />
         <main className="max-w-7xl mx-auto px-4 py-8">
           <div className="bg-red-50 border border-red-200 rounded-lg p-4">
             <p className="text-red-800">Error: {error}</p>
@@ -208,7 +205,6 @@ export default function PodcastPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
       <main className="max-w-7xl mx-auto px-4 py-8">
         {/* Breadcrumb Navigation */}
         <div className="mb-6">

@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import Header from '@/components/Header';
 import { fetchNewsArticle, NewsDetail } from '@/lib/api';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
@@ -47,7 +46,6 @@ export default function NewsDetailPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Header />
         <main className="max-w-5xl mx-auto px-4 py-8">
           <div className="text-center">
             <p className="text-gray-600">Loading news article...</p>
@@ -60,7 +58,6 @@ export default function NewsDetailPage() {
   if (error || !article) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Header />
         <main className="max-w-5xl mx-auto px-4 py-8">
           <div className="text-center">
             <p className="text-red-600">{error || 'News article not found'}</p>
@@ -86,7 +83,6 @@ export default function NewsDetailPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
 
       <main className="max-w-5xl mx-auto px-4 py-8">
         {/* Back Button */}

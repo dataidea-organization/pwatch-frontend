@@ -1,4 +1,3 @@
-import Header from '@/components/Header';
 import { Button } from '@/components/ui/button';
 import { fetchBill } from '@/lib/api';
 import { notFound } from 'next/navigation';
@@ -28,7 +27,6 @@ export default async function BillDetailsPage({
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
 
       {/* Page Header */}
       <div className="bg-white border-b">

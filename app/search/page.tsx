@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import Header from '@/components/Header';
 import { searchGlobal, GlobalSearchResponse } from '@/lib/api';
 import { Folder } from 'lucide-react';
 
@@ -150,7 +149,6 @@ function SearchPageContent() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Header />
         <main className="max-w-7xl mx-auto px-4 py-12">
           <div className="text-center">
             <p className="text-gray-600">Searching...</p>
@@ -163,7 +161,6 @@ function SearchPageContent() {
   if (error) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Header />
         <main className="max-w-7xl mx-auto px-4 py-12">
           <div className="text-center">
             <p className="text-red-600">{error}</p>
@@ -182,7 +179,6 @@ function SearchPageContent() {
   if (!query) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Header />
         <main className="max-w-7xl mx-auto px-4 py-12">
           <div className="text-center">
             <p className="text-gray-600">Please enter a search query</p>
@@ -195,7 +191,6 @@ function SearchPageContent() {
   if (!searchResults || searchResults.total_results === 0) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Header />
         <main className="max-w-7xl mx-auto px-4 py-12">
           <h1 className="text-2xl font-bold text-gray-800 mb-6">
             Search Results for &quot;{query}&quot;
@@ -211,7 +206,6 @@ function SearchPageContent() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
       <main className="max-w-7xl mx-auto px-4 py-12">
         <h1 className="text-2xl font-bold text-gray-800 mb-2">
           Search Results for &quot;{query}&quot;
@@ -386,7 +380,6 @@ export default function SearchPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-gray-50">
-        <Header />
         <main className="max-w-7xl mx-auto px-4 py-12">
           <div className="text-center">
             <p className="text-gray-600">Loading search...</p>

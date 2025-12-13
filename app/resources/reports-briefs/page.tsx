@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Header from '@/components/Header'
 import { ArrowLeft, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Download, FileText } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -84,7 +83,6 @@ export default function ReportsBriefsPage() {
   if (loading && reports.length === 0) {
     return (
       <>
-        <Header />
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
           <div className="flex flex-col items-center gap-4">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#085e29]"></div>
@@ -98,7 +96,6 @@ export default function ReportsBriefsPage() {
   if (error) {
     return (
       <>
-        <Header />
         <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
           <div className="bg-red-50 border border-red-200 text-red-800 rounded-lg p-6 max-w-md w-full">
             <h2 className="text-lg font-semibold mb-2">Error Loading Reports</h2>
@@ -117,7 +114,6 @@ export default function ReportsBriefsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
       <main className="max-w-7xl mx-auto px-4 py-8">
         <div className="mb-8">
           <Link href="/resources" className="inline-flex items-center text-[#085e29] hover:text-[#064920] mb-4 transition-colors">

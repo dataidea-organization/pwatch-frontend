@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Header from '@/components/Header';
 import { fetchBlogs, BlogPost } from '@/lib/api';
 import Link from 'next/link';
 
@@ -95,7 +94,6 @@ export default function BlogsPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Header />
         <main className="max-w-7xl mx-auto px-4 py-12">
           <div className="text-center">
             <p className="text-gray-600">Loading blog posts...</p>
@@ -108,7 +106,6 @@ export default function BlogsPage() {
   if (error && blogPosts.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Header />
         <main className="max-w-7xl mx-auto px-4 py-12">
           <div className="text-center">
             <p className="text-red-600">{error}</p>
@@ -126,8 +123,6 @@ export default function BlogsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
-
       <main className="max-w-7xl mx-auto px-4 py-12">
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="flex-1">

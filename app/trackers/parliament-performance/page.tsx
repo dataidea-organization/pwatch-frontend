@@ -1,13 +1,11 @@
 'use client'
 
 import Link from 'next/link'
-import Header from '@/components/Header'
 import { ArrowLeft, Clock } from 'lucide-react'
 
 export default function ParliamentPerformancePage() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
       <main className="max-w-7xl mx-auto px-4 py-8">
         <div className="mb-6">
           <Link

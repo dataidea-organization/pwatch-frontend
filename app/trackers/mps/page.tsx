@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
-import Header from '@/components/Header';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { fetchMPs, fetchMPSummary, MP, MPSummary } from '@/lib/api';
 import { Button } from '@/components/ui/button';
@@ -252,7 +251,6 @@ export default function MPsPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Header />
         <main className="max-w-7xl mx-auto px-4 py-8">
           <div className="text-center">
             <p className="text-gray-600">Loading Members of Parliament...</p>
@@ -265,7 +263,6 @@ export default function MPsPage() {
   if (error && allMps.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Header />
         <main className="max-w-7xl mx-auto px-4 py-8">
           <div className="text-center">
             <p className="text-red-600">{error}</p>
@@ -283,7 +280,6 @@ export default function MPsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
 
       <main className="max-w-7xl mx-auto px-4 py-8">
         {/* Header Section */}

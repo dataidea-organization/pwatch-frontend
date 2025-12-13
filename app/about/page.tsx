@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Header from '@/components/Header';
 import { fetchObjectives, fetchTeamMembers, Objective, TeamMember } from '@/lib/api';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
@@ -36,7 +35,6 @@ export default function AboutPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
 
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4">

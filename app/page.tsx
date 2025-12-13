@@ -1,8 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, Folder } from 'lucide-react';
@@ -150,7 +148,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
 
       <main className="max-w-7xl mx-auto px-4 py-6 pb-20">
         <div className="">
@@ -904,7 +901,6 @@ export default function Home() {
           </div>
         </div>
       )}
-      <Footer />
     </div>
   );
 }

@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import Header from '@/components/Header';
 import Link from 'next/link';
 import { fetchBills, BillList } from '@/lib/api';
 import { Input } from '@/components/ui/input';
@@ -165,7 +164,6 @@ export default function BillsTrackerPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
 
       <main className="relative">
 
