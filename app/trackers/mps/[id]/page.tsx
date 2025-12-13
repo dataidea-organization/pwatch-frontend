@@ -225,11 +225,14 @@ export default function MPDetailPage() {
             {mp.bio && (
               <div className="mb-8">
                 <h2 className="text-2xl font-bold text-gray-800 mb-4">Biography</h2>
-                <div className="prose max-w-none">
-                  <p className="text-gray-700 leading-relaxed whitespace-pre-line">
-                    {mp.bio}
-                  </p>
-                </div>
+                <div
+                  className="prose max-w-none"
+                  dangerouslySetInnerHTML={{ __html: mp.bio }}
+                  style={{
+                    color: '#374151',
+                    lineHeight: '1.75',
+                  }}
+                />
               </div>
             )}
 
