@@ -204,18 +204,23 @@ export default function Home() {
 
               {/* Content Overlay */}
               <div className="absolute bottom-8 left-8 z-20">
-                <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                  Your Eye on
-                  <br />
-                  <span className="relative inline-block">
-                    Parliament
-                    <div className="absolute -bottom-2 left-0 w-32 h-1 bg-[#085e29]" />
-                  </span>
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 max-w-2xl">
+                  We monitor and track the Ugandan Parliament on a regular basis, provide relevant data and expert insights.
                 </h2>
-                <Button variant="green" size="lg" className="mt-6">
-                  Get Involved
+                <Button 
+                  variant="green" 
+                  size="lg" 
+                  className="mt-6"
+                  onClick={() => {
+                    const newsSection = document.getElementById('news-section');
+                    if (newsSection) {
+                      newsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                  }}
+                >
+                  Here is How
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                   </svg>
                 </Button>
               </div>
@@ -242,7 +247,7 @@ export default function Home() {
         </div>
 
               {/* News and Updates Section */}
-        <div className="mt-8">
+        <div id="news-section" className="mt-8">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-2xl font-bold text-gray-800">News and Updates</h3>
             <Link href="/news">
