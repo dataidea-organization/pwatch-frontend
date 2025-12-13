@@ -833,3 +833,81 @@ export async function fetchHomeResourcesSummary(): Promise<HomeResourcesSummary>
   }
   return response.json();
 }
+
+// Global Search API
+export interface SearchResult {
+  id: number;
+  title?: string;
+  name?: string;
+  slug?: string;
+  author?: string;
+  category?: string;
+  category_display?: string;
+  excerpt?: string;
+  image?: string | null;
+  published_date?: string;
+  [key: string]: any; // Allow additional fields
+}
+
+export interface GlobalSearchResponse {
+  query: string;
+  total_results: number;
+  results: {
+    news?: SearchResult[];
+    blogs?: SearchResult[];
+    mps?: SearchResult[];
+    bills?: SearchResult[];
+    loans?: SearchResult[];
+    budgets?: SearchResult[];
+    hansards?: SearchResult[];
+    order_papers?: SearchResult[];
+    explainers?: SearchResult[];
+    reports?: SearchResult[];
+    partner_publications?: SearchResult[];
+    statements?: SearchResult[];
+    podcasts?: SearchResult[];
+    xspaces?: SearchResult[];
+    gallery?: SearchResult[];
+    polls?: SearchResult[];
+  };
+  counts: {
+    news?: number;
+    blogs?: number;
+    mps?: number;
+    bills?: number;
+    loans?: number;
+    budgets?: number;
+    hansards?: number;
+    order_papers?: number;
+    explainers?: number;
+    reports?: number;
+    partner_publications?: number;
+    statements?: number;
+    podcasts?: number;
+    xspaces?: number;
+    gallery?: number;
+    polls?: number;
+  };
+}
+
+export async function searchGlobal(query: string, limit: number = 5): Promise<GlobalSearchResponse> {
+  if (!query.trim()) {
+    return {
+      query: '',
+      total_results: 0,
+      results: {},
+      counts: {}
+    };
+  }
+
+  const params = new URLSearchParams({
+    q: query.trim(),
+    limit: limit.toString()
+  });
+
+  const response = await fetch(`${API_BASE_URL}/search/?${params.toString()}`);
+  if (!response.ok) {
+    throw new Error('Failed to perform search');
+  }
+  return response.json();
+}

@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,9 +12,130 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { searchGlobal, GlobalSearchResponse } from '@/lib/api';
 
 export default function Header() {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<GlobalSearchResponse | null>(null);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
+  const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
+
+  // Debounced search
+  useEffect(() => {
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current);
+    }
+
+    if (searchQuery.trim().length < 2) {
+      setSearchResults(null);
+      setShowDropdown(false);
+      return;
+    }
+
+    setIsSearching(true);
+    searchTimeoutRef.current = setTimeout(async () => {
+      // Cancel previous request
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+
+      // Create new abort controller
+      abortControllerRef.current = new AbortController();
+
+      try {
+        const results = await searchGlobal(searchQuery, 3); // 3 results per category for dropdown
+        setSearchResults(results);
+        setShowDropdown(true);
+      } catch (error: any) {
+        if (error.name !== 'AbortError') {
+          console.error('Search error:', error);
+          setSearchResults(null);
+        }
+      } finally {
+        setIsSearching(false);
+      }
+    }, 300); // 300ms debounce
+
+    return () => {
+      if (searchTimeoutRef.current) {
+        clearTimeout(searchTimeoutRef.current);
+      }
+    };
+  }, [searchQuery]);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setShowDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setShowDropdown(false);
+    }
+  };
+
+  const handleSearchIconClick = () => {
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setShowDropdown(false);
+    }
+  };
+
+  const getResultUrl = (type: string, result: any): string => {
+    switch (type) {
+      case 'news':
+        return `/news/${result.slug}`;
+      case 'blogs':
+        return `/blogs/${result.slug}`;
+      case 'mps':
+        return `/trackers/mps/${result.id}`;
+      case 'bills':
+        return `/trackers/bills/${result.id}`;
+      case 'loans':
+        return `/trackers/loans`;
+      case 'budgets':
+        return `/trackers/budgets`;
+      case 'hansards':
+        return `/trackers/hansards`;
+      case 'order_papers':
+        return `/trackers/order-paper`;
+      case 'explainers':
+        return `/resources/explainers`;
+      case 'reports':
+        return `/resources/reports-briefs`;
+      case 'partner_publications':
+        return `/resources/partner-publications`;
+      case 'statements':
+        return `/resources/statements`;
+      case 'podcasts':
+        return `/multimedia/podcast`;
+      case 'xspaces':
+        return `/multimedia/x-spaces`;
+      case 'gallery':
+        return `/multimedia/gallery`;
+      case 'polls':
+        return `/citizens-voice`;
+      default:
+        return '/';
+    }
+  };
+
+  const getResultTitle = (result: any): string => {
+    return result.title || result.name || 'Untitled';
+  };
 
   return (
     <header className="w-full bg-white">
@@ -47,20 +169,104 @@ export default function Header() {
               Support Us
             </Button>
           </Link>
-          <div className="relative">
+          <form onSubmit={handleSearchSubmit} className="relative">
             <Input
               type="text"
               placeholder="Search..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              onFocus={() => {
+                if (searchResults && searchResults.total_results > 0) {
+                  setShowDropdown(true);
+                }
+              }}
               className="bg-white/20 text-white placeholder-white/70 border-0 px-4 py-1 pr-10 rounded-full text-sm focus-visible:ring-0 focus-visible:bg-white/30"
             />
-            <button className="absolute right-2 top-1/2 -translate-y-1/2 text-white">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
+            <button
+              type="button"
+              onClick={handleSearchIconClick}
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-white hover:text-white/80"
+            >
+              {isSearching ? (
+                <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+              ) : (
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              )}
             </button>
-          </div>
+
+            {/* Search Dropdown */}
+            {showDropdown && searchResults && searchResults.total_results > 0 && (
+              <div
+                ref={dropdownRef}
+                className="absolute top-full left-0 mt-2 w-96 bg-white rounded-lg shadow-xl border border-gray-200 max-h-96 overflow-y-auto z-50"
+              >
+                <div className="p-2">
+                  {Object.entries(searchResults.results).map(([type, results]) => {
+                    if (!results || results.length === 0) return null;
+                    
+                    const typeLabels: { [key: string]: string } = {
+                      news: 'News',
+                      blogs: 'Blogs',
+                      mps: 'MPs',
+                      bills: 'Bills',
+                      loans: 'Loans',
+                      budgets: 'Budgets',
+                      hansards: 'Hansards',
+                      order_papers: 'Order Papers',
+                      explainers: 'Explainers',
+                      reports: 'Reports',
+                      partner_publications: 'Partner Publications',
+                      statements: 'Statements',
+                      podcasts: 'Podcasts',
+                      xspaces: 'X Spaces',
+                      gallery: 'Gallery',
+                      polls: 'Polls',
+                    };
+
+                    return (
+                      <div key={type} className="mb-4 last:mb-0">
+                        <h4 className="text-xs font-semibold text-gray-500 uppercase px-2 py-1">
+                          {typeLabels[type] || type}
+                        </h4>
+                        <div className="space-y-1">
+                          {results.slice(0, 3).map((result) => (
+                            <Link
+                              key={result.id}
+                              href={getResultUrl(type, result)}
+                              onClick={() => setShowDropdown(false)}
+                              className="block px-2 py-2 hover:bg-gray-50 rounded text-sm"
+                            >
+                              <p className="font-medium text-gray-900 line-clamp-1">
+                                {getResultTitle(result)}
+                              </p>
+                              {result.author && (
+                                <p className="text-xs text-gray-500 mt-0.5">By {result.author}</p>
+                              )}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
+                  
+                  <div className="border-t border-gray-200 mt-2 pt-2">
+                    <Link
+                      href={`/search?q=${encodeURIComponent(searchQuery)}`}
+                      onClick={() => setShowDropdown(false)}
+                      className="block px-2 py-2 text-center text-sm font-medium text-[#085e29] hover:bg-gray-50 rounded"
+                    >
+                      View all {searchResults.total_results} results
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            )}
+          </form>
         </div>
       </div>
 
