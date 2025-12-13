@@ -20,6 +20,8 @@ export default function Header() {
   const [searchResults, setSearchResults] = useState<GlobalSearchResponse | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(null);
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
@@ -388,12 +390,238 @@ export default function Header() {
             </Link>
           </nav>
 
-          <button className="md:hidden">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <button 
+            className="md:hidden"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle mobile menu"
+          >
+            <svg className="w-6 h-6 text-[#085e29]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
         </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden border-t bg-white">
+            <nav className="px-4 py-4 space-y-4">
+              {/* Trackers Dropdown */}
+              <div>
+                <button
+                  onClick={() => setOpenMobileDropdown(openMobileDropdown === 'trackers' ? null : 'trackers')}
+                  className="w-full flex items-center justify-between text-gray-700 hover:text-[#085e29] font-medium text-sm py-2"
+                >
+                  Trackers
+                  <svg 
+                    className={`w-4 h-4 transition-transform ${openMobileDropdown === 'trackers' ? 'rotate-180' : ''}`} 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {openMobileDropdown === 'trackers' && (
+                  <div className="pl-4 space-y-2 mt-2">
+                    <Link 
+                      href="/trackers/mps" 
+                      className="block text-gray-600 hover:text-[#085e29] text-sm py-1"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Members of Parliament
+                    </Link>
+                    <Link 
+                      href="/trackers/bills" 
+                      className="block text-gray-600 hover:text-[#085e29] text-sm py-1"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Bills Tracker
+                    </Link>
+                    <Link 
+                      href="/trackers/loans" 
+                      className="block text-gray-600 hover:text-[#085e29] text-sm py-1"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Loans Tracker
+                    </Link>
+                    <Link 
+                      href="/trackers/debt" 
+                      className="block text-gray-600 hover:text-[#085e29] text-sm py-1"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Debt Tracker
+                    </Link>
+                    <Link 
+                      href="/trackers/budgets" 
+                      className="block text-gray-600 hover:text-[#085e29] text-sm py-1"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Budget Tracker
+                    </Link>
+                    <Link 
+                      href="/trackers/hansards" 
+                      className="block text-gray-600 hover:text-[#085e29] text-sm py-1"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Hansards Tracker
+                    </Link>
+                    <Link 
+                      href="/trackers/order-paper" 
+                      className="block text-gray-600 hover:text-[#085e29] text-sm py-1"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Order Paper Tracker
+                    </Link>
+                    <Link 
+                      href="/trackers/parliament-performance" 
+                      className="block text-gray-600 hover:text-[#085e29] text-sm py-1"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Parliament Performance Tracker
+                    </Link>
+                  </div>
+                )}
+              </div>
+
+              {/* Multimedia Dropdown */}
+              <div>
+                <button
+                  onClick={() => setOpenMobileDropdown(openMobileDropdown === 'multimedia' ? null : 'multimedia')}
+                  className="w-full flex items-center justify-between text-gray-700 hover:text-[#085e29] font-medium text-sm py-2"
+                >
+                  Multimedia
+                  <svg 
+                    className={`w-4 h-4 transition-transform ${openMobileDropdown === 'multimedia' ? 'rotate-180' : ''}`} 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {openMobileDropdown === 'multimedia' && (
+                  <div className="pl-4 space-y-2 mt-2">
+                    <Link 
+                      href="/multimedia/x-spaces" 
+                      className="block text-gray-600 hover:text-[#085e29] text-sm py-1"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      X Spaces
+                    </Link>
+                    <Link 
+                      href="/multimedia/podcast" 
+                      className="block text-gray-600 hover:text-[#085e29] text-sm py-1"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Podcast
+                    </Link>
+                    <Link 
+                      href="/multimedia/gallery" 
+                      className="block text-gray-600 hover:text-[#085e29] text-sm py-1"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Gallery
+                    </Link>
+                  </div>
+                )}
+              </div>
+
+              {/* Resources Dropdown */}
+              <div>
+                <button
+                  onClick={() => setOpenMobileDropdown(openMobileDropdown === 'resources' ? null : 'resources')}
+                  className="w-full flex items-center justify-between text-gray-700 hover:text-[#085e29] font-medium text-sm py-2"
+                >
+                  Resources
+                  <svg 
+                    className={`w-4 h-4 transition-transform ${openMobileDropdown === 'resources' ? 'rotate-180' : ''}`} 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {openMobileDropdown === 'resources' && (
+                  <div className="pl-4 space-y-2 mt-2">
+                    <Link 
+                      href="/resources/explainers" 
+                      className="block text-gray-600 hover:text-[#085e29] text-sm py-1"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Explainers
+                    </Link>
+                    <Link 
+                      href="/resources/reports-briefs" 
+                      className="block text-gray-600 hover:text-[#085e29] text-sm py-1"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Reports & Briefs
+                    </Link>
+                    <Link 
+                      href="/resources/partner-publications" 
+                      className="block text-gray-600 hover:text-[#085e29] text-sm py-1"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Partner Publications
+                    </Link>
+                    <Link 
+                      href="/resources/statements" 
+                      className="block text-gray-600 hover:text-[#085e29] text-sm py-1"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Statements
+                    </Link>
+                    <Link 
+                      href="/resources/committees" 
+                      className="block text-gray-600 hover:text-[#085e29] text-sm py-1"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Committees
+                    </Link>
+                  </div>
+                )}
+              </div>
+
+              {/* Direct Links */}
+              <Link 
+                href="/citizens-voice" 
+                className="block text-gray-700 hover:text-[#085e29] font-medium text-sm py-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Citizens' Voice
+              </Link>
+              <Link 
+                href="/news" 
+                className="block text-gray-700 hover:text-[#085e29] font-medium text-sm py-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                News&Update
+              </Link>
+              <Link 
+                href="/blogs" 
+                className="block text-gray-700 hover:text-[#085e29] font-medium text-sm py-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Blogs
+              </Link>
+              <Link 
+                href="/contact" 
+                className="block text-gray-700 hover:text-[#085e29] font-medium text-sm py-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Contact
+              </Link>
+              <Link 
+                href="/about" 
+                className="block text-gray-700 hover:text-[#085e29] font-medium text-sm py-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                About Us
+              </Link>
+            </nav>
+          </div>
+        )}
       </div>
     </header>
   );
