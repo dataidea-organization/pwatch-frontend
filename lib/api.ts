@@ -26,9 +26,6 @@ export interface Bill {
   status_display: string;
   description: string;
   video_url: string | null;
-  likes: number;
-  comments: number;
-  shares: number;
   readings: BillReading[];
   created_at: string;
   updated_at: string;
@@ -88,35 +85,6 @@ export async function fetchBill(id: string): Promise<Bill> {
   return response.json();
 }
 
-export async function likeBill(id: number): Promise<{ likes: number }> {
-  const response = await fetch(`${API_BASE_URL}/trackers/bills/${id}/like/`, {
-    method: 'POST',
-  });
-  if (!response.ok) {
-    throw new Error('Failed to like bill');
-  }
-  return response.json();
-}
-
-export async function commentBill(id: number): Promise<{ comments: number }> {
-  const response = await fetch(`${API_BASE_URL}/trackers/bills/${id}/comment/`, {
-    method: 'POST',
-  });
-  if (!response.ok) {
-    throw new Error('Failed to comment on bill');
-  }
-  return response.json();
-}
-
-export async function shareBill(id: number): Promise<{ shares: number }> {
-  const response = await fetch(`${API_BASE_URL}/trackers/bills/${id}/share/`, {
-    method: 'POST',
-  });
-  if (!response.ok) {
-    throw new Error('Failed to share bill');
-  }
-  return response.json();
-}
 
 // News API
 export interface NewsArticle {
