@@ -14,7 +14,10 @@ export const metadata: Metadata = {
   title: "Parliament Watch Uganda",
   description: "Your Eye on Parliament - Bridging the gap between Parliament and citizens",
   icons: {
-    icon: "/favicon.png",
+    icon: [
+      { url: "/favicon.png", type: "image/png" },
+      { url: "/icon.png", type: "image/png" },
+    ],
     shortcut: "/favicon.png",
     apple: "/favicon.png",
   },
