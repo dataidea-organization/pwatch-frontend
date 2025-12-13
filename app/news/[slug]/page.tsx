@@ -176,11 +176,6 @@ export default function NewsDetailPage() {
             <div
               className="blog-content"
               dangerouslySetInnerHTML={{ __html: article.content }}
-              style={{
-                color: '#374151',
-                lineHeight: '1.75',
-                fontSize: '1.125rem',
-              }}
             />
           </div>
         </article>
