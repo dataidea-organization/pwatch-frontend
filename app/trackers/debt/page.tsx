@@ -26,13 +26,15 @@ export default function DebtTrackerPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+
   useEffect(() => {
     const fetchDebtData = async () => {
       try {
         setLoading(true);
 
         // Fetch all debt data
-        const response = await fetch('http://localhost:8000/api/trackers/debt/');
+        const response = await fetch(`${API_BASE_URL}/trackers/debt/`);
         if (!response.ok) {
           throw new Error('Failed to fetch debt data');
         }
@@ -40,7 +42,7 @@ export default function DebtTrackerPage() {
         setDebtData(data);
 
         // Fetch latest data
-        const latestResponse = await fetch('http://localhost:8000/api/trackers/debt/latest/');
+        const latestResponse = await fetch(`${API_BASE_URL}/trackers/debt/latest/`);
         if (!latestResponse.ok) {
           throw new Error('Failed to fetch latest debt data');
         }
