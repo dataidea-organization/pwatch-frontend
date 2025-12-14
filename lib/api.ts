@@ -918,3 +918,32 @@ export async function searchGlobal(query: string, limit: number = 5, signal?: Ab
   
   return response.json();
 }
+
+// Chatbot API
+export interface ChatbotQuery {
+  query: string;
+}
+
+export interface ChatbotResponse {
+  answer: string;
+  document_name: string;
+  document_url: string;
+  confidence?: number;
+}
+
+export async function chatWithBot(query: string): Promise<ChatbotResponse> {
+  const response = await fetch(`${API_BASE_URL}/chatbot/chat/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ query }),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error || error.detail || 'Failed to get chatbot response');
+  }
+
+  return response.json();
+}

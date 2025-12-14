@@ -3,6 +3,7 @@ import { Gabarito } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ChatbotWidget from "@/components/ChatbotWidget";
 
 const gabarito = Gabarito({
   variable: "--font-gabarito",
@@ -30,13 +31,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${gabarito.variable} antialiased font-sans`}
-      >
-        <Header />
-        {children}
-        <Footer />
-      </body>
+          <body
+            className={`${gabarito.variable} antialiased font-sans`}
+          >
+            <Header />
+            {children}
+            <Footer />
+            <ChatbotWidget />
+          </body>
     </html>
   );
 }

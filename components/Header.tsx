@@ -370,6 +370,9 @@ export default function Header() {
                 <DropdownMenuItem asChild>
                   <Link href="/resources/committees" className="w-full cursor-pointer">Committees</Link>
                 </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/chatbot" className="w-full cursor-pointer">Chatbot</Link>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
@@ -578,6 +581,13 @@ export default function Header() {
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       Committees
+                    </Link>
+                    <Link 
+                      href="/chatbot" 
+                      className="block text-gray-600 hover:text-[#085e29] text-sm py-1"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Chatbot
                     </Link>
                   </div>
                 )}
