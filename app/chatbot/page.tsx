@@ -45,11 +45,19 @@ export default function ChatbotPage() {
       <main className="max-w-4xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-            Parliamentary Chatbot
-          </h1>
-          <p className="text-gray-600 text-lg">
+          <div className="flex items-center gap-3 mb-2">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
+              Parliamentary Chatbot
+            </h1>
+            <span className="bg-yellow-100 text-yellow-800 text-xs font-semibold px-3 py-1 rounded">
+              ALPHA VERSION
+            </span>
+          </div>
+          <p className="text-gray-600 text-lg mb-2">
             Ask questions about parliamentary proceedings, bills, and documents
+          </p>
+          <p className="text-sm text-gray-500">
+            Currently supports question and answer only
           </p>
         </div>
 
