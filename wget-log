@@ -16003,4 +16003,102 @@ Saving to: ‘parliamentwatch.ug/blogs/the-ugly-face-of-sexual-harassment-in-the
     50K .......... .......... .......... .......... .......... 1.07M
    100K .......... .......... .......... .......... .......... 1.08M
    150K .......... .......... .......... .......... .......... 1.26M
-   200K .......... ....
+   200K .......... ....                                        2.83M=0.2s
+
+Last-modified header missing -- time-stamps turned off.
+2025-12-15 10:30:35 (1.19 MB/s) - ‘parliamentwatch.ug/blogs/the-ugly-face-of-sexual-harassment-in-the-work-place/index.html’ saved [219527]
+
+--2025-12-15 10:30:35--  https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.sizes.full.url%20%7D%7D
+Reusing existing connection to parliamentwatch.ug:443.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.sizes.full.url [following]
+--2025-12-15 10:30:36--  https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.sizes.full.url
+Reusing existing connection to parliamentwatch.ug:443.
+HTTP request sent, awaiting response... 404 Not Found
+2025-12-15 10:30:38 ERROR 404: Not Found.
+
+--2025-12-15 10:30:38--  https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.sizes.large.url%20%7D%7D
+Reusing existing connection to parliamentwatch.ug:443.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.sizes.large.url [following]
+--2025-12-15 10:30:39--  https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.sizes.large.url
+Reusing existing connection to parliamentwatch.ug:443.
+HTTP request sent, awaiting response... 404 Not Found
+2025-12-15 10:30:41 ERROR 404: Not Found.
+
+--2025-12-15 10:30:41--  https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.icon%20%7D%7D
+Reusing existing connection to parliamentwatch.ug:443.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.icon [following]
+--2025-12-15 10:30:42--  https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.icon
+Reusing existing connection to parliamentwatch.ug:443.
+HTTP request sent, awaiting response... 404 Not Found
+2025-12-15 10:30:43 ERROR 404: Not Found.
+
+--2025-12-15 10:30:44--  https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.url%20%7D%7D
+Reusing existing connection to parliamentwatch.ug:443.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.url [following]
+--2025-12-15 10:30:45--  https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.url
+Reusing existing connection to parliamentwatch.ug:443.
+HTTP request sent, awaiting response... 404 Not Found
+2025-12-15 10:30:46 ERROR 404: Not Found.
+
+--2025-12-15 10:30:46--  https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.authorLink%20%7D%7D
+Reusing existing connection to parliamentwatch.ug:443.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.authorLink [following]
+--2025-12-15 10:30:47--  https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.authorLink
+Reusing existing connection to parliamentwatch.ug:443.
+HTTP request sent, awaiting response... 404 Not Found
+2025-12-15 10:30:49 ERROR 404: Not Found.
+
+--2025-12-15 10:30:49--  https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.uploadedToLink%20%7D%7D
+Reusing existing connection to parliamentwatch.ug:443.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.uploadedToLink [following]
+--2025-12-15 10:30:50--  https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.uploadedToLink
+Reusing existing connection to parliamentwatch.ug:443.
+HTTP request sent, awaiting response... 404 Not Found
+2025-12-15 10:30:52 ERROR 404: Not Found.
+
+--2025-12-15 10:30:52--  https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.originalImageURL%20%7D%7D
+Reusing existing connection to parliamentwatch.ug:443.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.originalImageURL [following]
+--2025-12-15 10:30:53--  https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.originalImageURL
+Reusing existing connection to parliamentwatch.ug:443.
+HTTP request sent, awaiting response... 404 Not Found
+2025-12-15 10:30:55 ERROR 404: Not Found.
+
+--2025-12-15 10:30:55--  https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.link%20%7D%7D
+Reusing existing connection to parliamentwatch.ug:443.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.link [following]
+--2025-12-15 10:30:56--  https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.link
+Reusing existing connection to parliamentwatch.ug:443.
+HTTP request sent, awaiting response... 404 Not Found
+2025-12-15 10:30:58 ERROR 404: Not Found.
+
+--2025-12-15 10:30:58--  https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.editLink%20%7D%7D
+Reusing existing connection to parliamentwatch.ug:443.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.editLink [following]
+--2025-12-15 10:30:59--  https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.editLink
+Reusing existing connection to parliamentwatch.ug:443.
+HTTP request sent, awaiting response... 404 Not Found
+2025-12-15 10:31:01 ERROR 404: Not Found.
+
+--2025-12-15 10:31:01--  https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.size.url%20%7D%7D
+Reusing existing connection to parliamentwatch.ug:443.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.size.url [following]
+--2025-12-15 10:31:02--  https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.size.url
+Reusing existing connection to parliamentwatch.ug:443.
+HTTP request sent, awaiting response... 404 Not Found
+2025-12-15 10:31:04 ERROR 404: Not Found.
+
+--2025-12-15 10:31:04--  https://parliamentwatch.ug/blogs/menstrual-hygiene-the-key-issue-in-uganda-that-has-yet-to-be-paid-attention-to/%7B%7B%20data.image.src%20%7D%7D
+Reusing existing connection to parliamentwatch.ug:443.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://parliamentwatch.ug/blogs/menstrual-h
