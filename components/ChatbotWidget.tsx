@@ -71,7 +71,10 @@ export default function ChatbotWidget() {
       <div className="bg-[#085e29] text-white p-4 rounded-t-lg flex items-center justify-between">
         <div className="flex items-center gap-2">
           <MessageSquare className="w-5 h-5" />
-          <span className="font-semibold text-sm">Parliamentary Chatbot</span>
+          <div className="flex flex-col">
+            <span className="font-semibold text-sm">Parliamentary Chatbot</span>
+            <span className="text-xs text-white/80 font-normal">Alpha • Q&A Only</span>
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <button
@@ -103,8 +106,16 @@ export default function ChatbotWidget() {
             {!response && !error && (
               <div className="text-center py-8">
                 <MessageSquare className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                <p className="text-sm text-gray-600">
+                <div className="mb-2">
+                  <span className="inline-block bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-1 rounded">
+                    ALPHA VERSION
+                  </span>
+                </div>
+                <p className="text-sm text-gray-600 mb-2">
                   Ask me anything about parliamentary proceedings, bills, or documents
+                </p>
+                <p className="text-xs text-gray-500">
+                  Currently supports question and answer only
                 </p>
               </div>
             )}
