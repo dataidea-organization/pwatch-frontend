@@ -62,7 +62,7 @@ export default function NewsPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#f3eed4]">
-        <main className="bg-gradient-to-b from-gray-100 to-white py-12">
+        <main className="bg-gradient-to-b from-[#ddd0b8] to-[#f3eed4] py-12">
           <div className="max-w-7xl mx-auto px-4">
             <div className="text-center">
               <p className="text-gray-600">Loading news articles...</p>
@@ -76,7 +76,7 @@ export default function NewsPage() {
   if (error && newsArticles.length === 0) {
     return (
       <div className="min-h-screen bg-[#f3eed4]">
-        <main className="bg-gradient-to-b from-gray-100 to-white py-12">
+        <main className="bg-gradient-to-b from-[#ddd0b8] to-[#f3eed4] py-12">
           <div className="max-w-7xl mx-auto px-4">
             <div className="text-center">
               <p className="text-red-600">{error}</p>
@@ -95,7 +95,7 @@ export default function NewsPage() {
 
   return (
     <div className="min-h-screen bg-[#f3eed4]">
-      <main className="bg-gradient-to-b from-gray-100 to-white py-12">
+      <main className="bg-gradient-to-b from-[#ddd0b8] to-[#f3eed4] py-12">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
             <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
