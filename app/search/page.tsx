@@ -151,7 +151,7 @@ function SearchPageContent() {
       <div className="min-h-screen bg-[#f3eed4]">
         <main className="max-w-7xl mx-auto px-4 py-12">
           <div className="text-center">
-            <p className="text-[#8b7d6b]">Searching...</p>
+            <p className="text-gray-600">Searching...</p>
           </div>
         </main>
       </div>
@@ -181,7 +181,7 @@ function SearchPageContent() {
       <div className="min-h-screen bg-[#f3eed4]">
         <main className="max-w-7xl mx-auto px-4 py-12">
           <div className="text-center">
-            <p className="text-[#8b7d6b]">Please enter a search query</p>
+            <p className="text-gray-600">Please enter a search query</p>
           </div>
         </main>
       </div>
@@ -196,8 +196,8 @@ function SearchPageContent() {
             Search Results for &quot;{query}&quot;
           </h1>
           <div className="text-center py-12">
-            <p className="text-[#8b7d6b]">No results found for your search.</p>
-            <p className="text-sm text-[#a69780] mt-2">Try different keywords or check your spelling.</p>
+            <p className="text-gray-600">No results found for your search.</p>
+            <p className="text-sm text-gray-500 mt-2">Try different keywords or check your spelling.</p>
           </div>
         </main>
       </div>
@@ -210,7 +210,7 @@ function SearchPageContent() {
         <h1 className="text-2xl font-bold text-gray-800 mb-2">
           Search Results for &quot;{query}&quot;
         </h1>
-        <p className="text-[#8b7d6b] mb-8">
+        <p className="text-gray-600 mb-8">
           Found {searchResults.total_results} result{searchResults.total_results !== 1 ? 's' : ''}
         </p>
 
@@ -220,7 +220,7 @@ function SearchPageContent() {
             const count = searchResults.counts[type as keyof typeof searchResults.counts] || 0;
 
             return (
-              <div key={type} className="bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] p-6">
+              <div key={type} className="bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-xl font-bold text-gray-800">
                     {typeLabels[type] || type}
@@ -246,7 +246,7 @@ function SearchPageContent() {
                         <Link
                           key={result.id}
                           href={getResultUrl(type, result)}
-                          className="block p-4 border border-[#d2c4b0] rounded-lg hover:border-[#2d5016] hover:shadow-md transition-all"
+                          className="block p-4 border border-gray-200 rounded-lg hover:border-[#2d5016] hover:shadow-md transition-all"
                         >
                           <div className="flex gap-4">
                             <div className="w-24 h-24 flex-shrink-0 rounded overflow-hidden bg-gray-200">
@@ -265,7 +265,7 @@ function SearchPageContent() {
                                   {result.category_display || result.category}
                                 </span>
                                 {result.published_date && (
-                                  <span className="text-xs text-[#a69780]">
+                                  <span className="text-xs text-gray-500">
                                     {formatDate(result.published_date)}
                                   </span>
                                 )}
@@ -274,10 +274,10 @@ function SearchPageContent() {
                                 {getResultTitle(result)}
                               </h3>
                               {result.author && (
-                                <p className="text-sm text-[#8b7d6b] mb-1">By {result.author}</p>
+                                <p className="text-sm text-gray-600 mb-1">By {result.author}</p>
                               )}
                               {result.published_date && (
-                                <p className="text-xs text-[#a69780]">
+                                <p className="text-xs text-gray-500">
                                   {new Date(result.published_date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
                                 </p>
                               )}
@@ -292,14 +292,14 @@ function SearchPageContent() {
                         <Link
                           key={result.id}
                           href={getResultUrl(type, result)}
-                          className="flex items-center gap-3 p-3 border border-[#d2c4b0] rounded-lg hover:border-[#2d5016] hover:bg-[#f3eed4] transition-all"
+                          className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-[#2d5016] hover:bg-[#f3eed4] transition-all"
                         >
                           <Folder className="w-5 h-5 text-[#a0522d] flex-shrink-0" />
                           <div className="flex-1">
                             <p className="font-medium text-gray-900">
                               {result.name}
                             </p>
-                            <p className="text-sm text-[#8b7d6b]">
+                            <p className="text-sm text-gray-600">
                               {result.party} - {result.constituency}
                             </p>
                           </div>
@@ -311,7 +311,7 @@ function SearchPageContent() {
                       return (
                         <div
                           key={result.id}
-                          className="flex items-center gap-3 p-3 border border-[#d2c4b0] rounded-lg hover:bg-[#f3eed4] transition-all"
+                          className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-[#f3eed4] transition-all"
                         >
                           <Folder className="w-5 h-5 text-[#a0522d] flex-shrink-0" />
                           <div className="flex-1">
@@ -326,7 +326,7 @@ function SearchPageContent() {
                                   {getResultTitle(result)}
                                 </p>
                                 {result.description && (
-                                  <p className="text-sm text-[#8b7d6b] line-clamp-1">
+                                  <p className="text-sm text-gray-600 line-clamp-1">
                                     {result.description}
                                   </p>
                                 )}
@@ -337,7 +337,7 @@ function SearchPageContent() {
                                   {getResultTitle(result)}
                                 </p>
                                 {result.description && (
-                                  <p className="text-sm text-[#8b7d6b] line-clamp-1">
+                                  <p className="text-sm text-gray-600 line-clamp-1">
                                     {result.description}
                                   </p>
                                 )}
@@ -353,13 +353,13 @@ function SearchPageContent() {
                       <Link
                         key={result.id}
                         href={getResultUrl(type, result)}
-                        className="block p-3 border border-[#d2c4b0] rounded-lg hover:border-[#2d5016] hover:bg-[#f3eed4] transition-all"
+                        className="block p-3 border border-gray-200 rounded-lg hover:border-[#2d5016] hover:bg-[#f3eed4] transition-all"
                       >
                         <p className="font-medium text-gray-900">
                           {getResultTitle(result)}
                         </p>
                         {result.description && (
-                          <p className="text-sm text-[#8b7d6b] line-clamp-2 mt-1">
+                          <p className="text-sm text-gray-600 line-clamp-2 mt-1">
                             {result.description}
                           </p>
                         )}
@@ -382,7 +382,7 @@ export default function SearchPage() {
       <div className="min-h-screen bg-[#f3eed4]">
         <main className="max-w-7xl mx-auto px-4 py-12">
           <div className="text-center">
-            <p className="text-[#8b7d6b]">Loading search...</p>
+            <p className="text-gray-600">Loading search...</p>
           </div>
         </main>
       </div>

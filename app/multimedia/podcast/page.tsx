@@ -177,7 +177,7 @@ export default function PodcastPage() {
         <main className="max-w-7xl mx-auto px-4 py-8">
           <div className="text-center">
             <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#2d5016]"></div>
-            <p className="mt-4 text-[#8b7d6b]">Loading podcasts...</p>
+            <p className="mt-4 text-gray-600">Loading podcasts...</p>
           </div>
         </main>
       </div>
@@ -220,21 +220,21 @@ export default function PodcastPage() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Podcasts</h1>
-          <p className="text-[#8b7d6b] text-lg">Watch our YouTube podcast episodes on parliamentary matters and governance</p>
+          <p className="text-gray-600 text-lg">Watch our YouTube podcast episodes on parliamentary matters and governance</p>
         </div>
 
         {/* Search and Filter Section */}
-        <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] p-6 mb-6">
+        <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#b5a690] w-5 h-5 z-10" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 z-10" />
                 <Input
                   type="text"
                   placeholder="Search podcasts..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 text-gray-900 placeholder:text-[#b5a690]"
+                  className="w-full pl-10 pr-4 text-gray-900 placeholder:text-gray-400"
                   style={{ color: '#111827' }}
                 />
               </div>
@@ -243,7 +243,7 @@ export default function PodcastPage() {
               <select
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
-                className="px-4 py-2 border border-[#c4b5a0] rounded-md focus:ring-2 focus:ring-[#2d5016] focus:border-transparent text-gray-900 bg-white"
+                className="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2d5016] focus:border-transparent text-gray-900 bg-[#f3eed4]"
               >
                 <option value="all">All Categories</option>
                 {categories.map((cat) => (
@@ -259,7 +259,7 @@ export default function PodcastPage() {
                     setSearchQuery('');
                     setCategoryFilter('all');
                   }}
-                  className="bg-gray-200 text-[#7a6b5a] hover:bg-gray-300 border-[#c4b5a0]"
+                  className="bg-[#d2c4b0] text-gray-700 hover:bg-[#c4b5a0] border-gray-300"
                 >
                   Clear
                 </Button>
@@ -270,10 +270,10 @@ export default function PodcastPage() {
 
         {/* Podcasts Grid */}
         {sortedPodcasts.length === 0 ? (
-          <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] p-12 text-center">
-            <p className="text-[#a69780] text-lg">No podcasts found</p>
+          <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 p-12 text-center">
+            <p className="text-gray-500 text-lg">No podcasts found</p>
             {(searchQuery || categoryFilter !== 'all') && (
-              <p className="text-[#b5a690] text-sm mt-2">Try adjusting your search or filters</p>
+              <p className="text-gray-400 text-sm mt-2">Try adjusting your search or filters</p>
             )}
           </div>
         ) : (
@@ -285,10 +285,10 @@ export default function PodcastPage() {
               return (
                 <div
                   key={podcast.id}
-                  className="bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] overflow-hidden hover:shadow-md transition-shadow"
+                  className="bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow"
                 >
                   {/* Thumbnail */}
-                  <div className="relative h-48 w-full bg-gray-200">
+                  <div className="relative h-48 w-full bg-[#d2c4b0]">
                     {podcast.thumbnail ? (
                       <img
                         src={`${API_BASE_URL.replace('/api', '')}${podcast.thumbnail}`}
@@ -332,25 +332,25 @@ export default function PodcastPage() {
                     <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">{podcast.title}</h3>
                     
                     {podcast.description && (
-                      <p className="text-sm text-[#8b7d6b] mb-4 line-clamp-3">{podcast.description}</p>
+                      <p className="text-sm text-gray-600 mb-4 line-clamp-3">{podcast.description}</p>
                     )}
 
                     <div className="space-y-2 mb-4">
-                      <div className="flex items-center gap-2 text-sm text-[#8b7d6b]">
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
                         <User className="w-4 h-4" />
                         <span className="truncate">{podcast.host}</span>
                       </div>
                       {podcast.guest && (
-                        <div className="text-sm text-[#8b7d6b]">
+                        <div className="text-sm text-gray-600">
                           <span className="font-medium">Guest:</span> {podcast.guest}
                         </div>
                       )}
-                      <div className="flex items-center gap-2 text-sm text-[#8b7d6b]">
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
                         <Calendar className="w-4 h-4" />
                         <span>{formatDate(podcast.published_date)}</span>
                       </div>
                       {podcast.duration && (
-                        <div className="flex items-center gap-2 text-sm text-[#8b7d6b]">
+                        <div className="flex items-center gap-2 text-sm text-gray-600">
                           <Clock className="w-4 h-4" />
                           <span>{formatDuration(podcast.duration)}</span>
                         </div>
@@ -360,7 +360,7 @@ export default function PodcastPage() {
                     {/* Category */}
                     {podcast.category && (
                       <div className="mb-4">
-                        <span className="px-2 py-1 bg-gray-100 text-[#7a6b5a] text-xs rounded">
+                        <span className="px-2 py-1 bg-[#ddd0b8] text-gray-700 text-xs rounded">
                           {podcast.category}
                         </span>
                       </div>
@@ -373,13 +373,13 @@ export default function PodcastPage() {
                           {podcast.tags.split(',').slice(0, 3).map((tag, idx) => (
                             <span
                               key={idx}
-                              className="px-2 py-1 bg-gray-100 text-[#7a6b5a] text-xs rounded"
+                              className="px-2 py-1 bg-[#ddd0b8] text-gray-700 text-xs rounded"
                             >
                               {tag.trim()}
                             </span>
                           ))}
                           {podcast.tags.split(',').length > 3 && (
-                            <span className="px-2 py-1 text-[#a69780] text-xs">
+                            <span className="px-2 py-1 text-gray-500 text-xs">
                               +{podcast.tags.split(',').length - 3} more
                             </span>
                           )}
@@ -405,9 +405,9 @@ export default function PodcastPage() {
         )}
 
         {/* Footer Info */}
-        <div className="mt-8 bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] p-6">
-          <h3 className="text-sm font-semibold text-[#7a6b5a] mb-2">About Our Podcasts</h3>
-          <p className="text-sm text-[#8b7d6b]">
+        <div className="mt-8 bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 p-6">
+          <h3 className="text-sm font-semibold text-gray-700 mb-2">About Our Podcasts</h3>
+          <p className="text-sm text-gray-600">
             Our podcasts feature in-depth discussions on parliamentary matters, governance, and civic engagement.
             Watch episodes on our YouTube channel to stay informed about important legislative and political topics.
           </p>

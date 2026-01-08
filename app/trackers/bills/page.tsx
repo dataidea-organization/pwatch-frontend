@@ -208,48 +208,48 @@ export default function BillsTrackerPage() {
 
           {/* Statistics Cards */}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
-            <div className="bg-[#f3eed4] rounded-lg shadow-sm p-5 border border-[#d2c4b0]">
-              <p className="text-sm text-[#a69780]">1st Reading</p>
+            <div className="bg-[#f3eed4] rounded-lg shadow-sm p-5 border border-gray-200">
+              <p className="text-sm text-gray-500">1st Reading</p>
               {loading ? (
                 <div className="h-8 w-20 mt-2 bg-gray-200 animate-pulse rounded" />
               ) : (
                 <p className="text-3xl font-bold text-gray-900 mt-1">{summary?.['1st_reading'] ?? 0}</p>
               )}
             </div>
-            <div className="bg-[#f3eed4] rounded-lg shadow-sm p-5 border border-[#d2c4b0]">
-              <p className="text-sm text-[#a69780]">2nd Reading</p>
+            <div className="bg-[#f3eed4] rounded-lg shadow-sm p-5 border border-gray-200">
+              <p className="text-sm text-gray-500">2nd Reading</p>
               {loading ? (
                 <div className="h-8 w-20 mt-2 bg-gray-200 animate-pulse rounded" />
               ) : (
                 <p className="text-3xl font-bold text-gray-900 mt-1">{summary?.['2nd_reading'] ?? 0}</p>
               )}
             </div>
-            <div className="bg-[#f3eed4] rounded-lg shadow-sm p-5 border border-[#d2c4b0]">
-              <p className="text-sm text-[#a69780]">3rd Reading</p>
+            <div className="bg-[#f3eed4] rounded-lg shadow-sm p-5 border border-gray-200">
+              <p className="text-sm text-gray-500">3rd Reading</p>
               {loading ? (
                 <div className="h-8 w-20 mt-2 bg-gray-200 animate-pulse rounded" />
               ) : (
                 <p className="text-3xl font-bold text-gray-900 mt-1">{summary?.['3rd_reading'] ?? 0}</p>
               )}
             </div>
-            <div className="bg-[#f3eed4] rounded-lg shadow-sm p-5 border border-[#d2c4b0]">
-              <p className="text-sm text-[#a69780]">Waiting Assent</p>
+            <div className="bg-[#f3eed4] rounded-lg shadow-sm p-5 border border-gray-200">
+              <p className="text-sm text-gray-500">Waiting Assent</p>
               {loading ? (
                 <div className="h-8 w-20 mt-2 bg-gray-200 animate-pulse rounded" />
               ) : (
                 <p className="text-3xl font-bold text-gray-900 mt-1">{summary?.passed ?? 0}</p>
               )}
             </div>
-            <div className="bg-[#f3eed4] rounded-lg shadow-sm p-5 border border-[#d2c4b0]">
-              <p className="text-sm text-[#a69780]">Assented</p>
+            <div className="bg-[#f3eed4] rounded-lg shadow-sm p-5 border border-gray-200">
+              <p className="text-sm text-gray-500">Assented</p>
               {loading ? (
                 <div className="h-8 w-20 mt-2 bg-gray-200 animate-pulse rounded" />
               ) : (
                 <p className="text-3xl font-bold text-gray-900 mt-1">{summary?.assented ?? 0}</p>
               )}
             </div>
-            <div className="bg-[#f3eed4] rounded-lg shadow-sm p-5 border border-[#d2c4b0]">
-              <p className="text-sm text-[#a69780]">Withdrawn</p>
+            <div className="bg-[#f3eed4] rounded-lg shadow-sm p-5 border border-gray-200">
+              <p className="text-sm text-gray-500">Withdrawn</p>
               {loading ? (
                 <div className="h-8 w-20 mt-2 bg-gray-200 animate-pulse rounded" />
               ) : (
@@ -267,7 +267,7 @@ export default function BillsTrackerPage() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search bills by title..."
-                  className="w-full text-gray-900 placeholder:text-[#b5a690]"
+                  className="w-full text-gray-900 placeholder:text-gray-400"
                   style={{ color: '#111827' }}
                 />
               </div>
@@ -275,7 +275,7 @@ export default function BillsTrackerPage() {
                 <Button
                   variant="outline"
                   onClick={() => setSearchQuery('')}
-                  className="bg-[#d2c4b0] text-[#7a6b5a] hover:bg-[#c4b5a0] border-[#c4b5a0]"
+                  className="bg-[#d2c4b0] text-gray-700 hover:bg-[#c4b5a0] border-gray-300"
                 >
                   Clear
                 </Button>
@@ -285,7 +285,7 @@ export default function BillsTrackerPage() {
 
           {loading ? (
             <div className="text-center py-12">
-              <p className="text-[#8b7d6b]">Loading bills...</p>
+              <p className="text-gray-600">Loading bills...</p>
             </div>
           ) : error ? (
             <div className="text-center py-12">
@@ -305,13 +305,13 @@ export default function BillsTrackerPage() {
                   <TableHeader className="bg-[#f3eed4]">
                     <TableRow>
                       <TableHead 
-                        className="cursor-pointer hover:bg-[#ddd0b8] transition-colors group text-xs font-medium text-[#a69780] uppercase tracking-wider"
+                        className="cursor-pointer hover:bg-[#ddd0b8] transition-colors group text-xs font-medium text-gray-500 uppercase tracking-wider"
                         onClick={() => handleSort('title')}
                         title="Click to sort"
                       >
                       <div className="flex items-center gap-2">
                         Title
-                        <span className={`text-[#b5a690] group-hover:text-[#2d5016] transition-colors text-xs ${
+                        <span className={`text-gray-400 group-hover:text-[#2d5016] transition-colors text-xs ${
                           sortField === 'title' ? 'text-[#2d5016]' : ''
                         }`}>
                           {sortField === 'title' 
@@ -322,13 +322,13 @@ export default function BillsTrackerPage() {
                       </div>
                     </TableHead>
                       <TableHead 
-                        className="cursor-pointer hover:bg-[#ddd0b8] transition-colors group text-xs font-medium text-[#a69780] uppercase tracking-wider"
+                        className="cursor-pointer hover:bg-[#ddd0b8] transition-colors group text-xs font-medium text-gray-500 uppercase tracking-wider"
                         onClick={() => handleSort('bill_type')}
                         title="Click to sort"
                       >
                         <div className="flex items-center gap-2">
                           Type
-                          <span className={`text-[#b5a690] group-hover:text-[#2d5016] transition-colors text-xs ${
+                          <span className={`text-gray-400 group-hover:text-[#2d5016] transition-colors text-xs ${
                             sortField === 'bill_type' ? 'text-[#2d5016]' : ''
                           }`}>
                             {sortField === 'bill_type' 
@@ -339,13 +339,13 @@ export default function BillsTrackerPage() {
                         </div>
                       </TableHead>
                       <TableHead 
-                        className="cursor-pointer hover:bg-[#ddd0b8] transition-colors group text-xs font-medium text-[#a69780] uppercase tracking-wider"
+                        className="cursor-pointer hover:bg-[#ddd0b8] transition-colors group text-xs font-medium text-gray-500 uppercase tracking-wider"
                         onClick={() => handleSort('status')}
                         title="Click to sort"
                       >
                         <div className="flex items-center gap-2">
                           Status
-                          <span className={`text-[#b5a690] group-hover:text-[#2d5016] transition-colors text-xs ${
+                          <span className={`text-gray-400 group-hover:text-[#2d5016] transition-colors text-xs ${
                             sortField === 'status' ? 'text-[#2d5016]' : ''
                           }`}>
                             {sortField === 'status' 
@@ -356,13 +356,13 @@ export default function BillsTrackerPage() {
                         </div>
                       </TableHead>
                       <TableHead 
-                        className="cursor-pointer hover:bg-[#ddd0b8] transition-colors group text-xs font-medium text-[#a69780] uppercase tracking-wider"
+                        className="cursor-pointer hover:bg-[#ddd0b8] transition-colors group text-xs font-medium text-gray-500 uppercase tracking-wider"
                         onClick={() => handleSort('year_introduced')}
                         title="Click to sort"
                       >
                         <div className="flex items-center gap-2">
                           Year Introduced
-                          <span className={`text-[#b5a690] group-hover:text-[#2d5016] transition-colors text-xs ${
+                          <span className={`text-gray-400 group-hover:text-[#2d5016] transition-colors text-xs ${
                             sortField === 'year_introduced' ? 'text-[#2d5016]' : ''
                           }`}>
                             {sortField === 'year_introduced' 
@@ -373,13 +373,13 @@ export default function BillsTrackerPage() {
                         </div>
                       </TableHead>
                       <TableHead 
-                        className="cursor-pointer hover:bg-[#ddd0b8] transition-colors group text-xs font-medium text-[#a69780] uppercase tracking-wider"
+                        className="cursor-pointer hover:bg-[#ddd0b8] transition-colors group text-xs font-medium text-gray-500 uppercase tracking-wider"
                         onClick={() => handleSort('mover')}
                         title="Click to sort"
                       >
                         <div className="flex items-center gap-2">
                           Mover
-                          <span className={`text-[#b5a690] group-hover:text-[#2d5016] transition-colors text-xs ${
+                          <span className={`text-gray-400 group-hover:text-[#2d5016] transition-colors text-xs ${
                             sortField === 'mover' ? 'text-[#2d5016]' : ''
                           }`}>
                             {sortField === 'mover' 
@@ -389,7 +389,7 @@ export default function BillsTrackerPage() {
                           </span>
                         </div>
                       </TableHead>
-                      <TableHead className="text-right text-xs font-medium text-[#a69780] uppercase tracking-wider">Actions</TableHead>
+                      <TableHead className="text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</TableHead>
                   </TableRow>
                   </TableHeader>
                   <TableBody className="bg-[#f3eed4] divide-y divide-gray-200">
@@ -406,7 +406,7 @@ export default function BillsTrackerPage() {
                       <TableCell className="whitespace-nowrap">
                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                           bill.status === 'assented'
-                            ? 'bg-[#ddd0b8] text-[#7a6b5a]'
+                            ? 'bg-[#ddd0b8] text-gray-700'
                             : 'bg-emerald-50 text-[#2d5016]'
                         }`}>
                           {bill.status_display}

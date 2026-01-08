@@ -8,14 +8,14 @@ export default function NotFound() {
   return (
     <div className="min-h-screen bg-[#f3eed4]">
       <main className="max-w-7xl mx-auto px-4 py-8">
-        <div className="bg-[#f3eed4] rounded-lg border border-[#d2c4b0] shadow-sm p-12">
+        <div className="bg-[#f3eed4] rounded-lg border border-gray-200 shadow-sm p-12">
           <div className="flex flex-col items-center justify-center text-center">
             <div className="w-24 h-24 bg-[#2d5016] bg-opacity-10 rounded-full flex items-center justify-center mb-6">
               <FileX className="w-12 h-12 text-[#2d5016]" />
             </div>
             <h1 className="text-6xl font-bold text-gray-900 mb-4">404</h1>
             <h2 className="text-2xl font-bold text-gray-900 mb-3">Page Not Found</h2>
-            <p className="text-[#8b7d6b] max-w-md mb-8">
+            <p className="text-gray-600 max-w-md mb-8">
               Sorry, we couldn't find the page you're looking for. The page might have been moved, deleted, or the URL might be incorrect.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">

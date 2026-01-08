@@ -204,7 +204,7 @@ export default function LoansTrackerPage() {
         <main className="max-w-7xl mx-auto px-4 py-8">
           <div className="text-center">
             <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#2d5016]"></div>
-            <p className="mt-4 text-[#8b7d6b]">Loading loans tracker data...</p>
+            <p className="mt-4 text-gray-600">Loading loans tracker data...</p>
           </div>
         </main>
       </div>
@@ -247,26 +247,26 @@ export default function LoansTrackerPage() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Loans Tracker</h1>
-          <p className="text-[#8b7d6b] text-lg">Track government loans and development projects</p>
+          <p className="text-gray-600 text-lg">Track government loans and development projects</p>
         </div>
 
         {/* Main Content - Table and Chart */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Loan Debt Table */}
-          <div className="lg:col-span-2 bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] p-6">
+          <div className="lg:col-span-2 bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 p-6">
             <h2 className="text-xl font-bold text-gray-900 mb-4">LOAN DEBT</h2>
 
             {/* Search */}
             <div className="mb-4">
               <div className="flex gap-3 items-center">
                 <div className="relative flex-1">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#b5a690] w-5 h-5 z-10" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 z-10" />
                   <Input
                   type="text"
                     placeholder={`Search through ${filteredLoans.length} records...`}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-10 pr-4 text-gray-900 placeholder:text-[#b5a690]"
+                    className="w-full pl-10 pr-4 text-gray-900 placeholder:text-gray-400"
                     style={{ color: '#111827' }}
                   />
                 </div>
@@ -274,7 +274,7 @@ export default function LoansTrackerPage() {
                   <Button
                     variant="outline"
                     onClick={() => setSearchQuery('')}
-                    className="bg-[#d2c4b0] text-[#7a6b5a] hover:bg-[#c4b5a0] border-[#c4b5a0]"
+                    className="bg-[#d2c4b0] text-gray-700 hover:bg-[#c4b5a0] border-gray-300"
                   >
                     Clear
                   </Button>
@@ -288,13 +288,13 @@ export default function LoansTrackerPage() {
                 <thead className="bg-[#ddd0b8]">
                   <tr>
                     <th 
-                      className="px-4 py-3 text-left text-sm font-semibold text-[#7a6b5a] cursor-pointer hover:bg-[#d2c4b0] transition-colors group"
+                      className="px-4 py-3 text-left text-sm font-semibold text-gray-700 cursor-pointer hover:bg-[#d2c4b0] transition-colors group"
                       onClick={() => handleSort('sector')}
                       title="Click to sort"
                     >
                       <div className="flex items-center gap-2">
                         Sector
-                        <span className={`text-[#b5a690] group-hover:text-[#2d5016] transition-colors text-xs ${
+                        <span className={`text-gray-400 group-hover:text-[#2d5016] transition-colors text-xs ${
                           sortField === 'sector' ? 'text-[#2d5016]' : ''
                         }`}>
                           {sortField === 'sector' 
@@ -305,13 +305,13 @@ export default function LoansTrackerPage() {
                       </div>
                     </th>
                     <th 
-                      className="px-4 py-3 text-left text-sm font-semibold text-[#7a6b5a] cursor-pointer hover:bg-[#d2c4b0] transition-colors group"
+                      className="px-4 py-3 text-left text-sm font-semibold text-gray-700 cursor-pointer hover:bg-[#d2c4b0] transition-colors group"
                       onClick={() => handleSort('label')}
                       title="Click to sort"
                     >
                       <div className="flex items-center gap-2">
                         Label
-                        <span className={`text-[#b5a690] group-hover:text-[#2d5016] transition-colors text-xs ${
+                        <span className={`text-gray-400 group-hover:text-[#2d5016] transition-colors text-xs ${
                           sortField === 'label' ? 'text-[#2d5016]' : ''
                         }`}>
                           {sortField === 'label' 
@@ -322,13 +322,13 @@ export default function LoansTrackerPage() {
                       </div>
                     </th>
                     <th 
-                      className="px-4 py-3 text-left text-sm font-semibold text-[#7a6b5a] cursor-pointer hover:bg-[#d2c4b0] transition-colors group"
+                      className="px-4 py-3 text-left text-sm font-semibold text-gray-700 cursor-pointer hover:bg-[#d2c4b0] transition-colors group"
                       onClick={() => handleSort('approved_amount')}
                       title="Click to sort"
                     >
                       <div className="flex items-center gap-2">
                         Approved Amount
-                        <span className={`text-[#b5a690] group-hover:text-[#2d5016] transition-colors text-xs ${
+                        <span className={`text-gray-400 group-hover:text-[#2d5016] transition-colors text-xs ${
                           sortField === 'approved_amount' ? 'text-[#2d5016]' : ''
                         }`}>
                           {sortField === 'approved_amount' 
@@ -344,7 +344,7 @@ export default function LoansTrackerPage() {
                   {paginatedLoans.map((loan) => (
                     <tr key={loan.id} className="hover:bg-[#f3eed4] transition-colors">
                       <td className="px-4 py-4 text-sm text-gray-900">{loan.sector_display}</td>
-                      <td className="px-4 py-4 text-sm text-[#7a6b5a]">{loan.label}</td>
+                      <td className="px-4 py-4 text-sm text-gray-700">{loan.label}</td>
                       <td className="px-4 py-4 text-sm font-medium text-gray-900">
                         {formatCurrency(loan.approved_amount, loan.currency)}
                       </td>
@@ -355,15 +355,15 @@ export default function LoansTrackerPage() {
             </div>
 
             {/* Pagination */}
-            <div className="mt-6 flex items-center justify-between border-t border-[#d2c4b0] pt-4">
-              <div className="text-sm text-[#8b7d6b]">
+            <div className="mt-6 flex items-center justify-between border-t border-gray-200 pt-4">
+              <div className="text-sm text-gray-600">
                 Page {page} of {totalPages}
               </div>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setPage(1)}
                   disabled={page === 1}
-                  className="p-2 rounded-md border border-[#c4b5a0] hover:bg-[#f3eed4] disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="p-2 rounded-md border border-gray-300 hover:bg-[#f3eed4] disabled:opacity-50 disabled:cursor-not-allowed"
                   title="First page"
                 >
                   <ChevronsLeft className="w-4 h-4" />
@@ -371,7 +371,7 @@ export default function LoansTrackerPage() {
                 <button
                   onClick={() => setPage(page - 1)}
                   disabled={page === 1}
-                  className="p-2 rounded-md border border-[#c4b5a0] hover:bg-[#f3eed4] disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="p-2 rounded-md border border-gray-300 hover:bg-[#f3eed4] disabled:opacity-50 disabled:cursor-not-allowed"
                   title="Previous page"
                 >
                   <ChevronLeft className="w-4 h-4" />
@@ -382,7 +382,7 @@ export default function LoansTrackerPage() {
                 <button
                   onClick={() => setPage(page + 1)}
                   disabled={page >= totalPages}
-                  className="p-2 rounded-md border border-[#c4b5a0] hover:bg-[#f3eed4] disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="p-2 rounded-md border border-gray-300 hover:bg-[#f3eed4] disabled:opacity-50 disabled:cursor-not-allowed"
                   title="Next page"
                 >
                   <ChevronRight className="w-4 h-4" />
@@ -390,7 +390,7 @@ export default function LoansTrackerPage() {
                 <button
                   onClick={() => setPage(totalPages)}
                   disabled={page >= totalPages}
-                  className="p-2 rounded-md border border-[#c4b5a0] hover:bg-[#f3eed4] disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="p-2 rounded-md border border-gray-300 hover:bg-[#f3eed4] disabled:opacity-50 disabled:cursor-not-allowed"
                   title="Last page"
                 >
                   <ChevronsRight className="w-4 h-4" />
@@ -400,7 +400,7 @@ export default function LoansTrackerPage() {
           </div>
 
           {/* Loan Sources Chart */}
-          <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] p-6">
+          <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 p-6">
             <h2 className="text-xl font-bold text-gray-900 mb-6">LOAN SOURCES</h2>
 
             {sourcesSummary.length > 0 ? (
@@ -439,7 +439,7 @@ export default function LoansTrackerPage() {
 
                 {/* Legend */}
                 <div className="mt-6 space-y-2">
-                  <h3 className="text-sm font-semibold text-[#7a6b5a] mb-3">Loan Sources</h3>
+                  <h3 className="text-sm font-semibold text-gray-700 mb-3">Loan Sources</h3>
                   {sourcesSummary.map((source, index) => (
                     <div key={source.source} className="flex items-center justify-between text-sm">
                       <div className="flex items-center gap-2">
@@ -447,7 +447,7 @@ export default function LoansTrackerPage() {
                           className="w-3 h-3 rounded-full"
                           style={{ backgroundColor: COLORS[index % COLORS.length] }}
                         />
-                        <span className="text-[#7a6b5a]">{source.name}</span>
+                        <span className="text-gray-700">{source.name}</span>
                       </div>
                       <span className="font-medium text-gray-900">{source.percentage}%</span>
                     </div>
@@ -455,15 +455,15 @@ export default function LoansTrackerPage() {
                 </div>
               </div>
             ) : (
-              <p className="text-[#a69780] text-center py-8">No loan sources data available</p>
+              <p className="text-gray-500 text-center py-8">No loan sources data available</p>
             )}
           </div>
         </div>
 
         {/* Footer Info */}
-        <div className="mt-8 bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] p-6">
-          <h3 className="text-sm font-semibold text-[#7a6b5a] mb-2">About This Data</h3>
-          <p className="text-sm text-[#8b7d6b]">
+        <div className="mt-8 bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 p-6">
+          <h3 className="text-sm font-semibold text-gray-700 mb-2">About This Data</h3>
+          <p className="text-sm text-gray-600">
             Loan data includes government-approved loans and development projects from various international and bilateral sources.
             All amounts are in their original currency denominations. Data is regularly updated from official government records.
           </p>

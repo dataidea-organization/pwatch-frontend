@@ -92,23 +92,23 @@ export default function ChatbotPage() {
               ALPHA VERSION
             </span>
           </div>
-          <p className="text-[#8b7d6b] text-lg mb-2">
+          <p className="text-gray-600 text-lg mb-2">
             Ask questions about parliamentary proceedings, bills, and documents
           </p>
-          <p className="text-sm text-[#a69780]">
+          <p className="text-sm text-gray-500">
             Currently supports question and answer only
           </p>
         </div>
 
         {/* Chat Interface */}
-        <div className="bg-[#f3eed4] rounded-lg shadow-lg border border-[#d2c4b0] flex flex-col h-[600px]">
+        <div className="bg-[#f3eed4] rounded-lg shadow-lg border border-gray-200 flex flex-col h-[600px]">
           {/* Chat History */}
           <div className="flex-1 overflow-y-auto p-6 space-y-6">
             {chatHistory.length === 0 && !response && !error && (
-              <div className="text-center py-12 text-[#8b7d6b]">
-                <MessageSquare className="w-16 h-16 text-[#b5a690] mx-auto mb-4" />
+              <div className="text-center py-12 text-gray-600">
+                <MessageSquare className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                 <p className="text-lg">Start a conversation!</p>
-                <p className="text-sm text-[#a69780] mt-2">Ask me anything about parliamentary proceedings, bills, or documents.</p>
+                <p className="text-sm text-gray-500 mt-2">Ask me anything about parliamentary proceedings, bills, or documents.</p>
               </div>
             )}
 
@@ -168,7 +168,7 @@ export default function ChatbotPage() {
             {/* Loading Indicator */}
             {loading && (
               <div className="flex justify-start">
-                <div className="bg-gray-100 text-[#7a6b5a] rounded-lg p-3 max-w-md flex items-center gap-2">
+                <div className="bg-gray-100 text-gray-700 rounded-lg p-3 max-w-md flex items-center gap-2">
                   <Loader2 className="w-4 h-4 animate-spin" />
                   <p className="text-sm">Thinking...</p>
                 </div>
@@ -186,14 +186,14 @@ export default function ChatbotPage() {
           </div>
 
           {/* Input Form */}
-          <div className="border-t border-[#d2c4b0] p-6">
+          <div className="border-t border-gray-200 p-6">
             <form onSubmit={handleSubmit} className="flex items-center gap-3">
               <Input
                 type="text"
                 placeholder="Ask a question..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="flex-1 text-base text-gray-900 placeholder:text-[#b5a690]"
+                className="flex-1 text-base text-gray-900 placeholder:text-gray-400"
                 disabled={loading}
               />
               <Button
@@ -212,7 +212,7 @@ export default function ChatbotPage() {
                 variant="outline"
                 onClick={clearHistory}
                 disabled={chatHistory.length === 0 && !response && !error}
-                className="bg-gray-200 text-[#7a6b5a] hover:bg-gray-300 border-[#c4b5a0] px-4 py-2"
+                className="bg-gray-200 text-gray-700 hover:bg-gray-300 border-gray-300 px-4 py-2"
               >
                 Clear
               </Button>
@@ -221,9 +221,9 @@ export default function ChatbotPage() {
         </div>
 
         {/* Info Section */}
-        <div className="mt-8 bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] p-6">
+        <div className="mt-8 bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-3">How it works</h2>
-          <ul className="space-y-2 text-sm text-[#8b7d6b]">
+          <ul className="space-y-2 text-sm text-gray-600">
             <li className="flex items-start gap-2">
               <span className="text-[#2d5016] font-semibold">•</span>
               <span>Ask questions about parliamentary proceedings, bills, or documents</span>

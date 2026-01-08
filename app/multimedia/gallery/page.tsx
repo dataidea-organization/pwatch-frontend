@@ -176,7 +176,7 @@ export default function GalleryPage() {
         <main className="max-w-7xl mx-auto px-4 py-8">
           <div className="text-center">
             <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#2d5016]"></div>
-            <p className="mt-4 text-[#8b7d6b]">Loading gallery...</p>
+            <p className="mt-4 text-gray-600">Loading gallery...</p>
           </div>
         </main>
       </div>
@@ -219,21 +219,21 @@ export default function GalleryPage() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Gallery</h1>
-          <p className="text-[#8b7d6b] text-lg">Browse our collection of photographs from parliamentary events and activities</p>
+          <p className="text-gray-600 text-lg">Browse our collection of photographs from parliamentary events and activities</p>
         </div>
 
         {/* Search and Filter Section */}
-        <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] p-6 mb-6">
+        <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#b5a690] w-5 h-5 z-10" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 z-10" />
                 <Input
                   type="text"
                   placeholder="Search gallery..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 text-gray-900 placeholder:text-[#b5a690]"
+                  className="w-full pl-10 pr-4 text-gray-900 placeholder:text-gray-400"
                   style={{ color: '#111827' }}
                 />
               </div>
@@ -242,7 +242,7 @@ export default function GalleryPage() {
               <select
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
-                className="px-4 py-2 border border-[#c4b5a0] rounded-md focus:ring-2 focus:ring-[#2d5016] focus:border-transparent text-gray-900 bg-white"
+                className="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2d5016] focus:border-transparent text-gray-900 bg-[#f3eed4]"
               >
                 <option value="all">All Categories</option>
                 {categories.map((cat) => (
@@ -257,7 +257,7 @@ export default function GalleryPage() {
                   const value = e.target.value;
                   setFeaturedFilter(value === 'all' ? null : value === 'featured');
                 }}
-                className="px-4 py-2 border border-[#c4b5a0] rounded-md focus:ring-2 focus:ring-[#2d5016] focus:border-transparent text-gray-900 bg-white"
+                className="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2d5016] focus:border-transparent text-gray-900 bg-[#f3eed4]"
               >
                 <option value="all">All Images</option>
                 <option value="featured">Featured Only</option>
@@ -271,7 +271,7 @@ export default function GalleryPage() {
                     setCategoryFilter('all');
                     setFeaturedFilter(null);
                   }}
-                  className="bg-gray-200 text-[#7a6b5a] hover:bg-gray-300 border-[#c4b5a0]"
+                  className="bg-[#d2c4b0] text-gray-700 hover:bg-[#c4b5a0] border-gray-300"
                 >
                   Clear
                 </Button>
@@ -282,10 +282,10 @@ export default function GalleryPage() {
 
         {/* Gallery Grid */}
         {sortedImages.length === 0 ? (
-          <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] p-12 text-center">
-            <p className="text-[#a69780] text-lg">No images found</p>
+          <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 p-12 text-center">
+            <p className="text-gray-500 text-lg">No images found</p>
             {(searchQuery || categoryFilter !== 'all' || featuredFilter !== null) && (
-              <p className="text-[#b5a690] text-sm mt-2">Try adjusting your search or filters</p>
+              <p className="text-gray-400 text-sm mt-2">Try adjusting your search or filters</p>
             )}
           </div>
         ) : (
@@ -293,11 +293,11 @@ export default function GalleryPage() {
             {sortedImages.map((image) => (
               <div
                 key={image.id}
-                className="bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] overflow-hidden hover:shadow-md transition-shadow cursor-pointer group"
+                className="bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow cursor-pointer group"
                 onClick={() => setSelectedImage(image)}
               >
                 {/* Image */}
-                <div className="relative h-64 w-full bg-gray-200 overflow-hidden">
+                <div className="relative h-64 w-full bg-[#d2c4b0] overflow-hidden">
                   <img
                     src={`${API_BASE_URL.replace('/api', '')}${image.image}`}
                     alt={image.title}
@@ -324,13 +324,13 @@ export default function GalleryPage() {
                 <div className="p-4">
                   <h3 className="text-sm font-semibold text-gray-900 mb-1 line-clamp-1">{image.title}</h3>
                   {image.photographer && (
-                    <div className="flex items-center gap-1 text-xs text-[#8b7d6b] mb-1">
+                    <div className="flex items-center gap-1 text-xs text-gray-600 mb-1">
                       <User className="w-3 h-3" />
                       <span className="truncate">{image.photographer}</span>
                     </div>
                   )}
                   {image.event_date && (
-                    <div className="flex items-center gap-1 text-xs text-[#8b7d6b]">
+                    <div className="flex items-center gap-1 text-xs text-gray-600">
                       <Calendar className="w-3 h-3" />
                       <span>{formatDate(image.event_date)}</span>
                     </div>
@@ -355,9 +355,9 @@ export default function GalleryPage() {
               <div className="flex justify-end p-4">
                 <button
                   onClick={() => setSelectedImage(null)}
-                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                  className="p-2 hover:bg-[#ddd0b8] rounded-full transition-colors"
                 >
-                  <X className="w-5 h-5 text-[#8b7d6b]" />
+                  <X className="w-5 h-5 text-gray-600" />
                 </button>
               </div>
 
@@ -376,7 +376,7 @@ export default function GalleryPage() {
                   <div>
                     <h2 className="text-2xl font-bold text-gray-900 mb-2">{selectedImage.title}</h2>
                     {selectedImage.category && (
-                      <span className="inline-block px-3 py-1 bg-gray-100 text-[#7a6b5a] text-sm rounded-full mb-2">
+                      <span className="inline-block px-3 py-1 bg-[#ddd0b8] text-gray-700 text-sm rounded-full mb-2">
                         {selectedImage.category}
                       </span>
                     )}
@@ -389,18 +389,18 @@ export default function GalleryPage() {
                 </div>
 
                 {selectedImage.description && (
-                  <p className="text-[#8b7d6b] mb-4">{selectedImage.description}</p>
+                  <p className="text-gray-600 mb-4">{selectedImage.description}</p>
                 )}
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                   {selectedImage.photographer && (
-                    <div className="flex items-center gap-2 text-[#8b7d6b]">
+                    <div className="flex items-center gap-2 text-gray-600">
                       <User className="w-4 h-4" />
                       <span><strong>Photographer:</strong> {selectedImage.photographer}</span>
                     </div>
                   )}
                   {selectedImage.event_date && (
-                    <div className="flex items-center gap-2 text-[#8b7d6b]">
+                    <div className="flex items-center gap-2 text-gray-600">
                       <Calendar className="w-4 h-4" />
                       <span><strong>Date:</strong> {formatDate(selectedImage.event_date)}</span>
                     </div>
@@ -410,12 +410,12 @@ export default function GalleryPage() {
                 {/* Tags */}
                 {selectedImage.tags && (
                   <div className="mt-4">
-                    <p className="text-sm font-medium text-[#7a6b5a] mb-2">Tags:</p>
+                    <p className="text-sm font-medium text-gray-700 mb-2">Tags:</p>
                     <div className="flex flex-wrap gap-2">
                       {selectedImage.tags.split(',').map((tag, idx) => (
                         <span
                           key={idx}
-                          className="px-2 py-1 bg-gray-100 text-[#7a6b5a] text-xs rounded"
+                          className="px-2 py-1 bg-[#ddd0b8] text-gray-700 text-xs rounded"
                         >
                           {tag.trim()}
                         </span>
@@ -429,9 +429,9 @@ export default function GalleryPage() {
         )}
 
         {/* Footer Info */}
-        <div className="mt-8 bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] p-6">
-          <h3 className="text-sm font-semibold text-[#7a6b5a] mb-2">About Our Gallery</h3>
-          <p className="text-sm text-[#8b7d6b]">
+        <div className="mt-8 bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 p-6">
+          <h3 className="text-sm font-semibold text-gray-700 mb-2">About Our Gallery</h3>
+          <p className="text-sm text-gray-600">
             Our gallery showcases photographs from parliamentary events, activities, and important moments.
             Browse through our collection to see the work of Parliament Watch and stay connected with parliamentary activities.
           </p>

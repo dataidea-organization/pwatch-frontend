@@ -159,9 +159,9 @@ export default function XSpacesPage() {
       case 'completed':
         return 'bg-green-100 text-green-800';
       case 'cancelled':
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-[#ddd0b8] text-gray-800';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-[#ddd0b8] text-gray-800';
     }
   };
 
@@ -171,7 +171,7 @@ export default function XSpacesPage() {
         <main className="max-w-7xl mx-auto px-4 py-8">
           <div className="text-center">
             <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#2d5016]"></div>
-            <p className="mt-4 text-[#8b7d6b]">Loading X Spaces...</p>
+            <p className="mt-4 text-gray-600">Loading X Spaces...</p>
           </div>
         </main>
       </div>
@@ -214,21 +214,21 @@ export default function XSpacesPage() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">X Spaces</h1>
-          <p className="text-[#8b7d6b] text-lg">Join our live discussions and listen to recorded X Spaces events</p>
+          <p className="text-gray-600 text-lg">Join our live discussions and listen to recorded X Spaces events</p>
         </div>
 
         {/* Search and Filter Section */}
-        <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] p-6 mb-6">
+        <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#b5a690] w-5 h-5 z-10" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 z-10" />
                 <Input
                   type="text"
                   placeholder="Search X Spaces..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 text-gray-900 placeholder:text-[#b5a690]"
+                  className="w-full pl-10 pr-4 text-gray-900 placeholder:text-gray-400"
                   style={{ color: '#111827' }}
                 />
               </div>
@@ -237,7 +237,7 @@ export default function XSpacesPage() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-4 py-2 border border-[#c4b5a0] rounded-md focus:ring-2 focus:ring-[#2d5016] focus:border-transparent text-gray-900 bg-white"
+                className="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2d5016] focus:border-transparent text-gray-900 bg-[#f3eed4]"
               >
                 <option value="all">All Status</option>
                 <option value="upcoming">Upcoming</option>
@@ -252,7 +252,7 @@ export default function XSpacesPage() {
                     setSearchQuery('');
                     setStatusFilter('all');
                   }}
-                  className="bg-gray-200 text-[#7a6b5a] hover:bg-gray-300 border-[#c4b5a0]"
+                  className="bg-[#d2c4b0] text-gray-700 hover:bg-[#c4b5a0] border-gray-300"
                 >
                   Clear
                 </Button>
@@ -263,10 +263,10 @@ export default function XSpacesPage() {
 
         {/* X Spaces Grid */}
         {sortedXSpaces.length === 0 ? (
-          <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] p-12 text-center">
-            <p className="text-[#a69780] text-lg">No X Spaces found</p>
+          <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 p-12 text-center">
+            <p className="text-gray-500 text-lg">No X Spaces found</p>
             {(searchQuery || statusFilter !== 'all') && (
-              <p className="text-[#b5a690] text-sm mt-2">Try adjusting your search or filters</p>
+              <p className="text-gray-400 text-sm mt-2">Try adjusting your search or filters</p>
             )}
           </div>
         ) : (
@@ -274,7 +274,7 @@ export default function XSpacesPage() {
             {sortedXSpaces.map((space) => (
               <div
                 key={space.id}
-                className="bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] overflow-hidden hover:shadow-md transition-shadow"
+                className="bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow"
               >
                 {/* Thumbnail */}
                 {space.thumbnail ? (
@@ -309,20 +309,20 @@ export default function XSpacesPage() {
                   <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">{space.title}</h3>
                   
                   {space.description && (
-                    <p className="text-sm text-[#8b7d6b] mb-4 line-clamp-3">{space.description}</p>
+                    <p className="text-sm text-gray-600 mb-4 line-clamp-3">{space.description}</p>
                   )}
 
                   <div className="space-y-2 mb-4">
-                    <div className="flex items-center gap-2 text-sm text-[#8b7d6b]">
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
                       <User className="w-4 h-4" />
                       <span className="truncate">{space.host}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-[#8b7d6b]">
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
                       <Calendar className="w-4 h-4" />
                       <span>{formatDate(space.scheduled_date)}</span>
                     </div>
                     {space.duration && (
-                      <div className="flex items-center gap-2 text-sm text-[#8b7d6b]">
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
                         <Clock className="w-4 h-4" />
                         <span>{space.duration} minutes</span>
                       </div>
@@ -332,18 +332,18 @@ export default function XSpacesPage() {
                   {/* Topics */}
                   {space.topics && (
                     <div className="mb-4">
-                      <p className="text-xs text-[#a69780] mb-1">Topics:</p>
+                      <p className="text-xs text-gray-500 mb-1">Topics:</p>
                       <div className="flex flex-wrap gap-1">
                         {space.topics.split(',').slice(0, 3).map((topic, idx) => (
                           <span
                             key={idx}
-                            className="px-2 py-1 bg-gray-100 text-[#7a6b5a] text-xs rounded"
+                            className="px-2 py-1 bg-[#ddd0b8] text-gray-700 text-xs rounded"
                           >
                             {topic.trim()}
                           </span>
                         ))}
                         {space.topics.split(',').length > 3 && (
-                          <span className="px-2 py-1 text-[#a69780] text-xs">
+                          <span className="px-2 py-1 text-gray-500 text-xs">
                             +{space.topics.split(',').length - 3} more
                           </span>
                         )}
@@ -367,7 +367,7 @@ export default function XSpacesPage() {
                         href={space.recording_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-2 px-4 py-2 border border-[#c4b5a0] text-[#7a6b5a] text-sm font-medium rounded-md hover:bg-[#f3eed4] transition-colors"
+                        className="inline-flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-md hover:bg-[#f3eed4] transition-colors"
                       >
                         <Play className="w-4 h-4" />
                         Recording
@@ -381,9 +381,9 @@ export default function XSpacesPage() {
         )}
 
         {/* Footer Info */}
-        <div className="mt-8 bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] p-6">
-          <h3 className="text-sm font-semibold text-[#7a6b5a] mb-2">About X Spaces</h3>
-          <p className="text-sm text-[#8b7d6b]">
+        <div className="mt-8 bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 p-6">
+          <h3 className="text-sm font-semibold text-gray-700 mb-2">About X Spaces</h3>
+          <p className="text-sm text-gray-600">
             X Spaces are live audio conversations on X (formerly Twitter). Join our discussions on parliamentary
             matters, governance, and civic engagement. You can participate in live spaces or listen to recordings
             of past events.

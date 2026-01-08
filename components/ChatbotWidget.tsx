@@ -149,13 +149,13 @@ export default function ChatbotWidget() {
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
         {/* Proactive Message Bubble */}
         {showProactiveMessage && (
-          <div className="bg-[#f3eed4] rounded-lg shadow-xl border border-[#d2c4b0] p-4 max-w-xs relative animate-in fade-in slide-in-from-bottom-2 duration-300">
+          <div className="bg-[#f3eed4] rounded-lg shadow-xl border border-gray-200 p-4 max-w-xs relative animate-in fade-in slide-in-from-bottom-2 duration-300">
             <div className="flex items-start gap-3">
               <div className="flex-1">
                 <p className="text-sm font-medium text-gray-900 mb-1">
                   Need help finding something?
                 </p>
-                <p className="text-xs text-[#8b7d6b] mb-3">
+                <p className="text-xs text-gray-600 mb-3">
                   I can help you find information about parliamentary proceedings, bills, and documents.
                 </p>
                 <button
@@ -171,7 +171,7 @@ export default function ChatbotWidget() {
               </div>
               <button
                 onClick={() => setShowProactiveMessage(false)}
-                className="text-[#b5a690] hover:text-[#8b7d6b] transition-colors flex-shrink-0"
+                className="text-gray-400 hover:text-gray-600 transition-colors flex-shrink-0"
                 aria-label="Dismiss"
               >
                 <X className="w-4 h-4" />
@@ -202,7 +202,7 @@ export default function ChatbotWidget() {
   }
 
   return (
-    <div className={`fixed bottom-6 right-6 z-50 bg-[#f3eed4] rounded-lg shadow-2xl border border-[#d2c4b0] transition-all duration-300 ${
+    <div className={`fixed bottom-6 right-6 z-50 bg-[#f3eed4] rounded-lg shadow-2xl border border-gray-200 transition-all duration-300 ${
       isMinimized ? 'w-80 h-14' : 'w-96 h-[500px]'
     } flex flex-col`}>
       {/* Header */}
@@ -243,16 +243,16 @@ export default function ChatbotWidget() {
             {/* Welcome Message */}
             {chatHistory.length === 0 && !response && !error && (
               <div className="text-center py-8">
-                <MessageSquare className="w-12 h-12 text-[#b5a690] mx-auto mb-3" />
+                <MessageSquare className="w-12 h-12 text-gray-400 mx-auto mb-3" />
                 <div className="mb-2">
                   <span className="inline-block bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-1 rounded">
                     ALPHA VERSION
                   </span>
                 </div>
-                <p className="text-sm text-[#8b7d6b] mb-2">
+                <p className="text-sm text-gray-600 mb-2">
                   Ask me anything about parliamentary proceedings, bills, or documents
                 </p>
-                <p className="text-xs text-[#a69780]">
+                <p className="text-xs text-gray-500">
                   Currently supports question and answer only
                 </p>
               </div>
@@ -317,7 +317,7 @@ export default function ChatbotWidget() {
             {/* Loading Indicator */}
             {loading && (
               <div className="flex justify-start">
-                <div className="bg-gray-100 text-[#7a6b5a] rounded-lg p-2 max-w-[85%] flex items-center gap-2">
+                <div className="bg-gray-100 text-gray-700 rounded-lg p-2 max-w-[85%] flex items-center gap-2">
                   <Loader2 className="w-3 h-3 animate-spin" />
                   <p className="text-xs">Thinking...</p>
                 </div>
@@ -333,14 +333,14 @@ export default function ChatbotWidget() {
           </div>
 
           {/* Input Form */}
-          <div className="border-t border-[#d2c4b0] p-4">
+          <div className="border-t border-gray-200 p-4">
             <form onSubmit={handleSubmit} className="flex gap-2">
               <Input
                 type="text"
                 placeholder="Ask a question..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="flex-1 text-sm text-gray-900 placeholder:text-[#b5a690]"
+                className="flex-1 text-sm text-gray-900 placeholder:text-gray-400"
                 disabled={loading}
               />
               <Button
@@ -359,7 +359,7 @@ export default function ChatbotWidget() {
             {chatHistory.length > 0 && (
               <button
                 onClick={clearHistory}
-                className="mt-2 text-xs text-[#a69780] hover:text-[#7a6b5a] transition-colors"
+                className="mt-2 text-xs text-gray-500 hover:text-gray-700 transition-colors"
               >
                 Clear History
               </button>

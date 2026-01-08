@@ -161,7 +161,7 @@ export default function CitizensVoicePage() {
         <main className="max-w-7xl mx-auto px-4 py-8">
           <div className="text-center">
             <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#2d5016]"></div>
-            <p className="mt-4 text-[#8b7d6b]">Loading polls...</p>
+            <p className="mt-4 text-gray-600">Loading polls...</p>
           </div>
         </main>
       </div>
@@ -189,23 +189,23 @@ export default function CitizensVoicePage() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Citizens Voice</h1>
-          <p className="text-[#8b7d6b] text-lg">
+          <p className="text-gray-600 text-lg">
             Participate in polls and share your feedback on parliamentary matters and governance issues
           </p>
         </div>
 
         {/* Search and Filter Section */}
-        <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] p-6 mb-6">
+        <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#b5a690] w-5 h-5 z-10" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 z-10" />
                 <Input
                   type="text"
                   placeholder="Search polls..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 text-gray-900 placeholder:text-[#b5a690]"
+                  className="w-full pl-10 pr-4 text-gray-900 placeholder:text-gray-400"
                   style={{ color: '#111827' }}
                 />
               </div>
@@ -214,7 +214,7 @@ export default function CitizensVoicePage() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-4 py-2 border border-[#c4b5a0] rounded-md focus:ring-2 focus:ring-[#2d5016] focus:border-transparent text-gray-900 bg-white"
+                className="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2d5016] focus:border-transparent text-gray-900 bg-[#f3eed4]"
               >
                 <option value="all">All Status</option>
                 <option value="active">Active</option>
@@ -224,7 +224,7 @@ export default function CitizensVoicePage() {
               <select
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
-                className="px-4 py-2 border border-[#c4b5a0] rounded-md focus:ring-2 focus:ring-[#2d5016] focus:border-transparent text-gray-900 bg-white"
+                className="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2d5016] focus:border-transparent text-gray-900 bg-[#f3eed4]"
               >
                 <option value="all">All Categories</option>
                 {categories.map((cat) => (
@@ -239,7 +239,7 @@ export default function CitizensVoicePage() {
                   const value = e.target.value;
                   setFeaturedFilter(value === 'all' ? null : value === 'featured');
                 }}
-                className="px-4 py-2 border border-[#c4b5a0] rounded-md focus:ring-2 focus:ring-[#2d5016] focus:border-transparent text-gray-900 bg-white"
+                className="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2d5016] focus:border-transparent text-gray-900 bg-[#f3eed4]"
               >
                 <option value="all">All Polls</option>
                 <option value="featured">Featured Only</option>
@@ -253,7 +253,7 @@ export default function CitizensVoicePage() {
                     setCategoryFilter('all');
                     setFeaturedFilter(null);
                   }}
-                  className="bg-gray-200 text-[#7a6b5a] hover:bg-gray-300 border-[#c4b5a0]"
+                  className="bg-[#d2c4b0] text-gray-700 hover:bg-[#c4b5a0] border-gray-300"
                 >
                   Clear
                 </Button>
@@ -264,10 +264,10 @@ export default function CitizensVoicePage() {
 
         {/* Polls Grid */}
         {filteredPolls.length === 0 ? (
-          <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] p-12 text-center">
-            <p className="text-[#a69780] text-lg">No polls found</p>
+          <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 p-12 text-center">
+            <p className="text-gray-500 text-lg">No polls found</p>
             {(searchQuery || statusFilter !== 'all' || categoryFilter !== 'all' || featuredFilter !== null) && (
-              <p className="text-[#b5a690] text-sm mt-2">Try adjusting your search or filters</p>
+              <p className="text-gray-400 text-sm mt-2">Try adjusting your search or filters</p>
             )}
           </div>
         ) : (
@@ -280,10 +280,10 @@ export default function CitizensVoicePage() {
               return (
                 <div
                   key={poll.id}
-                  className="bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] overflow-hidden hover:shadow-md transition-shadow"
+                  className="bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow"
                 >
                   {/* Header */}
-                  <div className="p-6 border-b border-[#d2c4b0]">
+                  <div className="p-6 border-b border-gray-200">
                     <div className="flex items-start justify-between mb-2">
                       <h3 className="text-xl font-bold text-gray-900 flex-1">{poll.title}</h3>
                       {poll.featured && (
@@ -293,11 +293,11 @@ export default function CitizensVoicePage() {
                       )}
                     </div>
                     {poll.description && (
-                      <p className="text-[#8b7d6b] text-sm mb-3">{poll.description}</p>
+                      <p className="text-gray-600 text-sm mb-3">{poll.description}</p>
                     )}
-                    <div className="flex items-center gap-4 text-xs text-[#a69780]">
+                    <div className="flex items-center gap-4 text-xs text-gray-500">
                       {poll.category && (
-                        <span className="px-2 py-1 bg-gray-100 rounded">{poll.category}</span>
+                        <span className="px-2 py-1 bg-[#ddd0b8] rounded">{poll.category}</span>
                       )}
                       <div className="flex items-center gap-1">
                         {poll.is_active ? (
@@ -307,7 +307,7 @@ export default function CitizensVoicePage() {
                           </>
                         ) : (
                           <>
-                            <XCircle className="w-4 h-4 text-[#b5a690]" />
+                            <XCircle className="w-4 h-4 text-gray-400" />
                             <span>{poll.status_display}</span>
                           </>
                         )}
@@ -320,7 +320,7 @@ export default function CitizensVoicePage() {
                       )}
                     </div>
                     {(poll.start_date || poll.end_date) && (
-                      <div className="mt-3 flex items-center gap-4 text-xs text-[#a69780]">
+                      <div className="mt-3 flex items-center gap-4 text-xs text-gray-500">
                         {poll.start_date && (
                           <div className="flex items-center gap-1">
                             <Calendar className="w-3 h-3" />
@@ -340,7 +340,7 @@ export default function CitizensVoicePage() {
                   {/* Options */}
                   <div className="p-6">
                     {poll.options.length === 0 ? (
-                      <p className="text-[#a69780] text-sm">No options available</p>
+                      <p className="text-gray-500 text-sm">No options available</p>
                     ) : (
                       <div className="space-y-3">
                         {poll.options.map((option) => {
@@ -359,7 +359,7 @@ export default function CitizensVoicePage() {
                                   } p-3 rounded-lg border ${
                                     hasVoted && optionResults
                                       ? 'border-[#2d5016] bg-green-50'
-                                      : 'border-[#d2c4b0]'
+                                      : 'border-gray-200'
                                   } transition-colors`}
                                 >
                                   <div className="flex items-center gap-3">
@@ -386,11 +386,11 @@ export default function CitizensVoicePage() {
                               </div>
                               {showResults && (
                                 <div className="space-y-1">
-                                  <div className="flex items-center justify-between text-xs text-[#8b7d6b]">
+                                  <div className="flex items-center justify-between text-xs text-gray-600">
                                     <span>{voteCount} votes</span>
                                     <span>{percentage}%</span>
                                   </div>
-                                  <div className="w-full bg-gray-200 rounded-full h-2">
+                                  <div className="w-full bg-[#d2c4b0] rounded-full h-2">
                                     <div
                                       className="bg-[#2d5016] h-2 rounded-full transition-all duration-300"
                                       style={{ width: `${percentage}%` }}
@@ -433,9 +433,9 @@ export default function CitizensVoicePage() {
         )}
 
         {/* Info Section */}
-        <div className="mt-8 bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] p-6">
+        <div className="mt-8 bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-3">About Citizens Voice</h3>
-          <p className="text-[#8b7d6b] text-sm mb-3">
+          <p className="text-gray-600 text-sm mb-3">
             Citizens Voice is a platform for democratic engagement where you can participate in polls on various
             parliamentary and governance topics. Your opinions matter and help shape public discourse.
           </p>
@@ -444,21 +444,21 @@ export default function CitizensVoicePage() {
               <TrendingUp className="w-5 h-5 text-[#2d5016] mt-0.5" />
               <div>
                 <h4 className="font-semibold text-gray-900 text-sm">Real-time Results</h4>
-                <p className="text-[#8b7d6b] text-xs">See how others are voting as results update in real-time</p>
+                <p className="text-gray-600 text-xs">See how others are voting as results update in real-time</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
               <Users className="w-5 h-5 text-[#2d5016] mt-0.5" />
               <div>
                 <h4 className="font-semibold text-gray-900 text-sm">Your Voice Matters</h4>
-                <p className="text-[#8b7d6b] text-xs">Participate in polls on important governance and policy issues</p>
+                <p className="text-gray-600 text-xs">Participate in polls on important governance and policy issues</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
               <BarChart3 className="w-5 h-5 text-[#2d5016] mt-0.5" />
               <div>
                 <h4 className="font-semibold text-gray-900 text-sm">Transparent Process</h4>
-                <p className="text-[#8b7d6b] text-xs">View detailed results and statistics for all polls</p>
+                <p className="text-gray-600 text-xs">View detailed results and statistics for all polls</p>
               </div>
             </div>
           </div>

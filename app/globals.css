@@ -5,7 +5,7 @@
   --foreground: #171717;
   --primary-green: #2d5016;
   --primary-green-dark: #1b3d26;
-  --smokey-grey: #b5a690;
+  --smokey-grey: #4a4a4a;
   --antique-white: #f3eed4;
 }
 
@@ -51,7 +51,7 @@ body {
 
 /* Blog content styling */
 .blog-content {
-  color: #8b7d6b;
+  color: #374151;
   line-height: 1.75;
 }
 
@@ -114,7 +114,7 @@ body {
   padding-left: 1rem;
   margin: 1.5rem 0;
   font-style: italic;
-    color: #a69780;
+  color: #6b7280;
 }
 
 .blog-content code {

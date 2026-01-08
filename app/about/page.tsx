@@ -40,19 +40,19 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
             <div className="relative h-64 rounded-lg overflow-hidden bg-gray-200">
-              <div className="absolute inset-0 flex items-center justify-center text-[#a69780]">
+              <div className="absolute inset-0 flex items-center justify-center text-gray-500">
                 Office Image 1
               </div>
             </div>
             <div className="relative h-64 rounded-lg overflow-hidden bg-gray-200">
-              <div className="absolute inset-0 flex items-center justify-center text-[#a69780]">
+              <div className="absolute inset-0 flex items-center justify-center text-gray-500">
                 Office Image 2
               </div>
             </div>
           </div>
 
           <div className="mb-12">
-            <p className="text-[#7a6b5a] text-center max-w-4xl mx-auto mb-8">
+            <p className="text-gray-700 text-center max-w-4xl mx-auto mb-8">
               Parliament watch Uganda is a Parliament monitoring initiative of the Centre for Policy Analysis that began in 2013 with the goal of bridging the gap between Parliament and citizens and to make the legislature more transparent, open and accessible. Today, we&apos;re the leading non-governmental source of legislative information, analysis and critical research on parliament and informed public policy and legislative action in Uganda.
             </p>
           </div>
@@ -60,7 +60,7 @@ export default function AboutPage() {
           {loading ? (
             <div className="text-center py-12">
               <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#2d5016]"></div>
-              <p className="mt-4 text-[#8b7d6b]">Loading...</p>
+              <p className="mt-4 text-gray-600">Loading...</p>
             </div>
           ) : error ? (
             <div className="text-center py-12">
@@ -79,7 +79,7 @@ export default function AboutPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                   {objectives.length === 0 ? (
-                    <div className="col-span-3 text-center text-[#a69780] py-8">
+                    <div className="col-span-3 text-center text-gray-500 py-8">
                       No objectives available
                     </div>
                   ) : (
@@ -91,7 +91,7 @@ export default function AboutPage() {
                     </div>
                     <div className="flex-1">
                             <h3 className="font-semibold text-gray-900 mb-2">{obj.title}</h3>
-                      <p className="text-sm text-[#7a6b5a] leading-relaxed">
+                      <p className="text-sm text-gray-700 leading-relaxed">
                               {obj.description}
                       </p>
                     </div>
@@ -134,7 +134,7 @@ export default function AboutPage() {
           ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {teamMembers.length === 0 ? (
-                <div className="col-span-4 text-center text-[#b5a690] py-8">
+                <div className="col-span-4 text-center text-gray-400 py-8">
                   No team members available
                 </div>
               ) : (
@@ -148,7 +148,7 @@ export default function AboutPage() {
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                  <div className="absolute inset-0 flex items-center justify-center text-[#a69780]">
+                  <div className="absolute inset-0 flex items-center justify-center text-gray-500">
                           {member.name.charAt(0)}
                   </div>
                       )}
@@ -156,7 +156,7 @@ export default function AboutPage() {
                 </div>
                 <div className="p-4 text-center">
                   <h3 className="font-bold text-gray-800 mb-1">{member.name}</h3>
-                  <p className="text-sm text-[#8b7d6b] mb-3">{member.title}</p>
+                  <p className="text-sm text-gray-600 mb-3">{member.title}</p>
 
                   <div className="flex justify-center gap-2">
                         {member.facebook_url && (

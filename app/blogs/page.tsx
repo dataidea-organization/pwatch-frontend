@@ -96,7 +96,7 @@ export default function BlogsPage() {
       <div className="min-h-screen bg-[#f3eed4]">
         <main className="max-w-7xl mx-auto px-4 py-12">
           <div className="text-center">
-            <p className="text-[#8b7d6b]">Loading blog posts...</p>
+            <p className="text-gray-600">Loading blog posts...</p>
           </div>
         </main>
       </div>
@@ -137,12 +137,12 @@ export default function BlogsPage() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                  className="px-4 py-2 border border-[#c4b5a0] rounded-md focus:outline-none focus:ring-2 focus:ring-[#2d5016] flex-1 md:flex-none md:w-64"
+                  className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2d5016] flex-1 md:flex-none md:w-64"
                 />
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="px-4 py-2 border border-[#c4b5a0] rounded-md focus:outline-none focus:ring-2 focus:ring-[#2d5016]"
+                  className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2d5016]"
                 >
                   {categories.map((cat) => (
                     <option key={cat.value} value={cat.value}>
@@ -160,7 +160,7 @@ export default function BlogsPage() {
             </div>
 
             {blogPosts.length === 0 ? (
-              <div className="text-center py-12 text-[#8b7d6b]">
+              <div className="text-center py-12 text-gray-600">
                 <p>No blog posts available at the moment.</p>
               </div>
             ) : (
@@ -189,7 +189,7 @@ export default function BlogsPage() {
                             {post.title}
                           </h3>
                           <div className="mt-auto space-y-1">
-                            <div className="flex items-center gap-2 text-xs text-[#a69780]">
+                            <div className="flex items-center gap-2 text-xs text-gray-500">
                               <svg
                                 className="w-4 h-4"
                                 fill="none"
@@ -205,7 +205,7 @@ export default function BlogsPage() {
                               </svg>
                               <span>{formatDate(post.published_date)}</span>
                             </div>
-                            <div className="flex items-center gap-2 text-xs text-[#8b7d6b]">
+                            <div className="flex items-center gap-2 text-xs text-gray-600">
                               <svg
                                 className="w-4 h-4"
                                 fill="none"

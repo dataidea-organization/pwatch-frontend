@@ -154,7 +154,7 @@ export default function OrderPaperPage() {
         <div className="min-h-screen bg-[#f3eed4] flex items-center justify-center">
           <div className="flex flex-col items-center gap-4">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#2d5016]"></div>
-            <p className="text-[#8b7d6b]">Loading order papers...</p>
+            <p className="text-gray-600">Loading order papers...</p>
           </div>
         </div>
       </>
@@ -192,20 +192,20 @@ export default function OrderPaperPage() {
             Back to Trackers
           </Link>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900">Order Papers</h1>
-          <p className="text-[#8b7d6b] mt-2">Parliamentary order papers outlining daily business and proceedings</p>
+          <p className="text-gray-600 mt-2">Parliamentary order papers outlining daily business and proceedings</p>
         </div>
 
-        <div className="bg-[#f3eed4] rounded-lg border border-[#d2c4b0] shadow-sm">
-          <div className="p-4 border-b border-[#d2c4b0]">
+        <div className="bg-[#f3eed4] rounded-lg border border-gray-200 shadow-sm">
+          <div className="p-4 border-b border-gray-200">
             <div className="flex gap-3 items-center">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#b5a690] z-10" size={20} />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10" size={20} />
                 <Input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={`Search through ${totalCount} order papers...`}
-                  className="w-full pl-10 pr-4 text-gray-900 placeholder:text-[#b5a690]"
+                  className="w-full pl-10 pr-4 text-gray-900 placeholder:text-gray-400"
                   style={{ color: '#111827' }}
                 />
               </div>
@@ -213,7 +213,7 @@ export default function OrderPaperPage() {
                 <Button
                   variant="outline"
                   onClick={() => setSearchQuery('')}
-                  className="bg-[#d2c4b0] text-[#7a6b5a] hover:bg-[#c4b5a0] border-[#c4b5a0]"
+                  className="bg-[#d2c4b0] text-gray-700 hover:bg-[#c4b5a0] border-gray-300"
                 >
                   Clear
                 </Button>
@@ -226,14 +226,14 @@ export default function OrderPaperPage() {
               <thead className="bg-[#ddd0b8]">
                 <tr>
                   <th 
-                    className="px-6 py-3 text-left text-xs font-semibold text-[#7a6b5a] uppercase tracking-wider cursor-pointer hover:bg-[#d2c4b0] transition-colors group"
+                    className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-[#d2c4b0] transition-colors group"
                     onClick={() => handleSort('name')}
                     title="Click to sort"
                   >
                     <div className="flex items-center gap-2">
                       <FileText size={16} />
                       Document Name
-                      <span className={`text-[#b5a690] group-hover:text-[#2d5016] transition-colors text-xs ${
+                      <span className={`text-gray-400 group-hover:text-[#2d5016] transition-colors text-xs ${
                         sortField === 'name' ? 'text-[#2d5016]' : ''
                       }`}>
                         {sortField === 'name' 
@@ -243,17 +243,17 @@ export default function OrderPaperPage() {
                       </span>
                     </div>
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-[#7a6b5a] uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                     Description
                   </th>
                   <th 
-                    className="px-6 py-3 text-left text-xs font-semibold text-[#7a6b5a] uppercase tracking-wider cursor-pointer hover:bg-[#d2c4b0] transition-colors group"
+                    className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-[#d2c4b0] transition-colors group"
                     onClick={() => handleSort('created_at')}
                     title="Click to sort"
                   >
                     <div className="flex items-center gap-2">
                     Date Added
-                      <span className={`text-[#b5a690] group-hover:text-[#2d5016] transition-colors text-xs ${
+                      <span className={`text-gray-400 group-hover:text-[#2d5016] transition-colors text-xs ${
                         sortField === 'created_at' ? 'text-[#2d5016]' : ''
                       }`}>
                         {sortField === 'created_at' 
@@ -263,7 +263,7 @@ export default function OrderPaperPage() {
                       </span>
                     </div>
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-[#7a6b5a] uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
@@ -272,8 +272,8 @@ export default function OrderPaperPage() {
                 {paginatedOrderPapers.length === 0 ? (
                   <tr>
                     <td colSpan={4} className="px-6 py-12 text-center">
-                      <div className="flex flex-col items-center gap-3 text-[#a69780]">
-                        <FileText size={48} className="text-[#c4b5a0]" />
+                      <div className="flex flex-col items-center gap-3 text-gray-500">
+                        <FileText size={48} className="text-gray-300" />
                         <p className="text-lg font-medium">No order papers found</p>
                         {searchQuery && (
                           <p className="text-sm">Try adjusting your search query</p>
@@ -287,12 +287,12 @@ export default function OrderPaperPage() {
                       <td className="px-6 py-4">
                         <div className="font-medium text-gray-900">{orderPaper.name}</div>
                       </td>
-                      <td className="px-6 py-4 text-[#8b7d6b]">
+                      <td className="px-6 py-4 text-gray-600">
                         <div className="max-w-md">
                           {orderPaper.description || 'No description available'}
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-[#8b7d6b]">
+                      <td className="px-6 py-4 text-gray-600">
                         {formatDate(orderPaper.created_at)}
                       </td>
                       <td className="px-6 py-4">
@@ -307,7 +307,7 @@ export default function OrderPaperPage() {
                             Download
                           </a>
                         ) : (
-                          <span className="text-[#b5a690] text-sm">No file</span>
+                          <span className="text-gray-400 text-sm">No file</span>
                         )}
                       </td>
                     </tr>
@@ -318,8 +318,8 @@ export default function OrderPaperPage() {
           </div>
 
           {sortedOrderPapers.length > 0 && (
-            <div className="px-6 py-4 border-t border-[#d2c4b0] flex items-center justify-between">
-              <div className="text-sm text-[#8b7d6b]">
+            <div className="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
+              <div className="text-sm text-gray-600">
                 Showing {((page - 1) * pageSize) + 1} to {Math.min(page * pageSize, totalCount)} of {totalCount} order papers
               </div>
               <div className="flex items-center gap-2">
@@ -339,7 +339,7 @@ export default function OrderPaperPage() {
                 >
                   <ChevronLeft size={20} />
                 </button>
-                <span className="px-4 py-2 text-sm font-medium text-[#7a6b5a]">
+                <span className="px-4 py-2 text-sm font-medium text-gray-700">
                   Page {page} of {totalPages}
                 </span>
                 <button
@@ -359,16 +359,16 @@ export default function OrderPaperPage() {
                   <ChevronsRight size={20} />
                 </button>
               </div>
-              <div className="text-sm text-[#8b7d6b]">
+              <div className="text-sm text-gray-600">
                 Per Page: {pageSize}
               </div>
             </div>
           )}
         </div>
 
-        <div className="mt-6 bg-[#f3eed4] rounded-lg border border-[#d2c4b0] shadow-sm p-6">
+        <div className="mt-6 bg-[#f3eed4] rounded-lg border border-gray-200 shadow-sm p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-2">About Order Papers</h2>
-          <p className="text-[#8b7d6b]">
+          <p className="text-gray-600">
             Order Papers outline the business to be conducted during parliamentary sessions. They include questions,
             motions, bills, and other items scheduled for debate and consideration by Members of Parliament.
           </p>

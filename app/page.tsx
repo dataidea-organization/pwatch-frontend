@@ -256,7 +256,7 @@ export default function Home() {
           </div>
 
           {newsArticles.length === 0 ? (
-            <div className="text-center py-8 text-[#a69780]">
+            <div className="text-center py-8 text-gray-500">
               <p>No news articles available</p>
             </div>
           ) : (
@@ -281,7 +281,7 @@ export default function Home() {
                       <h4 className="mt-2 text-sm font-semibold text-gray-800 line-clamp-2">
                         {article.title}
                       </h4>
-                      <div className="mt-2 flex items-center gap-2 text-xs text-[#a69780]">
+                      <div className="mt-2 flex items-center gap-2 text-xs text-gray-500">
                         <svg
                           className="w-4 h-4"
                           fill="none"
@@ -297,7 +297,7 @@ export default function Home() {
                         </svg>
                         <span>{new Date(article.published_date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
                       </div>
-                      <div className="mt-1 flex items-center gap-2 text-xs text-[#8b7d6b]">
+                      <div className="mt-1 flex items-center gap-2 text-xs text-gray-600">
                         <svg
                           className="w-4 h-4"
                           fill="none"
@@ -326,13 +326,13 @@ export default function Home() {
           <h3 className="text-2xl font-bold text-gray-800 mb-4">Trackers</h3>
           <div className="bg-[#ddd0b8] rounded-lg overflow-hidden">
             {/* Tabs */}
-          <div className="bg-[#d2c4b0] px-4 py-2 flex flex-wrap gap-2 border-b border-[#c4b5a0]">
+          <div className="bg-[#d2c4b0] px-4 py-2 flex flex-wrap gap-2 border-b border-gray-300">
             <button
               onClick={() => setActiveTab('mps')}
               className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
                 activeTab === 'mps'
                   ? 'bg-[#f3eed4] text-gray-900'
-                  : 'text-[#8b7d6b] hover:text-gray-900'
+                  : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               + Members of Parliament
@@ -342,7 +342,7 @@ export default function Home() {
               className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
                 activeTab === 'bills'
                   ? 'bg-[#f3eed4] text-gray-900'
-                  : 'text-[#8b7d6b] hover:text-gray-900'
+                  : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               + Bills Tracker
@@ -352,7 +352,7 @@ export default function Home() {
               className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
                 activeTab === 'loans'
                   ? 'bg-[#f3eed4] text-gray-900'
-                  : 'text-[#8b7d6b] hover:text-gray-900'
+                  : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               + Loans Tracker
@@ -362,7 +362,7 @@ export default function Home() {
               className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
                 activeTab === 'budgets'
                   ? 'bg-[#f3eed4] text-gray-900'
-                  : 'text-[#8b7d6b] hover:text-gray-900'
+                  : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               + Budget Tracker
@@ -372,7 +372,7 @@ export default function Home() {
               className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
                 activeTab === 'hansards'
                   ? 'bg-[#f3eed4] text-gray-900'
-                  : 'text-[#8b7d6b] hover:text-gray-900'
+                  : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               + Hansards Tracker
@@ -382,7 +382,7 @@ export default function Home() {
               className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
                 activeTab === 'order-paper'
                   ? 'bg-[#f3eed4] text-gray-900'
-                  : 'text-[#8b7d6b] hover:text-gray-900'
+                  : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               + Order Paper Tracker
@@ -394,7 +394,7 @@ export default function Home() {
             {trackersLoading ? (
               <div className="text-center py-8">
                 <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-[#2d5016]"></div>
-                <p className="mt-2 text-[#a69780] text-sm">Loading...</p>
+                <p className="mt-2 text-gray-500 text-sm">Loading...</p>
               </div>
             ) : (
               <>
@@ -402,7 +402,7 @@ export default function Home() {
                 {activeTab === 'mps' && (
                   <div>
                     {!trackersData || trackersData.mps.length === 0 ? (
-                      <div className="text-center py-8 text-[#a69780]">
+                      <div className="text-center py-8 text-gray-500">
                         <p>No MPs data available</p>
                       </div>
                     ) : (
@@ -411,7 +411,7 @@ export default function Home() {
                           <Link
                             key={mp.id}
                             href={`/trackers/mps/${mp.id}`}
-                            className="flex items-center gap-3 py-2 border-b border-[#d2c4b0] last:border-0 hover:bg-[#f3eed4] transition-colors cursor-pointer"
+                            className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0 hover:bg-[#f3eed4] transition-colors cursor-pointer"
                           >
                             <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
                             <div className="flex-1 min-w-0">
@@ -437,7 +437,7 @@ export default function Home() {
                 {activeTab === 'bills' && (
                   <div>
                     {!trackersData || trackersData.bills.length === 0 ? (
-                      <div className="text-center py-8 text-[#a69780]">
+                      <div className="text-center py-8 text-gray-500">
                         <p>No bills data available</p>
                       </div>
                     ) : (
@@ -446,7 +446,7 @@ export default function Home() {
                           <Link
                             key={bill.id}
                             href={`/trackers/bills/${bill.id}`}
-                            className="flex items-center gap-3 py-2 border-b border-[#d2c4b0] last:border-0 hover:bg-[#f3eed4] transition-colors cursor-pointer"
+                            className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0 hover:bg-[#f3eed4] transition-colors cursor-pointer"
                           >
                             <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
                             <div className="flex-1 min-w-0">
@@ -472,13 +472,13 @@ export default function Home() {
                 {activeTab === 'loans' && (
                   <div>
                     {!trackersData || trackersData.loans.length === 0 ? (
-                      <div className="text-center py-8 text-[#a69780]">
+                      <div className="text-center py-8 text-gray-500">
                         <p>No loans data available</p>
                       </div>
                     ) : (
                       <div className="space-y-2">
                         {trackersData.loans.map((loan) => (
-                          <div key={loan.id} className="flex items-center gap-3 py-2 border-b border-[#d2c4b0] last:border-0">
+                          <div key={loan.id} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
                             <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
                             <div className="flex-1 min-w-0">
                               <p className="text-sm text-gray-800 truncate">
@@ -503,13 +503,13 @@ export default function Home() {
                 {activeTab === 'budgets' && (
                   <div>
                     {!trackersData || trackersData.budgets.length === 0 ? (
-                      <div className="text-center py-8 text-[#a69780]">
+                      <div className="text-center py-8 text-gray-500">
                         <p>No budgets data available</p>
                       </div>
                     ) : (
                       <div className="space-y-2">
                         {trackersData.budgets.map((budget) => (
-                          <div key={budget.id} className="flex items-center gap-3 py-2 border-b border-[#d2c4b0] last:border-0">
+                          <div key={budget.id} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
                             <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
                             <div className="flex-1 min-w-0">
                               {budget.file ? (
@@ -545,13 +545,13 @@ export default function Home() {
                 {activeTab === 'hansards' && (
                   <div>
                     {!trackersData || trackersData.hansards.length === 0 ? (
-                      <div className="text-center py-8 text-[#a69780]">
+                      <div className="text-center py-8 text-gray-500">
                         <p>No hansards data available</p>
                       </div>
                     ) : (
                       <div className="space-y-2">
                         {trackersData.hansards.map((hansard) => (
-                          <div key={hansard.id} className="flex items-center gap-3 py-2 border-b border-[#d2c4b0] last:border-0">
+                          <div key={hansard.id} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
                             <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
                             <div className="flex-1 min-w-0">
                               {hansard.file ? (
@@ -587,13 +587,13 @@ export default function Home() {
                 {activeTab === 'order-paper' && (
                   <div>
                     {!trackersData || trackersData.order_papers.length === 0 ? (
-                      <div className="text-center py-8 text-[#a69780]">
+                      <div className="text-center py-8 text-gray-500">
                         <p>No order papers data available</p>
                       </div>
                     ) : (
                       <div className="space-y-2">
                         {trackersData.order_papers.map((paper) => (
-                          <div key={paper.id} className="flex items-center gap-3 py-2 border-b border-[#d2c4b0] last:border-0">
+                          <div key={paper.id} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
                             <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
                             <div className="flex-1 min-w-0">
                               {paper.file ? (
@@ -635,13 +635,13 @@ export default function Home() {
           <h3 className="text-2xl font-bold text-gray-800 mb-4">Resources</h3>
           <div className="bg-[#ddd0b8] rounded-lg overflow-hidden">
             {/* Tabs */}
-          <div className="bg-[#d2c4b0] px-4 py-2 flex flex-wrap gap-2 border-b border-[#c4b5a0]">
+          <div className="bg-[#d2c4b0] px-4 py-2 flex flex-wrap gap-2 border-b border-gray-300">
             <button
               onClick={() => setActiveResourceTab('explainers')}
               className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
                 activeResourceTab === 'explainers'
                   ? 'bg-[#f3eed4] text-gray-900'
-                  : 'text-[#8b7d6b] hover:text-gray-900'
+                  : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               + Explainers
@@ -651,7 +651,7 @@ export default function Home() {
               className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
                 activeResourceTab === 'reports'
                   ? 'bg-[#f3eed4] text-gray-900'
-                  : 'text-[#8b7d6b] hover:text-gray-900'
+                  : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               + Reports
@@ -661,7 +661,7 @@ export default function Home() {
               className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
                 activeResourceTab === 'partner-publications'
                   ? 'bg-[#f3eed4] text-gray-900'
-                  : 'text-[#8b7d6b] hover:text-gray-900'
+                  : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               + Partner Publications
@@ -671,7 +671,7 @@ export default function Home() {
               className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
                 activeResourceTab === 'statements'
                   ? 'bg-[#f3eed4] text-gray-900'
-                  : 'text-[#8b7d6b] hover:text-gray-900'
+                  : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               + Statements
@@ -683,7 +683,7 @@ export default function Home() {
             {resourcesLoading ? (
               <div className="text-center py-8">
                 <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-[#2d5016]"></div>
-                <p className="mt-2 text-[#a69780] text-sm">Loading...</p>
+                <p className="mt-2 text-gray-500 text-sm">Loading...</p>
               </div>
             ) : (
               <>
@@ -691,13 +691,13 @@ export default function Home() {
                 {activeResourceTab === 'explainers' && (
                   <div>
                     {!resourcesData || resourcesData.explainers.length === 0 ? (
-                      <div className="text-center py-8 text-[#a69780]">
+                      <div className="text-center py-8 text-gray-500">
                         <p>No explainers available</p>
                       </div>
                     ) : (
                       <div className="space-y-2">
                         {resourcesData.explainers.map((explainer) => (
-                          <div key={explainer.id} className="flex items-center gap-3 py-2 border-b border-[#d2c4b0] last:border-0">
+                          <div key={explainer.id} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
                             <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
                             <div className="flex-1 min-w-0">
                               {explainer.file ? (
@@ -731,13 +731,13 @@ export default function Home() {
                 {activeResourceTab === 'reports' && (
                   <div>
                     {!resourcesData || resourcesData.reports.length === 0 ? (
-                      <div className="text-center py-8 text-[#a69780]">
+                      <div className="text-center py-8 text-gray-500">
                         <p>No reports available</p>
                       </div>
                     ) : (
                       <div className="space-y-2">
                         {resourcesData.reports.map((report) => (
-                          <div key={report.id} className="flex items-center gap-3 py-2 border-b border-[#d2c4b0] last:border-0">
+                          <div key={report.id} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
                             <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
                             <div className="flex-1 min-w-0">
                               {report.file ? (
@@ -771,13 +771,13 @@ export default function Home() {
                 {activeResourceTab === 'partner-publications' && (
                   <div>
                     {!resourcesData || resourcesData.partner_publications.length === 0 ? (
-                      <div className="text-center py-8 text-[#a69780]">
+                      <div className="text-center py-8 text-gray-500">
                         <p>No partner publications available</p>
                       </div>
                     ) : (
                       <div className="space-y-2">
                         {resourcesData.partner_publications.map((publication) => (
-                          <div key={publication.id} className="flex items-center gap-3 py-2 border-b border-[#d2c4b0] last:border-0">
+                          <div key={publication.id} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
                             <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
                             <div className="flex-1 min-w-0">
                               {publication.file ? (
@@ -811,13 +811,13 @@ export default function Home() {
                 {activeResourceTab === 'statements' && (
                   <div>
                     {!resourcesData || resourcesData.statements.length === 0 ? (
-                      <div className="text-center py-8 text-[#a69780]">
+                      <div className="text-center py-8 text-gray-500">
                         <p>No statements available</p>
                       </div>
                     ) : (
                       <div className="space-y-2">
                         {resourcesData.statements.map((statement) => (
-                          <div key={statement.id} className="flex items-center gap-3 py-2 border-b border-[#d2c4b0] last:border-0">
+                          <div key={statement.id} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
                             <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
                             <div className="flex-1 min-w-0">
                               {statement.file ? (
@@ -863,7 +863,7 @@ export default function Home() {
           </div>
 
           {blogPosts.length === 0 ? (
-            <div className="text-center py-8 text-[#a69780]">
+            <div className="text-center py-8 text-gray-500">
               <p>No blog posts available</p>
             </div>
           ) : (
@@ -889,7 +889,7 @@ export default function Home() {
                         {post.title}
                       </h4>
                       <div className="mt-auto space-y-1">
-                        <div className="flex items-center gap-2 text-xs text-[#a69780]">
+                        <div className="flex items-center gap-2 text-xs text-gray-500">
                           <svg
                             className="w-4 h-4"
                             fill="none"
@@ -905,7 +905,7 @@ export default function Home() {
                           </svg>
                           <span>{new Date(post.published_date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
                         </div>
-                        <div className="flex items-center gap-2 text-xs text-[#8b7d6b]">
+                        <div className="flex items-center gap-2 text-xs text-gray-600">
                           <svg
                             className="w-4 h-4"
                             fill="none"

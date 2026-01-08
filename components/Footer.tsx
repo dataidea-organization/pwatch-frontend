@@ -202,7 +202,7 @@ export default function Footer() {
             <div className="text-sm text-gray-200">
               <p>&copy; {currentYear} Parliament Watch Uganda. All rights reserved.</p>
             </div>
-            <div className="flex flex-wrap items-center gap-4 text-xs text-[#c4b5a0]">
+            <div className="flex flex-wrap items-center gap-4 text-xs text-gray-300">
               <Link href="/contact" className="hover:text-white transition-colors">
                 Privacy Policy
               </Link>

@@ -61,11 +61,11 @@ export default function NewsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-[#f3eed4]">
         <main className="bg-gradient-to-b from-gray-100 to-white py-12">
           <div className="max-w-7xl mx-auto px-4">
             <div className="text-center">
-              <p className="text-[#8b7d6b]">Loading news articles...</p>
+              <p className="text-gray-600">Loading news articles...</p>
             </div>
           </div>
         </main>
@@ -75,7 +75,7 @@ export default function NewsPage() {
 
   if (error && newsArticles.length === 0) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-[#f3eed4]">
         <main className="bg-gradient-to-b from-gray-100 to-white py-12">
           <div className="max-w-7xl mx-auto px-4">
             <div className="text-center">
@@ -94,7 +94,7 @@ export default function NewsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#f3eed4]">
       <main className="bg-gradient-to-b from-gray-100 to-white py-12">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
@@ -104,7 +104,7 @@ export default function NewsPage() {
           </div>
 
           {newsArticles.length === 0 ? (
-            <div className="text-center text-[#8b7d6b]">
+            <div className="text-center text-gray-600">
               <p>No news articles available at the moment.</p>
             </div>
           ) : (
@@ -130,7 +130,7 @@ export default function NewsPage() {
                       <h3 className="font-bold text-gray-800 text-sm mb-3 line-clamp-3">
                         {article.title}
                       </h3>
-                      <div className="flex items-center gap-2 text-xs text-[#8b7d6b] mb-2">
+                      <div className="flex items-center gap-2 text-xs text-gray-600 mb-2">
                         <svg
                           className="w-4 h-4"
                           fill="none"
@@ -146,7 +146,7 @@ export default function NewsPage() {
                         </svg>
                         <span>{formatDate(article.published_date)}</span>
                       </div>
-                      <div className="flex items-center gap-2 text-xs text-[#8b7d6b]">
+                      <div className="flex items-center gap-2 text-xs text-gray-600">
                         <svg
                           className="w-4 h-4"
                           fill="none"

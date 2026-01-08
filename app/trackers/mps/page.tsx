@@ -262,7 +262,7 @@ export default function MPsPage() {
       <div className="min-h-screen bg-[#f3eed4]">
         <main className="max-w-7xl mx-auto px-4 py-8">
           <div className="text-center">
-            <p className="text-[#8b7d6b]">Loading Members of Parliament...</p>
+            <p className="text-gray-600">Loading Members of Parliament...</p>
           </div>
         </main>
       </div>
@@ -296,11 +296,11 @@ export default function MPsPage() {
           <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
             Members of Parliament
           </h1>
-          <p className="text-[#8b7d6b]">
+          <p className="text-gray-600">
             Browse and search for your representatives in Parliament
           </p>
           <div className="flex items-center gap-2 mt-1">
-            <p className="text-sm text-[#a69780]">
+            <p className="text-sm text-gray-500">
               {filteredMps.length} {filteredMps.length === 1 ? 'MP' : 'MPs'} found
             </p>
           </div>
@@ -308,24 +308,24 @@ export default function MPsPage() {
 
         {/* Summary Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div className="bg-[#f3eed4] rounded-lg shadow-sm p-5 border border-[#d2c4b0]">
-            <p className="text-sm text-[#a69780]">Total MPs</p>
+          <div className="bg-[#f3eed4] rounded-lg shadow-sm p-5 border border-gray-200">
+            <p className="text-sm text-gray-500">Total MPs</p>
             {loading ? (
               <div className="h-8 w-20 mt-2 bg-gray-200 animate-pulse rounded" />
             ) : (
               <p className="text-3xl font-bold text-gray-900 mt-1">{summary?.total_mps ?? 0}</p>
             )}
           </div>
-          <div className="bg-[#f3eed4] rounded-lg shadow-sm p-5 border border-[#d2c4b0]">
-            <p className="text-sm text-[#a69780]">Total Parties</p>
+          <div className="bg-[#f3eed4] rounded-lg shadow-sm p-5 border border-gray-200">
+            <p className="text-sm text-gray-500">Total Parties</p>
             {loading ? (
               <div className="h-8 w-20 mt-2 bg-gray-200 animate-pulse rounded" />
             ) : (
               <p className="text-3xl font-bold text-gray-900 mt-1">{summary?.total_parties ?? 0}</p>
             )}
           </div>
-          <div className="bg-[#f3eed4] rounded-lg shadow-sm p-5 border border-[#d2c4b0]">
-            <p className="text-sm text-[#a69780]">Total Districts</p>
+          <div className="bg-[#f3eed4] rounded-lg shadow-sm p-5 border border-gray-200">
+            <p className="text-sm text-gray-500">Total Districts</p>
             {loading ? (
               <div className="h-8 w-20 mt-2 bg-gray-200 animate-pulse rounded" />
             ) : (
@@ -339,16 +339,16 @@ export default function MPsPage() {
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-medium text-[#7a6b5a] mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Constituency
                 </label>
                 <DropdownMenu open={searchDropdownOpen} onOpenChange={setSearchDropdownOpen}>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline" className="w-full justify-between text-[#8b7d6b] bg-[#f3eed4] hover:bg-[#f3eed4] border-[#c4b5a0]">
+                    <Button variant="outline" className="w-full justify-between text-gray-600 bg-[#f3eed4] hover:bg-[#f3eed4] border-gray-300">
                       {selectedSearchTerms.length > 0
                         ? `${selectedSearchTerms.length} selected`
                         : 'Select names/constituencies'}
-                      <span className="text-[#b5a690] text-xs ml-2">▼</span>
+                      <span className="text-gray-400 text-xs ml-2">▼</span>
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-[var(--radix-dropdown-menu-trigger-width)]" align="start" onCloseAutoFocus={(e) => e.preventDefault()}>
@@ -388,14 +388,14 @@ export default function MPsPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-[#7a6b5a] mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   District
                 </label>
                 <DropdownMenu open={districtDropdownOpen} onOpenChange={setDistrictDropdownOpen}>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline" className="w-full justify-between text-[#8b7d6b] bg-[#f3eed4] hover:bg-[#f3eed4] border-[#c4b5a0]">
+                    <Button variant="outline" className="w-full justify-between text-gray-600 bg-[#f3eed4] hover:bg-[#f3eed4] border-gray-300">
                       {selectedDistricts.length > 0 ? `${selectedDistricts.length} selected` : 'All Districts'}
-                      <span className="text-[#b5a690] text-xs ml-2">▼</span>
+                      <span className="text-gray-400 text-xs ml-2">▼</span>
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-[var(--radix-dropdown-menu-trigger-width)]" align="start" onCloseAutoFocus={(e) => e.preventDefault()}>
@@ -435,14 +435,14 @@ export default function MPsPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-[#7a6b5a] mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Party
                 </label>
                 <DropdownMenu open={partyDropdownOpen} onOpenChange={setPartyDropdownOpen}>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline" className="w-full justify-between text-[#8b7d6b] bg-[#f3eed4] hover:bg-[#f3eed4] border-[#c4b5a0]">
+                    <Button variant="outline" className="w-full justify-between text-gray-600 bg-[#f3eed4] hover:bg-[#f3eed4] border-gray-300">
                       {selectedParties.length > 0 ? `${selectedParties.length} selected` : 'All Parties'}
-                      <span className="text-[#b5a690] text-xs ml-2">▼</span>
+                      <span className="text-gray-400 text-xs ml-2">▼</span>
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-[var(--radix-dropdown-menu-trigger-width)]" align="start" onCloseAutoFocus={(e) => e.preventDefault()}>
@@ -499,7 +499,7 @@ export default function MPsPage() {
                     setDistrictFilterTerm('');
                     // The useEffect will automatically reload data without showing loading state
                   }}
-                  className="bg-[#d2c4b0] text-[#7a6b5a] px-6 py-2 rounded-md hover:bg-[#c4b5a0] transition-colors"
+                  className="bg-[#d2c4b0] text-gray-700 px-6 py-2 rounded-md hover:bg-[#c4b5a0] transition-colors"
                 >
                   Clear Filters
                 </button>
@@ -511,7 +511,7 @@ export default function MPsPage() {
         {/* MPs Table and Party Distribution Chart */}
         {filteredMps.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-[#8b7d6b]">No MPs found matching your criteria.</p>
+            <p className="text-gray-600">No MPs found matching your criteria.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
@@ -528,10 +528,10 @@ export default function MPsPage() {
                     setNameSearchTerm(e.target.value);
                     setPage(1); // Reset to first page when searching
                   }}
-                  className="w-full pl-10 pr-4 py-2 border border-[#c4b5a0] rounded-md focus:ring-2 focus:ring-[#2d5016] focus:border-[#2d5016] text-gray-900 placeholder:text-[#b5a690]"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2d5016] focus:border-[#2d5016] text-gray-900 placeholder:text-gray-400"
                 />
                 <svg
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#b5a690]"
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -549,7 +549,7 @@ export default function MPsPage() {
                       setNameSearchTerm('');
                       setPage(1);
                     }}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#b5a690] hover:text-[#8b7d6b]"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                     aria-label="Clear search"
                   >
                     <svg
@@ -575,13 +575,13 @@ export default function MPsPage() {
                   <thead className="bg-[#f3eed4]">
                     <tr>
                         <th 
-                          className="px-5 py-3 text-left text-xs font-medium text-[#a69780] uppercase tracking-wider cursor-pointer hover:bg-[#ddd0b8] transition-colors group"
+                          className="px-5 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-[#ddd0b8] transition-colors group"
                           onClick={() => handleSort('name')}
                           title="Click to sort"
                         >
                           <div className="flex items-center gap-2">
                             Name
-                            <span className={`text-[#b5a690] group-hover:text-[#2d5016] transition-colors text-xs ${
+                            <span className={`text-gray-400 group-hover:text-[#2d5016] transition-colors text-xs ${
                               sortField === 'name' ? 'text-[#2d5016]' : ''
                             }`}>
                               {sortField === 'name' 
@@ -592,13 +592,13 @@ export default function MPsPage() {
                           </div>
                       </th>
                         <th 
-                          className="px-6 py-3 text-left text-xs font-medium text-[#a69780] uppercase tracking-wider cursor-pointer hover:bg-[#ddd0b8] transition-colors group"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-[#ddd0b8] transition-colors group"
                           onClick={() => handleSort('party')}
                           title="Click to sort"
                         >
                           <div className="flex items-center gap-2">
                         Party
-                            <span className={`text-[#b5a690] group-hover:text-[#2d5016] transition-colors text-xs ${
+                            <span className={`text-gray-400 group-hover:text-[#2d5016] transition-colors text-xs ${
                               sortField === 'party' ? 'text-[#2d5016]' : ''
                             }`}>
                               {sortField === 'party' 
@@ -609,13 +609,13 @@ export default function MPsPage() {
                           </div>
                       </th>
                         <th 
-                          className="px-6 py-3 text-left text-xs font-medium text-[#a69780] uppercase tracking-wider cursor-pointer hover:bg-[#ddd0b8] transition-colors group"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-[#ddd0b8] transition-colors group"
                           onClick={() => handleSort('constituency')}
                           title="Click to sort"
                         >
                           <div className="flex items-center gap-2">
                         Constituency
-                            <span className={`text-[#b5a690] group-hover:text-[#2d5016] transition-colors text-xs ${
+                            <span className={`text-gray-400 group-hover:text-[#2d5016] transition-colors text-xs ${
                               sortField === 'constituency' ? 'text-[#2d5016]' : ''
                             }`}>
                               {sortField === 'constituency' 
@@ -626,13 +626,13 @@ export default function MPsPage() {
                           </div>
                       </th>
                         <th 
-                          className="px-6 py-3 text-left text-xs font-medium text-[#a69780] uppercase tracking-wider cursor-pointer hover:bg-[#ddd0b8] transition-colors group"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-[#ddd0b8] transition-colors group"
                           onClick={() => handleSort('district')}
                           title="Click to sort"
                         >
                           <div className="flex items-center gap-2">
                         District
-                            <span className={`text-[#b5a690] group-hover:text-[#2d5016] transition-colors text-xs ${
+                            <span className={`text-gray-400 group-hover:text-[#2d5016] transition-colors text-xs ${
                               sortField === 'district' ? 'text-[#2d5016]' : ''
                             }`}>
                               {sortField === 'district' 
@@ -642,7 +642,7 @@ export default function MPsPage() {
                             </span>
                           </div>
                       </th>
-                      <th className="px-6 py-3 text-right text-xs font-medium text-[#a69780] uppercase tracking-wider">
+                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Actions
                       </th>
                     </tr>
@@ -703,21 +703,21 @@ export default function MPsPage() {
 
             {/* Pagination Controls */}
             <div className="mt-6 flex items-center justify-between">
-              <div className="text-sm text-[#7a6b5a]">
+              <div className="text-sm text-gray-700">
                   Showing page {page} of {Math.ceil(filteredMps.length / pageSize)} ({filteredMps.length} total MPs)
               </div>
               <div className="flex gap-2">
                 <button
                   onClick={() => goToPage(page - 1)}
                     disabled={page === 1}
-                  className="px-4 py-2 border border-[#c4b5a0] rounded-md text-sm font-medium text-[#7a6b5a] bg-[#f3eed4] hover:bg-[#f3eed4] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-[#f3eed4] hover:bg-[#f3eed4] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   Previous
                 </button>
                 <button
                   onClick={() => goToPage(page + 1)}
                     disabled={page >= Math.ceil(filteredMps.length / pageSize)}
-                  className="px-4 py-2 border border-[#c4b5a0] rounded-md text-sm font-medium text-[#7a6b5a] bg-[#f3eed4] hover:bg-[#f3eed4] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-[#f3eed4] hover:bg-[#f3eed4] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                     Next
                 </button>
@@ -726,10 +726,10 @@ export default function MPsPage() {
             </div>
 
             {/* Party Distribution Chart */}
-            <div className="bg-[#f3eed4] rounded-lg shadow-sm p-6 border border-[#d2c4b0] self-start">
+            <div className="bg-[#f3eed4] rounded-lg shadow-sm p-6 border border-gray-200 self-start">
               <div className="mb-4">
                 <h3 className="text-xl font-bold text-gray-900">Party Distribution</h3>
-                <p className="text-sm text-[#a69780]">Share of MPs by political party</p>
+                <p className="text-sm text-gray-500">Share of MPs by political party</p>
               </div>
 
               {summary && summary.party_distribution.length > 0 ? (
@@ -777,7 +777,7 @@ export default function MPsPage() {
                           />
                           <div>
                             <p className="text-sm font-semibold text-gray-900">{item.party || 'Unknown'}</p>
-                            <p className="text-xs text-[#a69780]">{item.count} MPs</p>
+                            <p className="text-xs text-gray-500">{item.count} MPs</p>
                           </div>
                         </div>
                         <span className="text-sm font-medium text-gray-900">{item.percentage}%</span>
@@ -786,7 +786,7 @@ export default function MPsPage() {
                   </div>
                 </div>
               ) : (
-                <p className="text-[#a69780] text-center py-6">
+                <p className="text-gray-500 text-center py-6">
                   No party distribution data available.
                 </p>
               )}

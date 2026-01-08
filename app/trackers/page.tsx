@@ -70,55 +70,55 @@ export default function TrackersPage() {
                   <div className="w-16 h-16 rounded-full bg-[#2d5016] flex items-center justify-center text-white font-bold text-lg border-4 border-white shadow-lg">
                     1<sup className="text-xs">st</sup>
                   </div>
-                  <span className="text-xs text-[#8b7d6b] mt-2">Reading</span>
+                  <span className="text-xs text-gray-600 mt-2">Reading</span>
                 </div>
                 <div className="h-0.5 w-12 bg-[#2d5016]"></div>
                 <div className="flex flex-col items-center">
                   <div className="w-16 h-16 rounded-full bg-[#2d5016] flex items-center justify-center text-white font-bold text-lg border-4 border-white shadow-lg">
                     2<sup className="text-xs">nd</sup>
                   </div>
-                  <span className="text-xs text-[#8b7d6b] mt-2">Reading</span>
+                  <span className="text-xs text-gray-600 mt-2">Reading</span>
                 </div>
                 <div className="h-0.5 w-12 bg-gray-300"></div>
                 <div className="flex flex-col items-center">
-                  <div className="w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center text-[#8b7d6b] font-bold text-lg border-4 border-white shadow">
+                  <div className="w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 font-bold text-lg border-4 border-white shadow">
                     3<sup className="text-xs">rd</sup>
                   </div>
-                  <span className="text-xs text-[#8b7d6b] mt-2">Passed by Parliament</span>
+                  <span className="text-xs text-gray-600 mt-2">Passed by Parliament</span>
                 </div>
                 <div className="h-0.5 w-12 bg-gray-300"></div>
                 <div className="flex flex-col items-center">
-                  <div className="w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center text-[#8b7d6b] border-4 border-white shadow">
+                  <div className="w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 border-4 border-white shadow">
                     <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                   </div>
-                  <span className="text-xs text-[#8b7d6b] mt-2">Assented to by the President</span>
+                  <span className="text-xs text-gray-600 mt-2">Assented to by the President</span>
                 </div>
               </div>
             </div>
 
             <div className="mb-6">
               <h1 className="text-3xl font-bold text-[#2d5016] mb-4">BILL STATUS</h1>
-              <p className="text-sm text-[#8b7d6b] mb-2">BILL STATUS: 1ST READING</p>
+              <p className="text-sm text-gray-600 mb-2">BILL STATUS: 1ST READING</p>
               <h2 className="text-2xl font-bold text-gray-800 mb-4">
                 Forensic and Scientific Analytical Services Bill, 2025.
               </h2>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
-                  <span className="text-[#8b7d6b]">Bill type:</span>
+                  <span className="text-gray-600">Bill type:</span>
                   <span className="font-semibold text-gray-800 ml-2">Government</span>
                 </div>
                 <div>
-                  <span className="text-[#8b7d6b]">Year Introduced:</span>
+                  <span className="text-gray-600">Year Introduced:</span>
                   <span className="font-semibold text-gray-800 ml-2">2025-07-16</span>
                 </div>
                 <div className="col-span-2">
-                  <span className="text-[#8b7d6b]">Mover:</span>
+                  <span className="text-gray-600">Mover:</span>
                   <span className="font-semibold text-gray-800 ml-2">Major General Kahinda Otafiire</span>
                 </div>
                 <div className="col-span-2">
-                  <span className="text-[#8b7d6b]">Assigned to:</span>
+                  <span className="text-gray-600">Assigned to:</span>
                   <span className="font-semibold text-gray-800 ml-2">Committee on Defence and Internal Affairs</span>
                 </div>
               </div>

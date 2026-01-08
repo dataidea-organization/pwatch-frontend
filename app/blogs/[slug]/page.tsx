@@ -48,7 +48,7 @@ export default function BlogDetailPage() {
       <div className="min-h-screen bg-[#f3eed4]">
         <main className="max-w-5xl mx-auto px-4 py-8">
           <div className="text-center">
-            <p className="text-[#8b7d6b]">Loading blog post...</p>
+            <p className="text-gray-600">Loading blog post...</p>
           </div>
         </main>
       </div>
@@ -70,7 +70,7 @@ export default function BlogDetailPage() {
               </button>
               <Link
                 href="/blogs"
-                className="inline-block bg-gray-200 text-[#7a6b5a] px-6 py-2 rounded-md hover:bg-gray-300 transition-colors"
+                className="inline-block bg-gray-200 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-300 transition-colors"
               >
                 Back to Blogs
               </Link>
@@ -129,7 +129,7 @@ export default function BlogDetailPage() {
               <span className="px-3 py-1 bg-[#2d5016] text-white text-sm font-semibold rounded-full">
                 {blog.category_display || blog.category}
               </span>
-              <div className="flex items-center gap-2 text-sm text-[#8b7d6b]">
+              <div className="flex items-center gap-2 text-sm text-gray-600">
                 <svg
                   className="w-4 h-4"
                   fill="none"
@@ -153,13 +153,13 @@ export default function BlogDetailPage() {
             </h1>
 
             {/* Author */}
-            <div className="flex items-center gap-3 mb-6 pb-6 border-b border-[#d2c4b0]">
+            <div className="flex items-center gap-3 mb-6 pb-6 border-b border-gray-200">
               <div className="w-12 h-12 rounded-full bg-[#2d5016] flex items-center justify-center text-white font-semibold">
                 {blog.author.charAt(0).toUpperCase()}
               </div>
               <div>
                 <p className="font-semibold text-gray-900">{blog.author}</p>
-                <p className="text-sm text-[#8b7d6b]">Author</p>
+                <p className="text-sm text-gray-600">Author</p>
               </div>
             </div>
 

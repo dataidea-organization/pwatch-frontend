@@ -80,7 +80,7 @@ export default function DebtTrackerPage() {
         <main className="max-w-7xl mx-auto px-4 py-8">
           <div className="text-center">
             <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#2d5016]"></div>
-            <p className="mt-4 text-[#8b7d6b]">Loading debt tracker data...</p>
+            <p className="mt-4 text-gray-600">Loading debt tracker data...</p>
           </div>
         </main>
       </div>
@@ -122,32 +122,32 @@ export default function DebtTrackerPage() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">National Debt Tracker</h1>
-          <p className="text-[#8b7d6b] text-lg">Track Uganda's national debt and economic indicators</p>
+          <p className="text-gray-600 text-lg">Track Uganda's national debt and economic indicators</p>
         </div>
 
         {/* Top Stats Cards */}
         {latestData && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8">
-            <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] p-6 hover:shadow-md transition-shadow">
-              <h3 className="text-sm font-semibold text-[#a69780] uppercase tracking-wide mb-3">National Debt</h3>
+            <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">National Debt</h3>
               <p className="text-2xl md:text-3xl font-bold text-[#2d5016]">
                 UGX {(latestData.national_debt / 1000000).toLocaleString()}M
               </p>
-              <p className="text-xs text-[#a69780] mt-2">As of {latestData.year}</p>
+              <p className="text-xs text-gray-500 mt-2">As of {latestData.year}</p>
             </div>
-            <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] p-6 hover:shadow-md transition-shadow">
-              <h3 className="text-sm font-semibold text-[#a69780] uppercase tracking-wide mb-3">Interest</h3>
+            <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Interest</h3>
               <p className="text-2xl md:text-3xl font-bold text-[#2d5016]">
                 UGX {(latestData.interest / 1000000).toLocaleString()}M
               </p>
-              <p className="text-xs text-[#a69780] mt-2">As of {latestData.year}</p>
+              <p className="text-xs text-gray-500 mt-2">As of {latestData.year}</p>
             </div>
-            <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] p-6 hover:shadow-md transition-shadow">
-              <h3 className="text-sm font-semibold text-[#a69780] uppercase tracking-wide mb-3">Total Expenditure</h3>
+            <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Total Expenditure</h3>
               <p className="text-2xl md:text-3xl font-bold text-[#2d5016]">
                 UGX {(latestData.total_expenditure / 1000000).toLocaleString()}M
               </p>
-              <p className="text-xs text-[#a69780] mt-2">As of {latestData.year}</p>
+              <p className="text-xs text-gray-500 mt-2">As of {latestData.year}</p>
             </div>
           </div>
         )}
@@ -155,7 +155,7 @@ export default function DebtTrackerPage() {
         {/* Main Content - Chart and Sidebar */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Chart Section */}
-          <div className="lg:col-span-2 bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] p-6">
+          <div className="lg:col-span-2 bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 p-6">
             <h2 className="text-xl font-bold text-gray-900 mb-6">GDP and National Debt Trends</h2>
             <ResponsiveContainer width="100%" height={400}>
               <AreaChart
@@ -166,12 +166,12 @@ export default function DebtTrackerPage() {
                 <XAxis
                   dataKey="year"
                   label={{ value: 'Year', position: 'insideBottom', offset: -5 }}
-                  tick={{ fill: '#a69780' }}
+                  tick={{ fill: '#6b7280' }}
                 />
                 <YAxis
                   label={{ value: 'GDP', angle: -90, position: 'insideLeft' }}
                   tickFormatter={(value) => formatLargeNumber(value)}
-                  tick={{ fill: '#a69780' }}
+                  tick={{ fill: '#6b7280' }}
                 />
                 <Tooltip
                   formatter={(value: number) => formatCurrency(value)}
@@ -206,13 +206,13 @@ export default function DebtTrackerPage() {
 
           {/* Sidebar Metrics */}
           {latestData && (
-            <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] p-6">
+            <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 p-6">
               <h3 className="text-lg font-bold text-gray-900 mb-6">Per Capita Metrics</h3>
               <div className="space-y-6">
                 {/* Debt Per Citizen */}
                 <div>
                   <div className="flex justify-between mb-2">
-                    <span className="text-sm font-medium text-[#7a6b5a]">Debt Per Citizen</span>
+                    <span className="text-sm font-medium text-gray-700">Debt Per Citizen</span>
                     <span className="text-sm font-bold text-[#2d5016]">
                       UGX {(latestData.debt_per_citizen / 1000000000).toFixed(1)}B
                     </span>
@@ -228,7 +228,7 @@ export default function DebtTrackerPage() {
                 {/* GDP Per Capita */}
                 <div>
                   <div className="flex justify-between mb-2">
-                    <span className="text-sm font-medium text-[#7a6b5a]">GDP Per Capita</span>
+                    <span className="text-sm font-medium text-gray-700">GDP Per Capita</span>
                     <span className="text-sm font-bold text-[#2d5016]">
                       UGX {(latestData.gdp_per_capita / 1000000000).toFixed(1)}B
                     </span>
@@ -244,7 +244,7 @@ export default function DebtTrackerPage() {
                 {/* Per Capita Income */}
                 <div>
                   <div className="flex justify-between mb-2">
-                    <span className="text-sm font-medium text-[#7a6b5a]">Per Capita Income</span>
+                    <span className="text-sm font-medium text-gray-700">Per Capita Income</span>
                     <span className="text-sm font-bold text-[#2d5016]">
                       UGX {(latestData.per_capita_income / 1000000).toFixed(0)}M
                     </span>
@@ -259,8 +259,8 @@ export default function DebtTrackerPage() {
 
                 {/* Population Info */}
                 {latestData.population && (
-                  <div className="mt-6 pt-6 border-t border-[#d2c4b0]">
-                    <div className="text-sm text-[#8b7d6b]">
+                  <div className="mt-6 pt-6 border-t border-gray-200">
+                    <div className="text-sm text-gray-600">
                       <span className="font-medium">Population ({latestData.year}):</span>
                       <span className="ml-2 font-bold text-gray-900">
                         {latestData.population.toLocaleString()}
@@ -274,9 +274,9 @@ export default function DebtTrackerPage() {
         </div>
 
         {/* Data Source Footer */}
-        <div className="mt-8 bg-[#f3eed4] rounded-lg shadow-sm border border-[#d2c4b0] p-6">
-          <h3 className="text-sm font-semibold text-[#7a6b5a] mb-2">About This Data</h3>
-          <p className="text-sm text-[#8b7d6b]">
+        <div className="mt-8 bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 p-6">
+          <h3 className="text-sm font-semibold text-gray-700 mb-2">About This Data</h3>
+          <p className="text-sm text-gray-600">
             National debt and economic data is collected from official government sources and updated annually.
             All figures are in Uganda Shillings (UGX). Data covers fiscal years from {debtData[0]?.year} to {debtData[debtData.length - 1]?.year}.
           </p>

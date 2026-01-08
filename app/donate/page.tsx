@@ -66,7 +66,7 @@ export default function DonatePage() {
         {/* Page Header */}
         <div className="mb-12 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Support Our Mission</h1>
-          <p className="text-xl text-[#8b7d6b] max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             The Centre for Policy Analysis (CEPA) is dedicated to monitoring and tracking the Ugandan Parliament, 
             providing relevant data and expert insights to promote transparency, accountability, and good governance.
           </p>
@@ -76,10 +76,10 @@ export default function DonatePage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
           {/* Donation Form */}
           <div className="lg:col-span-2">
-            <div className="bg-[#f3eed4] rounded-lg border border-[#d2c4b0] shadow-sm p-8">
+            <div className="bg-[#f3eed4] rounded-lg border border-gray-200 shadow-sm p-8">
               <div className="mb-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">Donation Information</h2>
-                <p className="text-[#8b7d6b]">
+                <p className="text-gray-600">
                   Please provide your details below. All information will be kept confidential and secure.
                 </p>
               </div>
@@ -111,7 +111,7 @@ export default function DonatePage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-semibold text-[#7a6b5a] mb-2">
+                    <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
                       Full Name <span className="text-red-500">*</span>
                     </label>
                     <Input
@@ -119,14 +119,14 @@ export default function DonatePage() {
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="border-[#c4b5a0] focus-visible:ring-[#2d5016] focus-visible:border-[#2d5016]"
+                      className="border-gray-300 focus-visible:ring-[#2d5016] focus-visible:border-[#2d5016]"
                       required
                       disabled={isSubmitting}
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-sm font-semibold text-[#7a6b5a] mb-2">
+                    <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
                       Email Address <span className="text-red-500">*</span>
                     </label>
                     <Input
@@ -134,7 +134,7 @@ export default function DonatePage() {
                       type="email"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="border-[#c4b5a0] focus-visible:ring-[#2d5016] focus-visible:border-[#2d5016]"
+                      className="border-gray-300 focus-visible:ring-[#2d5016] focus-visible:border-[#2d5016]"
                       required
                       disabled={isSubmitting}
                     />
@@ -143,14 +143,14 @@ export default function DonatePage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="country" className="block text-sm font-semibold text-[#7a6b5a] mb-2">
+                    <label htmlFor="country" className="block text-sm font-semibold text-gray-700 mb-2">
                       Country <span className="text-red-500">*</span>
                     </label>
                     <select
                       id="country"
                       value={formData.country}
                       onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                      className="w-full h-10 rounded-md border border-[#c4b5a0] bg-white px-3 py-2 text-base shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#2d5016] focus-visible:border-[#2d5016]"
+                      className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 py-2 text-base shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#2d5016] focus-visible:border-[#2d5016]"
                       required
                       disabled={isSubmitting}
                     >
@@ -165,7 +165,7 @@ export default function DonatePage() {
                   </div>
 
                   <div>
-                    <label htmlFor="address" className="block text-sm font-semibold text-[#7a6b5a] mb-2">
+                    <label htmlFor="address" className="block text-sm font-semibold text-gray-700 mb-2">
                       Address
                     </label>
                     <Input
@@ -173,7 +173,7 @@ export default function DonatePage() {
                       type="text"
                       value={formData.address}
                       onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                      className="border-[#c4b5a0] focus-visible:ring-[#2d5016] focus-visible:border-[#2d5016]"
+                      className="border-gray-300 focus-visible:ring-[#2d5016] focus-visible:border-[#2d5016]"
                       placeholder="Street address, City, Postal code"
                       disabled={isSubmitting}
                     />
@@ -181,11 +181,11 @@ export default function DonatePage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-[#7a6b5a] mb-3">
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">
                     Preferred Donation Method
                   </label>
                   <div className="space-y-3">
-                    <div className="flex items-start gap-3 p-4 border border-[#d2c4b0] rounded-lg hover:border-[#2d5016] hover:bg-[#f3eed4] transition-colors cursor-pointer">
+                    <div className="flex items-start gap-3 p-4 border border-gray-200 rounded-lg hover:border-[#2d5016] hover:bg-[#f3eed4] transition-colors cursor-pointer">
                       <input
                         type="radio"
                         id="mobile-money"
@@ -193,7 +193,7 @@ export default function DonatePage() {
                         value="mobile-money"
                         checked={formData.donationMethod === 'mobile-money'}
                         onChange={(e) => setFormData({ ...formData, donationMethod: e.target.value })}
-                        className="mt-1 h-4 w-4 text-[#2d5016] focus:ring-[#2d5016] border-[#c4b5a0]"
+                        className="mt-1 h-4 w-4 text-[#2d5016] focus:ring-[#2d5016] border-gray-300"
                         disabled={isSubmitting}
                       />
                       <label htmlFor="mobile-money" className="flex-1 cursor-pointer">
@@ -201,11 +201,11 @@ export default function DonatePage() {
                           <Smartphone className="w-5 h-5 text-[#2d5016]" />
                           <span className="font-medium text-gray-900">Mobile Money</span>
                         </div>
-                        <p className="text-sm text-[#8b7d6b]">MTN: 0755588080 (UGX)</p>
+                        <p className="text-sm text-gray-600">MTN: 0755588080 (UGX)</p>
                       </label>
                     </div>
 
-                    <div className="flex items-start gap-3 p-4 border border-[#d2c4b0] rounded-lg hover:border-[#2d5016] hover:bg-[#f3eed4] transition-colors cursor-pointer">
+                    <div className="flex items-start gap-3 p-4 border border-gray-200 rounded-lg hover:border-[#2d5016] hover:bg-[#f3eed4] transition-colors cursor-pointer">
                       <input
                         type="radio"
                         id="bank-transfer"
@@ -213,7 +213,7 @@ export default function DonatePage() {
                         value="bank-transfer"
                         checked={formData.donationMethod === 'bank-transfer'}
                         onChange={(e) => setFormData({ ...formData, donationMethod: e.target.value })}
-                        className="mt-1 h-4 w-4 text-[#2d5016] focus:ring-[#2d5016] border-[#c4b5a0]"
+                        className="mt-1 h-4 w-4 text-[#2d5016] focus:ring-[#2d5016] border-gray-300"
                         disabled={isSubmitting}
                       />
                       <label htmlFor="bank-transfer" className="flex-1 cursor-pointer">
@@ -221,11 +221,11 @@ export default function DonatePage() {
                           <Building2 className="w-5 h-5 text-[#2d5016]" />
                           <span className="font-medium text-gray-900">Bank Transfer</span>
                         </div>
-                        <p className="text-sm text-[#8b7d6b]">Account details will be provided upon submission</p>
+                        <p className="text-sm text-gray-600">Account details will be provided upon submission</p>
                       </label>
                     </div>
 
-                    <div className="flex items-start gap-3 p-4 border border-[#d2c4b0] rounded-lg hover:border-[#2d5016] hover:bg-[#f3eed4] transition-colors cursor-pointer">
+                    <div className="flex items-start gap-3 p-4 border border-gray-200 rounded-lg hover:border-[#2d5016] hover:bg-[#f3eed4] transition-colors cursor-pointer">
                       <input
                         type="radio"
                         id="other"
@@ -233,7 +233,7 @@ export default function DonatePage() {
                         value="other"
                         checked={formData.donationMethod === 'other'}
                         onChange={(e) => setFormData({ ...formData, donationMethod: e.target.value })}
-                        className="mt-1 h-4 w-4 text-[#2d5016] focus:ring-[#2d5016] border-[#c4b5a0]"
+                        className="mt-1 h-4 w-4 text-[#2d5016] focus:ring-[#2d5016] border-gray-300"
                         disabled={isSubmitting}
                       />
                       <label htmlFor="other" className="flex-1 cursor-pointer">
@@ -241,14 +241,14 @@ export default function DonatePage() {
                           <Banknote className="w-5 h-5 text-[#2d5016]" />
                           <span className="font-medium text-gray-900">Other Method</span>
                         </div>
-                        <p className="text-sm text-[#8b7d6b]">Please specify in the message field below</p>
+                        <p className="text-sm text-gray-600">Please specify in the message field below</p>
                       </label>
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-semibold text-[#7a6b5a] mb-2">
+                  <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
                     Additional Message (Optional)
                   </label>
                   <textarea
@@ -256,13 +256,13 @@ export default function DonatePage() {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     rows={4}
-                    className="w-full rounded-md border border-[#c4b5a0] bg-white px-3 py-2 text-base shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#2d5016] focus-visible:border-[#2d5016] resize-none"
+                    className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#2d5016] focus-visible:border-[#2d5016] resize-none"
                     placeholder="Any additional information or special instructions..."
                     disabled={isSubmitting}
                   />
                 </div>
 
-                <div className="pt-4 border-t border-[#d2c4b0]">
+                <div className="pt-4 border-t border-gray-200">
                   <Button 
                     type="submit" 
                     variant="green" 
@@ -272,7 +272,7 @@ export default function DonatePage() {
                   >
                     {isSubmitting ? 'Submitting...' : 'Submit Donation Request'}
                   </Button>
-                  <p className="text-xs text-[#a69780] mt-3">
+                  <p className="text-xs text-gray-500 mt-3">
                     By submitting this form, you agree to our privacy policy and terms of service.
                   </p>
                 </div>
@@ -284,9 +284,9 @@ export default function DonatePage() {
           <div className="space-y-6">
 
             {/* Contact Information */}
-            <div className="bg-[#f3eed4] rounded-lg border border-[#d2c4b0] shadow-sm p-6">
+            <div className="bg-[#f3eed4] rounded-lg border border-gray-200 shadow-sm p-6">
               <h3 className="text-xl font-bold text-gray-900 mb-4">Contact Information</h3>
-              <div className="space-y-3 text-sm text-[#8b7d6b]">
+              <div className="space-y-3 text-sm text-gray-600">
                 <p>
                   <span className="font-semibold text-gray-900">Email:</span><br />
                   info@parliamentwatch.ug
@@ -301,7 +301,7 @@ export default function DonatePage() {
             {/* Security Notice */}
             <div className="bg-blue-50 rounded-lg border border-blue-200 p-6">
               <h3 className="text-lg font-bold text-gray-900 mb-2">Secure & Confidential</h3>
-              <p className="text-sm text-[#7a6b5a] leading-relaxed">
+              <p className="text-sm text-gray-700 leading-relaxed">
                 All donation information is encrypted and securely processed. We respect your privacy 
                 and will never share your personal information with third parties.
               </p>

@@ -48,7 +48,7 @@ export default function NewsDetailPage() {
       <div className="min-h-screen bg-[#f3eed4]">
         <main className="max-w-5xl mx-auto px-4 py-8">
           <div className="text-center">
-            <p className="text-[#8b7d6b]">Loading news article...</p>
+            <p className="text-gray-600">Loading news article...</p>
           </div>
         </main>
       </div>
@@ -70,7 +70,7 @@ export default function NewsDetailPage() {
               </button>
               <Link
                 href="/news"
-                className="inline-block bg-gray-200 text-[#7a6b5a] px-6 py-2 rounded-md hover:bg-gray-300 transition-colors"
+                className="inline-block bg-[#d2c4b0] text-gray-700 px-6 py-2 rounded-md hover:bg-[#c4b5a0] transition-colors"
               >
                 Back to News
               </Link>
@@ -111,7 +111,7 @@ export default function NewsDetailPage() {
         {/* News Article */}
         <article className="bg-[#f3eed4] rounded-lg shadow-md overflow-hidden">
           {/* Header Image */}
-          <div className="relative h-96 bg-gray-200">
+          <div className="relative h-96 bg-[#d2c4b0]">
             <img
               src={article.image 
                 ? (article.image.startsWith('http') ? article.image : `${API_BASE_URL.replace('/api', '')}${article.image}`)
@@ -129,7 +129,7 @@ export default function NewsDetailPage() {
               <span className="px-3 py-1 bg-[#2d5016] text-white text-sm font-semibold rounded-full">
                 {article.category_display || article.category}
               </span>
-              <div className="flex items-center gap-2 text-sm text-[#8b7d6b]">
+              <div className="flex items-center gap-2 text-sm text-gray-600">
                 <svg
                   className="w-4 h-4"
                   fill="none"
@@ -153,13 +153,13 @@ export default function NewsDetailPage() {
             </h1>
 
             {/* Author */}
-            <div className="flex items-center gap-3 mb-6 pb-6 border-b border-[#d2c4b0]">
+            <div className="flex items-center gap-3 mb-6 pb-6 border-b border-gray-200">
               <div className="w-12 h-12 rounded-full bg-[#2d5016] flex items-center justify-center text-white font-semibold">
                 {article.author.charAt(0).toUpperCase()}
               </div>
               <div>
                 <p className="font-semibold text-gray-900">{article.author}</p>
-                <p className="text-sm text-[#8b7d6b]">Author</p>
+                <p className="text-sm text-gray-600">Author</p>
               </div>
             </div>
 

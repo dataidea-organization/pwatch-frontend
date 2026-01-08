@@ -37,7 +37,7 @@ export default function MPDetailPage() {
       <div className="min-h-screen bg-[#f3eed4]">
         <main className="max-w-5xl mx-auto px-4 py-8">
           <div className="text-center">
-            <p className="text-[#8b7d6b]">Loading MP details...</p>
+            <p className="text-gray-600">Loading MP details...</p>
           </div>
         </main>
       </div>
@@ -59,7 +59,7 @@ export default function MPDetailPage() {
               </button>
               <Link
                 href="/trackers/mps"
-                className="inline-block bg-[#d2c4b0] text-[#7a6b5a] px-6 py-2 rounded-md hover:bg-[#c4b5a0] transition-colors"
+                className="inline-block bg-[#d2c4b0] text-gray-700 px-6 py-2 rounded-md hover:bg-[#c4b5a0] transition-colors"
               >
                 Back to MPs
               </Link>
@@ -177,7 +177,7 @@ export default function MPDetailPage() {
                       />
                     </svg>
                     <div>
-                      <p className="text-sm font-medium text-[#8b7d6b] mb-1">Email</p>
+                      <p className="text-sm font-medium text-gray-600 mb-1">Email</p>
                       <a
                         href={`mailto:${mp.email}`}
                         className="text-[#2d5016] hover:underline break-all"
@@ -204,7 +204,7 @@ export default function MPDetailPage() {
                       />
                     </svg>
                     <div>
-                      <p className="text-sm font-medium text-[#8b7d6b] mb-1">Phone</p>
+                      <p className="text-sm font-medium text-gray-600 mb-1">Phone</p>
                       <a
                         href={`tel:${mp.phone_no}`}
                         className="text-[#2d5016] hover:underline"
@@ -217,7 +217,7 @@ export default function MPDetailPage() {
               </div>
 
               {!mp.email && !mp.phone_no && (
-                <p className="text-[#a69780] italic">No contact information available.</p>
+                <p className="text-gray-500 italic">No contact information available.</p>
               )}
             </div>
 
@@ -229,7 +229,7 @@ export default function MPDetailPage() {
                   className="prose max-w-none"
                   dangerouslySetInnerHTML={{ __html: mp.bio }}
                   style={{
-                    color: '#8b7d6b',
+                    color: '#374151',
                     lineHeight: '1.75',
                   }}
                 />
@@ -243,15 +243,15 @@ export default function MPDetailPage() {
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="p-4 bg-[#f3eed4] rounded-lg">
-                  <p className="text-sm font-medium text-[#8b7d6b] mb-1">Party</p>
+                  <p className="text-sm font-medium text-gray-600 mb-1">Party</p>
                   <p className="text-gray-800 font-semibold">{mp.party}</p>
                 </div>
                 <div className="p-4 bg-[#f3eed4] rounded-lg">
-                  <p className="text-sm font-medium text-[#8b7d6b] mb-1">Constituency</p>
+                  <p className="text-sm font-medium text-gray-600 mb-1">Constituency</p>
                   <p className="text-gray-800 font-semibold">{mp.constituency}</p>
                 </div>
                 <div className="p-4 bg-[#f3eed4] rounded-lg">
-                  <p className="text-sm font-medium text-[#8b7d6b] mb-1">District</p>
+                  <p className="text-sm font-medium text-gray-600 mb-1">District</p>
                   <p className="text-gray-800 font-semibold">{mp.district}</p>
                 </div>
               </div>
@@ -263,7 +263,7 @@ export default function MPDetailPage() {
         <div className="mt-6 flex justify-center">
           <Link
             href="/trackers/mps"
-            className="bg-[#d2c4b0] text-[#7a6b5a] px-8 py-3 rounded-md hover:bg-[#c4b5a0] transition-colors font-medium"
+            className="bg-[#d2c4b0] text-gray-700 px-8 py-3 rounded-md hover:bg-[#c4b5a0] transition-colors font-medium"
           >
             View All MPs
           </Link>
