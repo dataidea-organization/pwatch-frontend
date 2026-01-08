@@ -90,9 +90,9 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/resources/explainers" className="text-sm text-gray-200 hover:text-white transition-colors">
+                <a href="https://www.youtube.com/@Centre4PolicyAnalysis" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-200 hover:text-white transition-colors">
                   Explainers
-                </Link>
+                </a>
               </li>
               <li>
                 <Link href="/resources/reports-briefs" className="text-sm text-gray-200 hover:text-white transition-colors">

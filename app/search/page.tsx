@@ -36,7 +36,7 @@ const typeLinks: { [key: string]: string } = {
   budgets: '/trackers/budgets',
   hansards: '/trackers/hansards',
   order_papers: '/trackers/order-paper',
-  explainers: '/resources/explainers',
+  explainers: 'https://www.youtube.com/@Centre4PolicyAnalysis',
   reports: '/resources/reports-briefs',
   partner_publications: '/resources/partner-publications',
   statements: '/resources/statements',
@@ -112,7 +112,7 @@ function SearchPageContent() {
       case 'order_papers':
         return `/trackers/order-paper`;
       case 'explainers':
-        return `/resources/explainers`;
+        return 'https://www.youtube.com/@Centre4PolicyAnalysis';
       case 'reports':
         return `/resources/reports-briefs`;
       case 'partner_publications':
@@ -226,12 +226,23 @@ function SearchPageContent() {
                     {typeLabels[type] || type}
                   </h2>
                   {count > results.length && (
-                    <Link
-                      href={`${typeLinks[type]}?search=${encodeURIComponent(query)}`}
-                      className="text-[#2d5016] hover:text-[#1b3d26] text-sm font-medium"
-                    >
-                      View all {count} {typeLabels[type]}
-                    </Link>
+                    type === 'explainers' ? (
+                      <a
+                        href={typeLinks[type]}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#2d5016] hover:text-[#1b3d26] text-sm font-medium"
+                      >
+                        View all {count} {typeLabels[type]}
+                      </a>
+                    ) : (
+                      <Link
+                        href={`${typeLinks[type]}?search=${encodeURIComponent(query)}`}
+                        className="text-[#2d5016] hover:text-[#1b3d26] text-sm font-medium"
+                      >
+                        View all {count} {typeLabels[type]}
+                      </Link>
+                    )
                   )}
                 </div>
 

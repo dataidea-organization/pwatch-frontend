@@ -115,7 +115,7 @@ export default function Header() {
       case 'order_papers':
         return `/trackers/order-paper`;
       case 'explainers':
-        return `/resources/explainers`;
+        return 'https://www.youtube.com/@Centre4PolicyAnalysis';
       case 'reports':
         return `/resources/reports-briefs`;
       case 'partner_publications':
@@ -356,7 +356,7 @@ export default function Header() {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-56">
                 <DropdownMenuItem asChild>
-                  <Link href="/resources/explainers" className="w-full cursor-pointer">Explainers</Link>
+                  <a href="https://www.youtube.com/@Centre4PolicyAnalysis" target="_blank" rel="noopener noreferrer" className="w-full cursor-pointer">Explainers</a>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/resources/reports-briefs" className="w-full cursor-pointer">Reports &amp; Briefs</Link>
@@ -547,13 +547,15 @@ export default function Header() {
                 </button>
                 {openMobileDropdown === 'resources' && (
                   <div className="pl-4 space-y-2 mt-2">
-                    <Link 
-                      href="/resources/explainers" 
+                    <a 
+                      href="https://www.youtube.com/@Centre4PolicyAnalysis" 
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="block text-gray-600 hover:text-[#2d5016] text-sm py-1"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       Explainers
-                    </Link>
+                    </a>
                     <Link 
                       href="/resources/reports-briefs" 
                       className="block text-gray-600 hover:text-[#2d5016] text-sm py-1"

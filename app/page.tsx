@@ -10,7 +10,7 @@ import Link from 'next/link';
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
 
 type TrackerTab = 'mps' | 'bills' | 'loans' | 'budgets' | 'hansards' | 'order-paper';
-type ResourceTab = 'explainers' | 'reports' | 'partner-publications' | 'statements';
+type ResourceTab = 'reports' | 'partner-publications' | 'statements';
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -26,7 +26,7 @@ export default function Home() {
   const [trackersLoading, setTrackersLoading] = useState(true);
   
   // Resources section state
-  const [activeResourceTab, setActiveResourceTab] = useState<ResourceTab>('explainers');
+  const [activeResourceTab, setActiveResourceTab] = useState<ResourceTab>('reports');
   const [resourcesData, setResourcesData] = useState<HomeResourcesSummary | null>(null);
   const [resourcesLoading, setResourcesLoading] = useState(true);
 
@@ -637,16 +637,6 @@ export default function Home() {
             {/* Tabs */}
           <div className="bg-[#d2c4b0] px-4 py-2 flex flex-wrap gap-2 border-b border-gray-300">
             <button
-              onClick={() => setActiveResourceTab('explainers')}
-              className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
-                activeResourceTab === 'explainers'
-                  ? 'bg-[#f3eed4] text-gray-900'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              + Explainers
-            </button>
-            <button
               onClick={() => setActiveResourceTab('reports')}
               className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
                 activeResourceTab === 'reports'
@@ -687,46 +677,6 @@ export default function Home() {
               </div>
             ) : (
               <>
-                {/* Explainers Table */}
-                {activeResourceTab === 'explainers' && (
-                  <div>
-                    {!resourcesData || resourcesData.explainers.length === 0 ? (
-                      <div className="text-center py-8 text-gray-500">
-                        <p>No explainers available</p>
-                      </div>
-                    ) : (
-                      <div className="space-y-2">
-                        {resourcesData.explainers.map((explainer) => (
-                          <div key={explainer.id} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
-                            <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
-                            <div className="flex-1 min-w-0">
-                              {explainer.file ? (
-                                <a
-                                  href={explainer.file}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="text-sm text-gray-800 truncate hover:text-[#2d5016] transition-colors cursor-pointer block"
-                                >
-                                  {explainer.name}
-                                </a>
-                              ) : (
-                                <p className="text-sm text-gray-800 truncate">{explainer.name}</p>
-                              )}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                    <div className="mt-4 text-left">
-                      <Link href="/resources">
-                        <Button className="bg-[#2d5016] hover:bg-[#1b3d26] text-white">
-                          See all Explainers
-                        </Button>
-                      </Link>
-                    </div>
-                  </div>
-                )}
-
                 {/* Reports Table */}
                 {activeResourceTab === 'reports' && (
                   <div>
