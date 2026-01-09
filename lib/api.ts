@@ -112,8 +112,25 @@ export interface NewsPaginatedResponse {
   results: NewsArticle[];
 }
 
-export async function fetchNews(page: number = 1, pageSize: number = 12): Promise<NewsPaginatedResponse> {
-  const response = await fetch(`${API_BASE_URL}/news/?page=${page}&page_size=${pageSize}`);
+export async function fetchNews(
+  page: number = 1,
+  pageSize: number = 12,
+  filters?: {
+    category?: string;
+    search?: string;
+    ordering?: string;
+  }
+): Promise<NewsPaginatedResponse> {
+  const params = new URLSearchParams({
+    page: page.toString(),
+    page_size: pageSize.toString(),
+  });
+
+  if (filters?.category) params.append('category', filters.category);
+  if (filters?.search) params.append('search', filters.search);
+  if (filters?.ordering) params.append('ordering', filters.ordering);
+
+  const response = await fetch(`${API_BASE_URL}/news/?${params.toString()}`);
   if (!response.ok) {
     throw new Error('Failed to fetch news');
   }
