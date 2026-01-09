@@ -158,6 +158,30 @@ export async function fetchHomeNewsSummary(): Promise<HomeNewsSummaryResponse> {
   return response.json();
 }
 
+// Hot in Parliament API
+export interface HotInParliamentItem {
+  id: number;
+  title: string;
+  slug: string;
+  author: string;
+  content: string;
+  image: string | null;
+  link_url: string | null;
+  published_date: string;
+}
+
+export interface HotInParliamentResponse {
+  results: HotInParliamentItem[];
+}
+
+export async function fetchHotInParliament(): Promise<HotInParliamentResponse> {
+  const response = await fetch(`${API_BASE_URL}/news/hot-in-parliament/`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch hot in parliament');
+  }
+  return response.json();
+}
+
 // Blog API
 export interface BlogPost {
   id: number;

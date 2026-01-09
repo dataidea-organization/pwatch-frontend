@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, Folder } from 'lucide-react';
-import { fetchHeroImages, fetchHeadlines, fetchHomeNewsSummary, fetchHomeBlogSummary, fetchHomeTrackersSummary, fetchHomeResourcesSummary, HeroImage, Headline, NewsArticle, BlogPost, HomeTrackersSummary, HomeResourcesSummary } from '@/lib/api';
+import { fetchHeroImages, fetchHeadlines, fetchHomeNewsSummary, fetchHomeBlogSummary, fetchHomeTrackersSummary, fetchHomeResourcesSummary, fetchHotInParliament, HeroImage, Headline, NewsArticle, BlogPost, HomeTrackersSummary, HomeResourcesSummary, HotInParliamentItem } from '@/lib/api';
 import Link from 'next/link';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
@@ -18,6 +18,7 @@ export default function Home() {
   const [headlines, setHeadlines] = useState<Headline[]>([]);
   const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [hotInParliament, setHotInParliament] = useState<HotInParliamentItem[]>([]);
   const [loading, setLoading] = useState(true);
   
   // Trackers section state
@@ -90,6 +91,15 @@ export default function Home() {
       setBlogPosts([]);
     }
     
+    // Fetch Hot in Parliament items
+    try {
+      const hotData = await fetchHotInParliament();
+      setHotInParliament(hotData.results || []);
+    } catch (error) {
+      console.error('Error loading hot in parliament:', error);
+      setHotInParliament([]);
+    }
+    
     setLoading(false);
   };
 
@@ -150,7 +160,8 @@ export default function Home() {
     <div className="min-h-screen bg-[#f3eed4]">
 
       <main className="max-w-7xl mx-auto px-4 py-6 pb-20">
-        <div className="">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Hero Image Section */}
           <div className="lg:col-span-2">
             <div className="relative h-[400px] rounded-lg overflow-hidden group">
               {/* Image Carousel */}
@@ -238,6 +249,69 @@ export default function Home() {
                       aria-label={`Go to slide ${index + 1}`}
                     />
                   ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Hot in Parliament Section - Only visible on large screens */}
+          <div className="hidden lg:block">
+            <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 p-4 h-[400px] overflow-y-auto">
+              <h3 className="text-xl font-bold text-gray-900 mb-4 sticky top-0 bg-[#f3eed4] pb-2 border-b border-gray-300">
+                Hot in Parliament
+              </h3>
+              {hotInParliament.length === 0 ? (
+                <div className="text-center py-8 text-gray-500">
+                  <p className="text-sm">No hot items available</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {hotInParliament.map((item) => {
+                    const content = item.content.replace(/<[^>]*>/g, '').substring(0, 150) + '...';
+                    const itemUrl = item.link_url || `/news/${item.slug}`;
+                    
+                    return (
+                      <Link
+                        key={item.id}
+                        href={itemUrl}
+                        className="block group"
+                      >
+                        <div className="bg-white rounded-lg p-3 hover:shadow-md transition-shadow border border-gray-200">
+                          {item.image && (
+                            <div className="relative h-32 mb-2 rounded overflow-hidden">
+                              <img
+                                src={item.image.startsWith('http') ? item.image : `${API_BASE_URL.replace('/api', '')}${item.image}`}
+                                alt={item.title}
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                              />
+                            </div>
+                          )}
+                          <h4 className="font-semibold text-gray-900 text-sm mb-2 line-clamp-2 group-hover:text-[#2d5016] transition-colors">
+                            {item.title}
+                          </h4>
+                          <p className="text-xs text-gray-600 line-clamp-3 mb-2">
+                            {content}
+                          </p>
+                          <div className="flex items-center gap-2 text-xs text-gray-500">
+                            <svg
+                              className="w-3 h-3"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                              />
+                            </svg>
+                            <span>{new Date(item.published_date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
+                          </div>
+                        </div>
+                      </Link>
+                    );
+                  })}
                 </div>
               )}
             </div>
