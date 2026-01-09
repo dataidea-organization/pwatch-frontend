@@ -14,7 +14,7 @@ export default function Footer() {
           <div>
             <Link href="/" className="inline-block mb-4 bg-[#f3eed4] p-2 rounded">
               <Image
-                src="/images/PWATCH LOGO.png"
+                src="/images/logo.png"
                 alt="Parliament Watch Uganda Logo"
                 width={200}
                 height={67}

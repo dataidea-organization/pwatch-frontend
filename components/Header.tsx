@@ -276,7 +276,7 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <Image
-              src="/images/PWATCH LOGO.png"
+              src="/images/logo.png"
               alt="Parliament Watch Uganda Logo"
               width={240}
               height={80}
