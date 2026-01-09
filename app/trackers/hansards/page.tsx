@@ -10,6 +10,7 @@ interface Hansard {
   id: number;
   name: string;
   date: string | null;
+  date_received: string | null;
   file: string;
   created_at: string;
   updated_at: string;
@@ -274,6 +275,9 @@ export default function HansardsTrackerPage() {
                       </span>
                     </div>
                   </th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">
+                    Date Received
+                  </th>
                   <th className="px-6 py-4 text-center text-sm font-semibold text-gray-700">Actions</th>
                 </tr>
               </thead>
@@ -285,6 +289,9 @@ export default function HansardsTrackerPage() {
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-600">
                       {formatDate(hansard.date)}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-600">
+                      {hansard.date_received ? formatDate(hansard.date_received) : 'N/A'}
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center justify-center gap-2">

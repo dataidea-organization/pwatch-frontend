@@ -11,6 +11,7 @@ interface OrderPaper {
   name: string
   description: string | null
   file: string | null
+  date_received: string | null
   created_at: string
   updated_at: string
 }
@@ -246,22 +247,8 @@ export default function OrderPaperPage() {
                   <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                     Description
                   </th>
-                  <th 
-                    className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-[#d2c4b0] transition-colors group"
-                    onClick={() => handleSort('created_at')}
-                    title="Click to sort"
-                  >
-                    <div className="flex items-center gap-2">
-                    Date Added
-                      <span className={`text-gray-400 group-hover:text-[#2d5016] transition-colors text-xs ${
-                        sortField === 'created_at' ? 'text-[#2d5016]' : ''
-                      }`}>
-                        {sortField === 'created_at' 
-                          ? (sortDirection === 'asc' ? '↑' : '↓')
-                          : '↕'
-                        }
-                      </span>
-                    </div>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                    Date Received
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                     Actions
@@ -293,7 +280,7 @@ export default function OrderPaperPage() {
                         </div>
                       </td>
                       <td className="px-6 py-4 text-gray-600">
-                        {formatDate(orderPaper.created_at)}
+                        {orderPaper.date_received ? formatDate(orderPaper.date_received) : 'N/A'}
                       </td>
                       <td className="px-6 py-4">
                         {orderPaper.file ? (

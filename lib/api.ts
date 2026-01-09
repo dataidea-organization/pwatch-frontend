@@ -182,6 +182,14 @@ export async function fetchHotInParliament(): Promise<HotInParliamentResponse> {
   return response.json();
 }
 
+export async function fetchHotInParliamentItem(slug: string): Promise<HotInParliamentItem> {
+  const response = await fetch(`${API_BASE_URL}/news/hot-in-parliament/${slug}/`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch hot in parliament item');
+  }
+  return response.json();
+}
+
 // Blog API
 export interface BlogPost {
   id: number;

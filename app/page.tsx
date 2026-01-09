@@ -94,6 +94,7 @@ export default function Home() {
     // Fetch Hot in Parliament items
     try {
       const hotData = await fetchHotInParliament();
+      console.log('Hot in Parliament data:', hotData);
       setHotInParliament(hotData.results || []);
     } catch (error) {
       console.error('Error loading hot in parliament:', error);
@@ -267,8 +268,8 @@ export default function Home() {
               ) : (
                 <div className="space-y-4">
                   {hotInParliament.map((item) => {
-                    const content = item.content.replace(/<[^>]*>/g, '').substring(0, 150) + '...';
-                    const itemUrl = item.link_url || `/news/${item.slug}`;
+                    const content = item.content.replace(/<[^>]*>/g, '').substring(0, 100) + '...';
+                    const itemUrl = `/hot-in-parliament/${item.slug}`;
                     
                     return (
                       <Link
@@ -276,37 +277,44 @@ export default function Home() {
                         href={itemUrl}
                         className="block group"
                       >
-                        <div className="bg-white rounded-lg p-3 hover:shadow-md transition-shadow border border-gray-200">
-                          {item.image && (
-                            <div className="relative h-32 mb-2 rounded overflow-hidden">
+                        <div className="relative rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer h-48 w-full">
+                          {item.image ? (
+                            <>
                               <img
                                 src={item.image.startsWith('http') ? item.image : `${API_BASE_URL.replace('/api', '')}${item.image}`}
                                 alt={item.title}
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                                className="absolute inset-0 w-full h-full object-cover"
                               />
-                            </div>
+                              {/* Dark gradient overlay at bottom */}
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
+                            </>
+                          ) : (
+                            <div className="absolute inset-0 bg-gradient-to-br from-[#2d5016] to-[#1b3d26]" />
                           )}
-                          <h4 className="font-semibold text-gray-900 text-sm mb-2 line-clamp-2 group-hover:text-[#2d5016] transition-colors">
-                            {item.title}
-                          </h4>
-                          <p className="text-xs text-gray-600 line-clamp-3 mb-2">
-                            {content}
-                          </p>
-                          <div className="flex items-center gap-2 text-xs text-gray-500">
-                            <svg
-                              className="w-3 h-3"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                              />
-                            </svg>
-                            <span>{new Date(item.published_date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
+                          {/* Content overlay - positioned at bottom */}
+                          <div className="absolute bottom-0 left-0 right-0 p-3 z-10">
+                            <h4 className="font-semibold text-white text-sm mb-1.5 line-clamp-2">
+                              {item.title}
+                            </h4>
+                            <p className="text-xs text-white/90 line-clamp-2 mb-1.5">
+                              {content}
+                            </p>
+                            <div className="flex items-center gap-2 text-xs text-white/90">
+                              <svg
+                                className="w-3 h-3"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                />
+                              </svg>
+                              <span>{new Date(item.published_date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
+                            </div>
                           </div>
                         </div>
                       </Link>

@@ -11,6 +11,7 @@ interface Statement {
   name: string
   description: string | null
   file: string | null
+  date_received: string | null
   created_at: string
   updated_at: string
 }
@@ -164,7 +165,7 @@ export default function StatementsPage() {
                     Description
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                    Date Added
+                    Date Received
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                     Actions
@@ -196,7 +197,7 @@ export default function StatementsPage() {
                         </div>
                       </td>
                       <td className="px-6 py-4 text-gray-600">
-                        {formatDate(statement.created_at)}
+                        {statement.date_received ? formatDate(statement.date_received) : 'N/A'}
                       </td>
                       <td className="px-6 py-4">
                         {statement.file ? (
