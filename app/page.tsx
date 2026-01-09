@@ -91,13 +91,13 @@ export default function Home() {
       setBlogPosts([]);
     }
     
-    // Fetch Hot in Parliament items
+    // Fetch Latest in Parliament items
     try {
       const hotData = await fetchHotInParliament();
-      console.log('Hot in Parliament data:', hotData);
+      console.log('Latest in Parliament data:', hotData);
       setHotInParliament(hotData.results || []);
     } catch (error) {
-      console.error('Error loading hot in parliament:', error);
+      console.error('Error loading latest in parliament:', error);
       setHotInParliament([]);
     }
     
@@ -259,11 +259,11 @@ export default function Home() {
           <div className="hidden lg:block">
             <div className="bg-[#f3eed4] rounded-lg shadow-sm border border-gray-200 p-4 h-[400px] overflow-y-auto">
               <h3 className="text-xl font-bold text-gray-900 mb-4 sticky top-0 bg-[#f3eed4] pb-2 border-b border-gray-300">
-                Hot in Parliament
+                Latest in Parliament
               </h3>
               {hotInParliament.length === 0 ? (
                 <div className="text-center py-8 text-gray-500">
-                  <p className="text-sm">No hot items available</p>
+                  <p className="text-sm">No latest items available</p>
                 </div>
               ) : (
                 <div className="space-y-4">
