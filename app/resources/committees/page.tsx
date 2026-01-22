@@ -103,7 +103,7 @@ export default function CommitteesPage() {
           <p className="text-gray-600 mt-2">Explore committees, their members, and documents</p>
         </div>
 
-        <div className="bg-white rounded-lg border border-gray-200 shadow-sm mb-6">
+        <div className="bg-[#fafaf8] rounded-lg border border-gray-200 shadow-sm mb-6">
           <div className="p-4 border-b border-gray-200">
             <form onSubmit={handleSearch} className="flex gap-3 items-center">
               <div className="relative flex-1">
@@ -113,7 +113,7 @@ export default function CommitteesPage() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={`Search through ${totalCount} committees...`}
-                  className="w-full pl-10 pr-4 text-gray-900 placeholder:text-gray-400"
+                  className="w-full pl-10 pr-4 text-gray-900 placeholder:text-gray-400 border-gray-300 focus:border-gray-400"
                   style={{ color: '#111827' }}
                 />
               </div>
@@ -125,7 +125,7 @@ export default function CommitteesPage() {
                     setSearchQuery('')
                     setPage(1)
                   }}
-                  className="bg-[#d2c4b0] text-gray-700 hover:bg-[#c4b5a0] border-gray-300"
+                  className="bg-[#fafaf8] text-gray-700 hover:bg-[#f5f0e8] border-gray-300"
                 >
                   Clear
                 </Button>
@@ -142,7 +142,7 @@ export default function CommitteesPage() {
         </div>
 
         {committees.length === 0 ? (
-          <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-12 text-center">
+          <div className="bg-[#fafaf8] rounded-lg border border-gray-200 shadow-sm p-12 text-center">
             <p className="text-gray-600 text-lg">No committees found.</p>
             {searchQuery && (
               <p className="text-gray-500 mt-2">Try adjusting your search query.</p>
@@ -155,7 +155,7 @@ export default function CommitteesPage() {
                 <Link
                   key={committee.id}
                   href={`/resources/committees/${committee.id}`}
-                  className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow p-6 block"
+                  className="bg-[#fafaf8] rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow p-6 block"
                 >
                   <h2 className="text-xl font-semibold text-gray-900 mb-3 line-clamp-2">
                     {committee.title}
@@ -208,7 +208,7 @@ export default function CommitteesPage() {
             </div>
 
             {totalPages > 1 && (
-              <div className="flex items-center justify-between bg-white rounded-lg border border-gray-200 shadow-sm p-4">
+              <div className="flex items-center justify-between bg-[#fafaf8] rounded-lg border border-gray-200 shadow-sm p-4">
                 <div className="text-sm text-gray-600">
                   Showing {((page - 1) * pageSize) + 1} to {Math.min(page * pageSize, totalCount)} of {totalCount} committees
                 </div>
@@ -217,7 +217,7 @@ export default function CommitteesPage() {
                     variant="outline"
                     onClick={() => setPage(1)}
                     disabled={page === 1}
-                    className="bg-[#d2c4b0] text-gray-700 hover:bg-[#c4b5a0] border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-[#fafaf8] text-gray-700 hover:bg-[#f5f0e8] border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     First
                   </Button>
@@ -225,7 +225,7 @@ export default function CommitteesPage() {
                     variant="outline"
                     onClick={() => setPage(page - 1)}
                     disabled={page === 1}
-                    className="bg-[#d2c4b0] text-gray-700 hover:bg-[#c4b5a0] border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-[#fafaf8] text-gray-700 hover:bg-[#f5f0e8] border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <ChevronLeft size={20} />
                   </Button>
@@ -236,7 +236,7 @@ export default function CommitteesPage() {
                     variant="outline"
                     onClick={() => setPage(page + 1)}
                     disabled={page === totalPages}
-                    className="bg-[#d2c4b0] text-gray-700 hover:bg-[#c4b5a0] border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-[#fafaf8] text-gray-700 hover:bg-[#f5f0e8] border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <ChevronRight size={20} />
                   </Button>
@@ -244,7 +244,7 @@ export default function CommitteesPage() {
                     variant="outline"
                     onClick={() => setPage(totalPages)}
                     disabled={page === totalPages}
-                    className="bg-[#d2c4b0] text-gray-700 hover:bg-[#c4b5a0] border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-[#fafaf8] text-gray-700 hover:bg-[#f5f0e8] border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Last
                   </Button>

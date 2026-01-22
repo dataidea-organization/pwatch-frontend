@@ -125,7 +125,7 @@ export default function StatementsPage() {
           <p className="text-gray-600 mt-2">Official statements and position papers from CEPA</p>
         </div>
 
-        <div className="bg-[#f5f0e8] rounded-lg border border-gray-200 shadow-sm">
+        <div className="bg-[#fafaf8] rounded-lg border border-gray-200 shadow-sm">
           <div className="p-4 border-b border-gray-200">
             <div className="flex gap-3 items-center">
               <div className="relative flex-1">
@@ -135,7 +135,7 @@ export default function StatementsPage() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={`Search through ${totalCount} statements...`}
-                  className="w-full pl-10 pr-4 text-gray-900 placeholder:text-gray-400"
+                  className="w-full pl-10 pr-4 text-gray-900 placeholder:text-gray-400 border-gray-300 focus:border-gray-400"
                   style={{ color: '#111827' }}
                 />
               </div>
@@ -143,7 +143,7 @@ export default function StatementsPage() {
                 <Button
                   variant="outline"
                   onClick={() => setSearchQuery('')}
-                  className="bg-[#d2c4b0] text-gray-700 hover:bg-[#c4b5a0] border-gray-300"
+                  className="bg-[#fafaf8] text-gray-700 hover:bg-[#f5f0e8] border-gray-300"
                 >
                   Clear
                 </Button>
@@ -153,7 +153,7 @@ export default function StatementsPage() {
 
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-[#ddd0b8]">
+              <thead className="bg-[#fafaf8]">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                     <div className="flex items-center gap-2">
@@ -187,7 +187,7 @@ export default function StatementsPage() {
                   </tr>
                 ) : (
                   statements.map((statement) => (
-                    <tr key={statement.id} className="hover:bg-[#f5f0e8] transition-colors">
+                    <tr key={statement.id} className="hover:bg-[#fafaf8] transition-colors">
                       <td className="px-6 py-4">
                         <div className="font-medium text-gray-900">{statement.name}</div>
                       </td>
@@ -230,7 +230,7 @@ export default function StatementsPage() {
                 <button
                   onClick={() => setPage(1)}
                   disabled={page === 1}
-                  className="p-2 rounded-md text-gray-600 hover:bg-[#ddd0b8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="p-2 rounded-md text-gray-600 hover:bg-[#fafaf8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   aria-label="First page"
                 >
                   <ChevronsLeft size={20} />
@@ -238,7 +238,7 @@ export default function StatementsPage() {
                 <button
                   onClick={() => setPage(page - 1)}
                   disabled={page === 1}
-                  className="p-2 rounded-md text-gray-600 hover:bg-[#ddd0b8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="p-2 rounded-md text-gray-600 hover:bg-[#fafaf8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   aria-label="Previous page"
                 >
                   <ChevronLeft size={20} />
@@ -249,7 +249,7 @@ export default function StatementsPage() {
                 <button
                   onClick={() => setPage(page + 1)}
                   disabled={page === totalPages}
-                  className="p-2 rounded-md text-gray-600 hover:bg-[#ddd0b8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="p-2 rounded-md text-gray-600 hover:bg-[#fafaf8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   aria-label="Next page"
                 >
                   <ChevronRight size={20} />
@@ -257,7 +257,7 @@ export default function StatementsPage() {
                 <button
                   onClick={() => setPage(totalPages)}
                   disabled={page === totalPages}
-                  className="p-2 rounded-md text-gray-600 hover:bg-[#ddd0b8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="p-2 rounded-md text-gray-600 hover:bg-[#fafaf8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   aria-label="Last page"
                 >
                   <ChevronsRight size={20} />
@@ -267,7 +267,7 @@ export default function StatementsPage() {
           )}
         </div>
 
-        <div className="mt-6 bg-[#f5f0e8] rounded-lg border border-gray-200 shadow-sm p-6">
+        <div className="mt-6 bg-[#fafaf8] rounded-lg border border-gray-200 shadow-sm p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-2">About Statements</h3>
           <p className="text-gray-600">
             Official statements, position papers, and policy positions from CEPA on key governance and parliamentary issues.

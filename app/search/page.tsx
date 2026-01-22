@@ -19,7 +19,6 @@ const typeLabels: { [key: string]: string } = {
   order_papers: 'Order Papers',
   explainers: 'Explainers',
   reports: 'Reports',
-  partner_publications: 'Partner Publications',
   statements: 'Statements',
   podcasts: 'Podcasts',
   xspaces: 'X Spaces',
@@ -38,7 +37,6 @@ const typeLinks: { [key: string]: string } = {
   order_papers: '/trackers/order-paper',
   explainers: 'https://www.youtube.com/@Centre4PolicyAnalysis',
   reports: '/resources/reports-briefs',
-  partner_publications: '/resources/partner-publications',
   statements: '/resources/statements',
   podcasts: '/multimedia/podcast',
   xspaces: '/multimedia/x-spaces',
@@ -115,8 +113,6 @@ function SearchPageContent() {
         return 'https://www.youtube.com/@Centre4PolicyAnalysis';
       case 'reports':
         return `/resources/reports-briefs`;
-      case 'partner_publications':
-        return `/resources/partner-publications`;
       case 'statements':
         return `/resources/statements`;
       case 'podcasts':
@@ -250,7 +246,7 @@ function SearchPageContent() {
                   {results.map((result) => {
                     const isNewsOrBlog = type === 'news' || type === 'blogs';
                     const isMP = type === 'mps';
-                    const isResource = ['explainers', 'reports', 'partner_publications', 'statements', 'budgets', 'hansards', 'order_papers'].includes(type);
+                    const isResource = ['explainers', 'reports', 'statements', 'budgets', 'hansards', 'order_papers'].includes(type);
 
                     if (isNewsOrBlog) {
                       return (

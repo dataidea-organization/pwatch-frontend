@@ -10,7 +10,7 @@ import Link from 'next/link';
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
 
 type TrackerTab = 'mps' | 'bills' | 'loans' | 'budgets' | 'hansards' | 'order-paper';
-type ResourceTab = 'reports' | 'partner-publications' | 'statements';
+type ResourceTab = 'reports' | 'statements';
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -257,8 +257,8 @@ export default function Home() {
 
           {/* Hot in Parliament Section - Only visible on large screens */}
           <div className="hidden lg:block">
-            <div className="bg-[#f5f0e8] rounded-lg shadow-sm border border-gray-200 p-4 h-[400px] overflow-y-auto">
-              <h3 className="text-xl font-bold text-gray-900 mb-4 sticky top-0 bg-[#f5f0e8] pb-2 border-b border-gray-300">
+            <div className="bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 p-4 h-[400px] overflow-y-auto">
+              <h3 className="text-xl font-bold text-gray-900 mb-4 sticky top-0 bg-[#fafaf8] pb-2 border-b border-gray-300">
                 Latest in Parliament
               </h3>
               {hotInParliament.length === 0 ? (
@@ -407,14 +407,14 @@ export default function Home() {
         {/* Trackers Section */}
         <div className="mt-12">
           <h3 className="text-2xl font-bold text-gray-800 mb-4">Trackers</h3>
-          <div className="bg-[#ddd0b8] rounded-lg overflow-hidden">
+          <div className="bg-[#fafaf8] rounded-lg overflow-hidden">
             {/* Tabs */}
-          <div className="bg-[#d2c4b0] px-4 py-2 flex flex-wrap gap-2 border-b border-gray-300">
+          <div className="bg-[#f5f0e8] px-4 py-2 flex flex-wrap gap-2 border border-[#fafaf8]">
             <button
               onClick={() => setActiveTab('mps')}
               className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
                 activeTab === 'mps'
-                  ? 'bg-[#f5f0e8] text-gray-900'
+                  ? 'bg-[#fafaf8] text-gray-900'
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
@@ -424,7 +424,7 @@ export default function Home() {
               onClick={() => setActiveTab('bills')}
               className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
                 activeTab === 'bills'
-                  ? 'bg-[#f5f0e8] text-gray-900'
+                  ? 'bg-[#fafaf8] text-gray-900'
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
@@ -434,7 +434,7 @@ export default function Home() {
               onClick={() => setActiveTab('loans')}
               className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
                 activeTab === 'loans'
-                  ? 'bg-[#f5f0e8] text-gray-900'
+                  ? 'bg-[#fafaf8] text-gray-900'
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
@@ -444,7 +444,7 @@ export default function Home() {
               onClick={() => setActiveTab('budgets')}
               className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
                 activeTab === 'budgets'
-                  ? 'bg-[#f5f0e8] text-gray-900'
+                  ? 'bg-[#fafaf8] text-gray-900'
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
@@ -454,7 +454,7 @@ export default function Home() {
               onClick={() => setActiveTab('hansards')}
               className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
                 activeTab === 'hansards'
-                  ? 'bg-[#f5f0e8] text-gray-900'
+                  ? 'bg-[#fafaf8] text-gray-900'
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
@@ -464,7 +464,7 @@ export default function Home() {
               onClick={() => setActiveTab('order-paper')}
               className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
                 activeTab === 'order-paper'
-                  ? 'bg-[#f5f0e8] text-gray-900'
+                  ? 'bg-[#fafaf8] text-gray-900'
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
@@ -473,7 +473,7 @@ export default function Home() {
           </div>
 
           {/* Content Area */}
-          <div className="bg-[#f5f0e8] p-4">
+          <div className="bg-[#fafaf8] p-4">
             {trackersLoading ? (
               <div className="text-center py-8">
                 <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-[#2d5016]"></div>
@@ -494,7 +494,7 @@ export default function Home() {
                           <Link
                             key={mp.id}
                             href={`/trackers/mps/${mp.id}`}
-                            className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0 hover:bg-[#f5f0e8] transition-colors cursor-pointer"
+                            className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0 hover:bg-[#fafaf8] transition-colors cursor-pointer"
                           >
                             <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
                             <div className="flex-1 min-w-0">
@@ -529,7 +529,7 @@ export default function Home() {
                           <Link
                             key={bill.id}
                             href={`/trackers/bills/${bill.id}`}
-                            className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0 hover:bg-[#f5f0e8] transition-colors cursor-pointer"
+                            className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0 hover:bg-[#fafaf8] transition-colors cursor-pointer"
                           >
                             <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
                             <div className="flex-1 min-w-0">
@@ -716,34 +716,24 @@ export default function Home() {
         {/* Resources Section */}
         <div className="mt-12">
           <h3 className="text-2xl font-bold text-gray-800 mb-4">Resources</h3>
-          <div className="bg-[#ddd0b8] rounded-lg overflow-hidden">
+          <div className="bg-[#fafaf8] rounded-lg overflow-hidden">
             {/* Tabs */}
-          <div className="bg-[#d2c4b0] px-4 py-2 flex flex-wrap gap-2 border-b border-gray-300">
+          <div className="bg-[#f5f0e8] px-4 py-2 flex flex-wrap gap-2 border border-[#fafaf8]">
             <button
               onClick={() => setActiveResourceTab('reports')}
               className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
                 activeResourceTab === 'reports'
-                  ? 'bg-[#f5f0e8] text-gray-900'
+                  ? 'bg-[#fafaf8] text-gray-900'
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               + Reports
             </button>
             <button
-              onClick={() => setActiveResourceTab('partner-publications')}
-              className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
-                activeResourceTab === 'partner-publications'
-                  ? 'bg-[#f5f0e8] text-gray-900'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              + Partner Publications
-            </button>
-            <button
               onClick={() => setActiveResourceTab('statements')}
               className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
                 activeResourceTab === 'statements'
-                  ? 'bg-[#f5f0e8] text-gray-900'
+                  ? 'bg-[#fafaf8] text-gray-900'
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
@@ -752,7 +742,7 @@ export default function Home() {
           </div>
 
           {/* Content Area */}
-          <div className="bg-[#f5f0e8] p-4">
+          <div className="bg-[#fafaf8] p-4">
             {resourcesLoading ? (
               <div className="text-center py-8">
                 <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-[#2d5016]"></div>
@@ -794,46 +784,6 @@ export default function Home() {
                       <Link href="/resources">
                         <Button className="bg-[#2d5016] hover:bg-[#1b3d26] text-white">
                           See all Reports
-                        </Button>
-                      </Link>
-                    </div>
-                  </div>
-                )}
-
-                {/* Partner Publications Table */}
-                {activeResourceTab === 'partner-publications' && (
-                  <div>
-                    {!resourcesData || resourcesData.partner_publications.length === 0 ? (
-                      <div className="text-center py-8 text-gray-500">
-                        <p>No partner publications available</p>
-                      </div>
-                    ) : (
-                      <div className="space-y-2">
-                        {resourcesData.partner_publications.map((publication) => (
-                          <div key={publication.id} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
-                            <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
-                            <div className="flex-1 min-w-0">
-                              {publication.file ? (
-                                <a
-                                  href={publication.file}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="text-sm text-gray-800 truncate hover:text-[#2d5016] transition-colors cursor-pointer block"
-                                >
-                                  {publication.name}
-                                </a>
-                              ) : (
-                                <p className="text-sm text-gray-800 truncate">{publication.name}</p>
-                              )}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                    <div className="mt-4 text-left">
-                      <Link href="/resources">
-                        <Button className="bg-[#2d5016] hover:bg-[#1b3d26] text-white">
-                          See all Partner Publications
                         </Button>
                       </Link>
                     </div>

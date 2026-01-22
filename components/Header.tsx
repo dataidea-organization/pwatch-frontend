@@ -118,8 +118,6 @@ export default function Header() {
         return 'https://www.youtube.com/@Centre4PolicyAnalysis';
       case 'reports':
         return `/resources/reports-briefs`;
-      case 'partner_publications':
-        return `/resources/partner-publications`;
       case 'statements':
         return `/resources/statements`;
       case 'podcasts':
@@ -227,7 +225,6 @@ export default function Header() {
                       order_papers: 'Order Papers',
                       explainers: 'Explainers',
                       reports: 'Reports',
-                      partner_publications: 'Partner Publications',
                       statements: 'Statements',
                       podcasts: 'Podcasts',
                       xspaces: 'X Spaces',
@@ -310,9 +307,6 @@ export default function Header() {
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/resources/reports-briefs" className="w-full cursor-pointer">Reports &amp; Briefs</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/resources/partner-publications" className="w-full cursor-pointer">Partner Publications</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/resources/statements" className="w-full cursor-pointer">Statements</Link>
@@ -456,13 +450,6 @@ export default function Header() {
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       Reports & Briefs
-                    </Link>
-                    <Link 
-                      href="/resources/partner-publications" 
-                      className="block text-gray-600 hover:text-[#2d5016] text-sm py-1"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      Partner Publications
                     </Link>
                     <Link 
                       href="/resources/statements" 
