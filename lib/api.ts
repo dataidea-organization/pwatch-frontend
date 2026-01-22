@@ -366,6 +366,82 @@ export async function fetchMP(id: string): Promise<MPDetail> {
   return response.json();
 }
 
+// Committee API
+export interface CommitteeDocument {
+  id: number;
+  title: string;
+  description: string;
+  file: string;
+  document_date: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Committee {
+  id: number;
+  title: string;
+  description: string;
+  begin_date: string | null;
+  end_date: string | null;
+  chairperson_name: string | null;
+  deputy_chairperson_name: string | null;
+  member_count: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface CommitteeDetail {
+  id: number;
+  title: string;
+  description: string;
+  begin_date: string | null;
+  end_date: string | null;
+  chairperson: MP | null;
+  deputy_chairperson: MP | null;
+  members: MP[];
+  documents: CommitteeDocument[];
+  created_at: string;
+  updated_at: string;
+}
+
+export interface CommitteePaginatedResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Committee[];
+}
+
+export async function fetchCommittees(
+  page: number = 1,
+  pageSize: number = 20,
+  filters?: {
+    search?: string;
+    ordering?: string;
+  }
+): Promise<CommitteePaginatedResponse> {
+  const params = new URLSearchParams({
+    page: page.toString(),
+    page_size: pageSize.toString(),
+  });
+
+  if (filters?.search) params.append('search', filters.search);
+  if (filters?.ordering) params.append('ordering', filters.ordering);
+
+  const response = await fetch(`${API_BASE_URL}/trackers/committees/?${params.toString()}`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch committees');
+  }
+  return response.json();
+}
+
+export async function fetchCommittee(id: string): Promise<CommitteeDetail> {
+  const response = await fetch(`${API_BASE_URL}/trackers/committees/${id}/`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch committee');
+  }
+  return response.json();
+}
+
 // Home page trackers summary
 export interface HomeTrackersSummary {
   mps: Array<{
