@@ -164,6 +164,41 @@ export default function CitizensVoicePage() {
     });
   };
 
+  const handleFeedbackSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!feedbackForm.name.trim() || !feedbackForm.email.trim() || !feedbackForm.message.trim()) {
+      setFeedbackStatus({ type: 'error', message: 'Please fill in all fields' });
+      return;
+    }
+
+    try {
+      setIsSubmittingFeedback(true);
+      setFeedbackStatus({ type: null, message: '' });
+      
+      await submitFeedback(feedbackForm);
+      
+      setFeedbackStatus({ 
+        type: 'success', 
+        message: 'Thank you for your feedback! We appreciate your input.' 
+      });
+      
+      // Reset form
+      setFeedbackForm({
+        name: '',
+        email: '',
+        message: '',
+      });
+    } catch (err) {
+      setFeedbackStatus({ 
+        type: 'error', 
+        message: err instanceof Error ? err.message : 'Failed to submit feedback. Please try again.' 
+      });
+    } finally {
+      setIsSubmittingFeedback(false);
+    }
+  };
+
   if (loading && allPolls.length === 0) {
     return (
       <div className="min-h-screen bg-[#f5f0e8]">
@@ -440,6 +475,162 @@ export default function CitizensVoicePage() {
             })}
           </div>
         )}
+
+        {/* Feedback Form Section */}
+        <div className="mt-8 bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-0">
+            {/* Left Side - Form */}
+            <div className="lg:col-span-2 p-6 lg:p-8">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="p-2 bg-[#2d5016] rounded-lg">
+                  <MessageSquare className="w-5 h-5 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900">Share Your Feedback</h3>
+              </div>
+              <p className="text-gray-600 text-sm mb-6">
+                Help us improve by sharing your thoughts and suggestions
+              </p>
+              
+              <form onSubmit={handleFeedbackSubmit} className="space-y-4">
+                {feedbackStatus.type && (
+                  <div
+                    className={`p-3 rounded-md flex items-start gap-3 ${
+                      feedbackStatus.type === 'success'
+                        ? 'bg-green-50 border border-green-200'
+                        : 'bg-red-50 border border-red-200'
+                    }`}
+                  >
+                    {feedbackStatus.type === 'success' ? (
+                      <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                    ) : (
+                      <AlertCircle className="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" />
+                    )}
+                    <p
+                      className={`text-sm ${
+                        feedbackStatus.type === 'success' ? 'text-green-800' : 'text-red-800'
+                      }`}
+                    >
+                      {feedbackStatus.message}
+                    </p>
+                  </div>
+                )}
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="feedback-name" className="block text-sm font-medium text-gray-700 mb-1.5">
+                      Name <span className="text-red-500">*</span>
+                    </label>
+                    <Input
+                      id="feedback-name"
+                      type="text"
+                      required
+                      value={feedbackForm.name}
+                      onChange={(e) => setFeedbackForm({ ...feedbackForm, name: e.target.value })}
+                      disabled={isSubmittingFeedback}
+                      className="w-full border-gray-300 focus:border-gray-400"
+                      placeholder="Your name"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="feedback-email" className="block text-sm font-medium text-gray-700 mb-1.5">
+                      Email <span className="text-red-500">*</span>
+                    </label>
+                    <Input
+                      id="feedback-email"
+                      type="email"
+                      required
+                      value={feedbackForm.email}
+                      onChange={(e) => setFeedbackForm({ ...feedbackForm, email: e.target.value })}
+                      disabled={isSubmittingFeedback}
+                      className="w-full border-gray-300 focus:border-gray-400"
+                      placeholder="your.email@example.com"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="feedback-message" className="block text-sm font-medium text-gray-700 mb-1.5">
+                    Message <span className="text-red-500">*</span>
+                  </label>
+                  <textarea
+                    id="feedback-message"
+                    required
+                    value={feedbackForm.message}
+                    onChange={(e) => setFeedbackForm({ ...feedbackForm, message: e.target.value })}
+                    disabled={isSubmittingFeedback}
+                    rows={4}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2d5016] focus:border-transparent resize-none disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-900 placeholder:text-gray-400"
+                    placeholder="Share your feedback, suggestions, or concerns..."
+                  />
+                </div>
+
+                <Button
+                  type="submit"
+                  disabled={isSubmittingFeedback}
+                  className="w-full sm:w-auto bg-[#2d5016] text-white hover:bg-[#1b3d26] transition-colors font-medium shadow-sm disabled:bg-gray-400 disabled:cursor-not-allowed disabled:hover:bg-gray-400 px-6"
+                >
+                  {isSubmittingFeedback ? (
+                    <>
+                      <div className="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      Submitting...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4 mr-2 inline" />
+                      Submit Feedback
+                    </>
+                  )}
+                </Button>
+              </form>
+            </div>
+
+            {/* Right Side - Info/Visual */}
+            <div className="bg-[#f5f0e8] p-6 lg:p-8 border-t lg:border-t-0 lg:border-l border-gray-200">
+              <div className="space-y-6">
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                    <TrendingUp className="w-4 h-4 text-[#2d5016]" />
+                    Why Your Feedback Matters
+                  </h4>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Your input helps us enhance the platform and better serve the community's needs.
+                  </p>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3">
+                    <div className="p-1.5 bg-[#2d5016] rounded-full mt-0.5">
+                      <CheckCircle className="w-3 h-3 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-900">Quick Response</p>
+                      <p className="text-xs text-gray-600">We review all feedback regularly</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="p-1.5 bg-[#2d5016] rounded-full mt-0.5">
+                      <Users className="w-3 h-3 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-900">Community Driven</p>
+                      <p className="text-xs text-gray-600">Your voice shapes our improvements</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="p-1.5 bg-[#2d5016] rounded-full mt-0.5">
+                      <MessageSquare className="w-3 h-3 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-900">Open Communication</p>
+                      <p className="text-xs text-gray-600">We value every suggestion</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* Info Section */}
         <div className="mt-8 bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 p-6">
