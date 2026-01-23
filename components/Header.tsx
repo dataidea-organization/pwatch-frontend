@@ -281,8 +281,8 @@ export default function Header() {
               src="/images/PWATCH LOGO.png"
               alt="Parliament Watch Uganda Logo"
               width={320}
-              height={106}
-              className="h-16 w-auto"
+              height={160}
+              className="h-auto w-auto"
               priority
             />
           </Link>
