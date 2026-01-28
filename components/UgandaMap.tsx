@@ -36,7 +36,7 @@ const DISTRICT_REGIONS: { [key: string]: string } = {
   'Serere': 'Eastern', 'Sironko': 'Eastern', 'Soroti': 'Eastern', 'Tororo': 'Eastern',
   'Namisindwa': 'Eastern', 'Butebo': 'Eastern', 'Kapelebyong': 'Eastern',
   
-  // Northern Region
+  // Northern Region0
   'Agago': 'Northern', 'Alebtong': 'Northern', 'Amolatar': 'Northern', 'Amuru': 'Northern',
   'Apac': 'Northern', 'Dokolo': 'Northern', 'Gulu': 'Northern', 'Kitgum': 'Northern',
   'Kole': 'Northern', 'Kwania': 'Northern', 'Lamwo': 'Northern', 'Lira': 'Northern',
