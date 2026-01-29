@@ -136,9 +136,9 @@ export default function AboutPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">
               {whoWeAre.title}
             </h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
               {whoWeAre.image && (
-                <div className="relative h-96 rounded-lg overflow-hidden">
+                <div className="relative h-96 rounded-xl overflow-hidden shadow-xl">
                   <img
                     src={whoWeAre.image.startsWith('http') ? whoWeAre.image : `${API_BASE_URL.replace('/api', '')}${whoWeAre.image}`}
                     alt={whoWeAre.title}
@@ -146,10 +146,12 @@ export default function AboutPage() {
                   />
                 </div>
               )}
-              <div
-                className="prose prose-lg max-w-none text-gray-700"
-                dangerouslySetInnerHTML={{ __html: whoWeAre.content }}
-              />
+              <div className="bg-white rounded-xl shadow-md border border-gray-200 p-8 h-96 flex flex-col">
+                <div
+                  className="prose prose-lg max-w-none text-gray-700 prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-[#2d5016] prose-a:no-underline hover:prose-a:underline overflow-y-auto"
+                  dangerouslySetInnerHTML={{ __html: whoWeAre.content }}
+                />
+              </div>
             </div>
           </section>
         )}
@@ -160,13 +162,15 @@ export default function AboutPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">
               {ourStory.title}
             </h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-              <div
-                className="prose prose-lg max-w-none text-gray-700"
-                dangerouslySetInnerHTML={{ __html: ourStory.content }}
-              />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+              <div className="bg-white rounded-xl shadow-md border border-gray-200 p-8 h-96 flex flex-col">
+                <div
+                  className="prose prose-lg max-w-none text-gray-700 prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-[#2d5016] prose-a:no-underline hover:prose-a:underline overflow-y-auto"
+                  dangerouslySetInnerHTML={{ __html: ourStory.content }}
+                />
+              </div>
               {ourStory.image && (
-                <div className="relative h-96 rounded-lg overflow-hidden">
+                <div className="relative h-96 rounded-xl overflow-hidden shadow-xl">
                   <img
                     src={ourStory.image.startsWith('http') ? ourStory.image : `${API_BASE_URL.replace('/api', '')}${ourStory.image}`}
                     alt={ourStory.title}
@@ -184,18 +188,23 @@ export default function AboutPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-12 text-center">
               What Sets Us Apart
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {whatSetsUsApart.map((item, index) => (
-                <div key={item.id} className="bg-[#fafaf8] rounded-lg p-6 shadow-lg border-2 border-gray-100 hover:border-[#2d5016] transition-colors">
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-16 h-16 bg-[#2d5016] rounded-full flex items-center justify-center text-white">
-                      {item.icon ? (
-                        <span className="text-2xl">{item.icon}</span>
-                      ) : (
-                        <span className="text-2xl font-bold">{index + 1}</span>
-                      )}
+                <div key={item.id} className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl p-6 shadow-md border border-gray-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+                  <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
+                    <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
+                  </div>
+                  <div className="relative z-10 flex items-start gap-4">
+                    <div className="flex-shrink-0">
+                      <div className="w-16 h-16 bg-gradient-to-br from-[#2d5016] to-[#1b3d26] rounded-xl flex items-center justify-center text-white shadow-md">
+                        {item.icon ? (
+                          <span className="text-2xl">{item.icon}</span>
+                        ) : (
+                          <span className="text-2xl font-bold">{index + 1}</span>
+                        )}
+                      </div>
                     </div>
-                    <div className="flex-1">
+                    <div className="flex-1 min-w-0">
                       <h3 className="font-semibold text-gray-900 mb-2">{item.title}</h3>
                       <p className="text-sm text-gray-700 leading-relaxed">
                         {item.description}
@@ -218,14 +227,14 @@ export default function AboutPage() {
               {/* Navigation Buttons */}
               <button
                 onClick={goToPreviousPartner}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-[#2d5016] text-white p-2 rounded-full shadow-lg hover:bg-[#1b3d26] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-[#2d5016] text-white p-3 rounded-full shadow-lg hover:bg-[#1b3d26] transition-all hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 aria-label="Previous partners"
               >
                 <ChevronLeft size={24} />
               </button>
               <button
                 onClick={goToNextPartner}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-[#2d5016] text-white p-2 rounded-full shadow-lg hover:bg-[#1b3d26] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-[#2d5016] text-white p-3 rounded-full shadow-lg hover:bg-[#1b3d26] transition-all hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 aria-label="Next partners"
               >
                 <ChevronRight size={24} />
@@ -254,7 +263,7 @@ export default function AboutPage() {
                           minWidth: cardWidth,
                         }}
                       >
-                        <div className="bg-[#fafaf8] rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow flex flex-col items-center justify-center text-center h-full">
+                        <div className="relative bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col items-center justify-center text-center h-full border border-gray-200">
                           {partner.logo ? (
                             <a
                               href={partner.website_url || '#'}
@@ -269,7 +278,7 @@ export default function AboutPage() {
                               />
                             </a>
                           ) : (
-                            <div className="w-full h-24 flex items-center justify-center mb-4">
+                            <div className="w-full h-24 flex items-center justify-center mb-4 bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-lg">
                               <span className="text-gray-400 font-semibold">{partner.name}</span>
                             </div>
                           )}
@@ -292,7 +301,7 @@ export default function AboutPage() {
                     onClick={() => setCurrentPartnerSlide(index)}
                     className={`h-2 rounded-full transition-all ${
                       index === currentPartnerSlide
-                        ? 'bg-[#2d5016] w-8'
+                        ? 'bg-[#2d5016] w-8 shadow-sm'
                         : 'bg-gray-300 hover:bg-gray-400 w-2'
                     }`}
                     aria-label={`Go to slide ${index + 1}`}
@@ -311,26 +320,26 @@ export default function AboutPage() {
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {teamMembers.map((member) => (
-                <div key={member.id} className="bg-[#fafaf8] rounded-lg overflow-hidden shadow-xl group">
-                  <div className="relative h-64 bg-gray-300">
+                <div key={member.id} className="bg-white rounded-xl overflow-hidden shadow-md border border-gray-200 group hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                  <div className="relative h-64 bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] overflow-hidden">
                     {member.photo ? (
                       <img
                         src={`${API_BASE_URL.replace('/api', '')}${member.photo}`}
                         alt={member.name}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />
                     ) : (
-                      <div className="absolute inset-0 flex items-center justify-center text-gray-500 text-4xl font-bold">
-                        {member.name.charAt(0)}
+                      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#2d5016] to-[#1b3d26]">
+                        <span className="text-white text-4xl font-bold">{member.name.charAt(0)}</span>
                       </div>
                     )}
-                    <div className="absolute bottom-0 right-0 w-16 h-16 bg-[#2d5016] opacity-75" style={{ clipPath: 'polygon(100% 0, 100% 100%, 0 100%)' }}></div>
+                    <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-br from-[#2d5016] to-[#1b3d26] opacity-90" style={{ clipPath: 'polygon(100% 0, 100% 100%, 0 100%)' }}></div>
                   </div>
-                  <div className="p-4 text-center">
-                    <h3 className="font-bold text-gray-800 mb-1">{member.name}</h3>
+                  <div className="p-5 text-center bg-white">
+                    <h3 className="font-bold text-gray-900 mb-1">{member.name}</h3>
                     <p className="text-sm text-gray-600 mb-3">{member.title}</p>
                     {member.bio && (
-                      <p className="text-xs text-gray-600 mb-3 line-clamp-3">{member.bio}</p>
+                      <p className="text-xs text-gray-600 mb-4 line-clamp-3 leading-relaxed">{member.bio}</p>
                     )}
                     <div className="flex justify-center gap-2">
                       {member.linkedin_url && (
@@ -338,9 +347,9 @@ export default function AboutPage() {
                           href={member.linkedin_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-6 h-6 bg-gray-700 rounded flex items-center justify-center text-white hover:bg-[#2d5016] transition-colors"
+                          className="w-8 h-8 bg-gray-700 rounded-lg flex items-center justify-center text-white hover:bg-[#2d5016] transition-colors shadow-sm hover:shadow-md"
                         >
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                           </svg>
                         </a>
@@ -350,9 +359,9 @@ export default function AboutPage() {
                           href={member.twitter_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-6 h-6 bg-gray-700 rounded flex items-center justify-center text-white hover:bg-[#2d5016] transition-colors"
+                          className="w-8 h-8 bg-gray-700 rounded-lg flex items-center justify-center text-white hover:bg-[#2d5016] transition-colors shadow-sm hover:shadow-md"
                         >
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                           </svg>
                         </a>
@@ -362,9 +371,9 @@ export default function AboutPage() {
                           href={member.facebook_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-6 h-6 bg-gray-700 rounded flex items-center justify-center text-white hover:bg-[#2d5016] transition-colors"
+                          className="w-8 h-8 bg-gray-700 rounded-lg flex items-center justify-center text-white hover:bg-[#2d5016] transition-colors shadow-sm hover:shadow-md"
                         >
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                           </svg>
                         </a>

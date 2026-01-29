@@ -256,11 +256,12 @@ export default function NewsPage() {
           ) : (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {newsArticles.map((article) => (
+                {newsArticles.map((article, index) => (
                   <Link
                     key={article.id}
                     href={`/news/${article.slug}`}
-                    className="relative rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer h-full min-h-[300px] flex flex-col"
+                    className="relative rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer h-full min-h-[300px] flex flex-col hover:scale-[1.02] hover:-translate-y-1 animate-fade-in-up group"
+                    style={{ animationDelay: `${index * 50}ms`, animationFillMode: 'both' }}
                   >
                     <img
                       src={article.image 
@@ -268,7 +269,7 @@ export default function NewsPage() {
                         : '/images/default-news.jpg'
                       }
                       alt={article.title}
-                      className="absolute inset-0 w-full h-full object-cover"
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                     {/* Dark gradient overlay at bottom */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />

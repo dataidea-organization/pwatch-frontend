@@ -138,30 +138,30 @@ export default function Header() {
   };
 
   return (
-    <header className="w-full bg-[#f5f0e8]">
-      <div className="bg-[#2d5016] px-4 py-2 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <a href="https://x.com/pwatchug" target="_blank" rel="noopener noreferrer" className="text-white hover:opacity-80" aria-label="X (Twitter)">
+    <header className="w-full bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] shadow-md sticky top-0 z-50">
+      <div className="bg-gradient-to-r from-[#2d5016] to-[#1b3d26] px-4 py-2.5 flex items-center justify-between shadow-sm">
+        <div className="flex items-center gap-4">
+          <a href="https://x.com/pwatchug" target="_blank" rel="noopener noreferrer" className="text-white hover:text-white/80 transition-colors hover:scale-110 transform duration-200" aria-label="X (Twitter)">
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
             </svg>
           </a>
-          <a href="https://www.tiktok.com/@pwatchug" target="_blank" rel="noopener noreferrer" className="text-white hover:opacity-80" aria-label="TikTok">
+          <a href="https://www.tiktok.com/@pwatchug" target="_blank" rel="noopener noreferrer" className="text-white hover:text-white/80 transition-colors hover:scale-110 transform duration-200" aria-label="TikTok">
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
               <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
             </svg>
           </a>
-          <a href="https://www.linkedin.com/company/cepa-_-parliament-watch-uganda" target="_blank" rel="noopener noreferrer" className="text-white hover:opacity-80" aria-label="LinkedIn">
+          <a href="https://www.linkedin.com/company/cepa-_-parliament-watch-uganda" target="_blank" rel="noopener noreferrer" className="text-white hover:text-white/80 transition-colors hover:scale-110 transform duration-200" aria-label="LinkedIn">
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
               <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
             </svg>
           </a>
-          <a href="https://www.facebook.com/pwatchug" target="_blank" rel="noopener noreferrer" className="text-white hover:opacity-80" aria-label="Facebook">
+          <a href="https://www.facebook.com/pwatchug" target="_blank" rel="noopener noreferrer" className="text-white hover:text-white/80 transition-colors hover:scale-110 transform duration-200" aria-label="Facebook">
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
               <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
             </svg>
           </a>
-          <a href="https://parliamentwatch.ug" target="_blank" rel="noopener noreferrer" className="text-white hover:opacity-80" aria-label="Website">
+          <a href="https://parliamentwatch.ug" target="_blank" rel="noopener noreferrer" className="text-white hover:text-white/80 transition-colors hover:scale-110 transform duration-200" aria-label="Website">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
             </svg>
@@ -170,7 +170,7 @@ export default function Header() {
 
         <div className="flex items-center gap-4">
           <Link href="/donate">
-            <Button variant="ghost" className="text-white hover:bg-white/20 hover:text-white">
+            <Button variant="ghost" className="text-white hover:bg-white/20 hover:text-white rounded-lg transition-all hover:shadow-sm">
               Support Us
             </Button>
           </Link>
@@ -185,7 +185,7 @@ export default function Header() {
                   setShowDropdown(true);
                 }
               }}
-              className="bg-white/20 text-white placeholder-white/70 border-0 px-4 py-1 pr-10 rounded-full text-sm focus-visible:ring-0 focus-visible:bg-white/30"
+              className="bg-white/20 text-white placeholder-white/70 border-0 px-4 py-2 pr-10 rounded-full text-sm focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:bg-white/30 shadow-sm transition-all"
             />
             <button
               type="button"
@@ -208,7 +208,7 @@ export default function Header() {
             {showDropdown && searchResults && searchResults.total_results > 0 && (
               <div
                 ref={dropdownRef}
-                className="absolute top-full right-0 mt-2 w-96 max-w-[calc(100vw-2rem)] sm:max-w-none bg-[#f5f0e8] rounded-lg shadow-xl border border-gray-200 max-h-96 overflow-y-auto z-50"
+                className="absolute top-full right-0 mt-2 w-96 max-w-[calc(100vw-2rem)] sm:max-w-none bg-white rounded-xl shadow-xl border border-gray-200 max-h-96 overflow-y-auto z-50"
               >
                 <div className="p-2">
                   {Object.entries(searchResults.results).map(([type, results]) => {
@@ -243,7 +243,7 @@ export default function Header() {
                               key={result.id}
                               href={getResultUrl(type, result)}
                               onClick={() => setShowDropdown(false)}
-                              className="block px-2 py-2 hover:bg-gray-50 rounded text-sm"
+                              className="block px-3 py-2 hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] rounded-lg text-sm transition-all"
                             >
                               <p className="font-medium text-gray-900 line-clamp-1">
                                 {getResultTitle(result)}
@@ -262,7 +262,7 @@ export default function Header() {
                     <Link
                       href={`/search?q=${encodeURIComponent(searchQuery)}`}
                       onClick={() => setShowDropdown(false)}
-                      className="block px-2 py-2 text-center text-sm font-medium text-[#2d5016] hover:bg-gray-50 rounded"
+                      className="block px-3 py-2 text-center text-sm font-medium text-[#2d5016] hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] rounded-lg transition-all"
                     >
                       View all {searchResults.total_results} results
                     </Link>
@@ -274,9 +274,9 @@ export default function Header() {
         </div>
       </div>
 
-      <div className="border-b">
+      <div className="border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
             <Image
               src="/images/PWATCH LOGO.png"
               alt="Parliament Watch Uganda Logo"
@@ -288,113 +288,121 @@ export default function Header() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-6">
-            <Link href="/news" className="text-gray-700 hover:text-[#2d5016] font-medium text-sm">
+            <Link href="/news" className="text-gray-700 hover:text-[#2d5016] font-medium text-sm transition-colors relative group">
               News&Update
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#2d5016] transition-all group-hover:w-full"></span>
             </Link>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="text-gray-700 hover:text-[#2d5016] font-medium text-sm h-auto p-0">
+                <Button variant="ghost" className="text-gray-700 hover:text-[#2d5016] font-medium text-sm h-auto p-0 transition-colors relative group">
                   Resources
-                  <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="ml-1 w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#2d5016] transition-all group-hover:w-full"></span>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-56">
-                <DropdownMenuItem asChild>
-                  <a href="https://www.youtube.com/@Centre4PolicyAnalysis" target="_blank" rel="noopener noreferrer" className="w-full cursor-pointer">Explainers</a>
+              <DropdownMenuContent align="start" className="w-56 bg-white rounded-xl shadow-lg border border-gray-200 p-2">
+                <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
+                  <Link href="/resources/reports-briefs" className="w-full cursor-pointer rounded-lg hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all text-gray-900 hover:text-gray-900 focus:text-gray-900">Reports &amp; Briefs</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/resources/reports-briefs" className="w-full cursor-pointer">Reports &amp; Briefs</Link>
+                <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
+                  <Link href="/resources/statements" className="w-full cursor-pointer rounded-lg hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all text-gray-900 hover:text-gray-900 focus:text-gray-900">Statements</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/resources/statements" className="w-full cursor-pointer">Statements</Link>
+                <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
+                  <Link href="/resources/committees" className="w-full cursor-pointer rounded-lg hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all text-gray-900 hover:text-gray-900 focus:text-gray-900">Committees</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/resources/committees" className="w-full cursor-pointer">Committees</Link>
+                <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
+                  <a href="https://www.youtube.com/@Centre4PolicyAnalysis" target="_blank" rel="noopener noreferrer" className="w-full cursor-pointer rounded-lg hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all text-gray-900 hover:text-gray-900 focus:text-gray-900">Explainers</a>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/chatbot" className="w-full cursor-pointer">Chatbot</Link>
+                <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
+                  <Link href="/chatbot" className="w-full cursor-pointer rounded-lg hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all text-gray-900 hover:text-gray-900 focus:text-gray-900">Chatbot</Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="text-gray-700 hover:text-[#2d5016] font-medium text-sm h-auto p-0">
+                <Button variant="ghost" className="text-gray-700 hover:text-[#2d5016] font-medium text-sm h-auto p-0 transition-colors relative group">
                   Trackers
-                  <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="ml-1 w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#2d5016] transition-all group-hover:w-full"></span>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-64">
-                <DropdownMenuItem asChild>
-                    <Link href="/trackers/mps" className="w-full cursor-pointer">Members of Parliament</Link>
+              <DropdownMenuContent align="start" className="w-64 bg-white rounded-xl shadow-lg border border-gray-200 p-2">
+                <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
+                    <Link href="/trackers/mps" className="w-full cursor-pointer rounded-lg hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all text-gray-900 hover:text-gray-900 focus:text-gray-900">Members of Parliament</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/trackers/bills" className="w-full cursor-pointer">Bills Tracker</Link>
+                <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
+                  <Link href="/trackers/bills" className="w-full cursor-pointer rounded-lg hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all text-gray-900 hover:text-gray-900 focus:text-gray-900">Bills Tracker</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/trackers/loans" className="w-full cursor-pointer">Loans Tracker</Link>
+                <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
+                  <Link href="/trackers/loans" className="w-full cursor-pointer rounded-lg hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all text-gray-900 hover:text-gray-900 focus:text-gray-900">Loans Tracker</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/trackers/debt" className="w-full cursor-pointer">Debt Tracker</Link>
+                <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
+                  <Link href="/trackers/debt" className="w-full cursor-pointer rounded-lg hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all text-gray-900 hover:text-gray-900 focus:text-gray-900">Debt Tracker</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/trackers/budgets" className="w-full cursor-pointer">Budget Tracker</Link>
+                <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
+                  <Link href="/trackers/budgets" className="w-full cursor-pointer rounded-lg hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all text-gray-900 hover:text-gray-900 focus:text-gray-900">Budget Tracker</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/trackers/hansards" className="w-full cursor-pointer">Hansards Tracker</Link>
+                <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
+                  <Link href="/trackers/hansards" className="w-full cursor-pointer rounded-lg hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all text-gray-900 hover:text-gray-900 focus:text-gray-900">Hansards Tracker</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/trackers/order-paper" className="w-full cursor-pointer">Order Paper Tracker</Link>
+                <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
+                  <Link href="/trackers/order-paper" className="w-full cursor-pointer rounded-lg hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all text-gray-900 hover:text-gray-900 focus:text-gray-900">Order Paper Tracker</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                    <Link href="/trackers/parliament-performance" className="w-full cursor-pointer">Parliament Performance Tracker</Link>
+                <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
+                    <Link href="/trackers/parliament-performance" className="w-full cursor-pointer rounded-lg hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all text-gray-900 hover:text-gray-900 focus:text-gray-900">Parliament Performance Tracker</Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="text-gray-700 hover:text-[#2d5016] font-medium text-sm h-auto p-0">
+                <Button variant="ghost" className="text-gray-700 hover:text-[#2d5016] font-medium text-sm h-auto p-0 transition-colors relative group">
                   Multimedia
-                  <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="ml-1 w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#2d5016] transition-all group-hover:w-full"></span>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-48">
-                <DropdownMenuItem asChild>
-                  <Link href="/multimedia/x-spaces" className="w-full cursor-pointer">X Spaces</Link>
+              <DropdownMenuContent align="start" className="w-48 bg-white rounded-xl shadow-lg border border-gray-200 p-2">
+                <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
+                  <Link href="/multimedia/x-spaces" className="w-full cursor-pointer rounded-lg hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all text-gray-900 hover:text-gray-900 focus:text-gray-900">X Spaces</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/multimedia/podcast" className="w-full cursor-pointer">Podcast</Link>
+                <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
+                  <Link href="/multimedia/podcast" className="w-full cursor-pointer rounded-lg hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all text-gray-900 hover:text-gray-900 focus:text-gray-900">Podcast</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/multimedia/gallery" className="w-full cursor-pointer">Gallery</Link>
+                <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
+                  <Link href="/multimedia/gallery" className="w-full cursor-pointer rounded-lg hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all text-gray-900 hover:text-gray-900 focus:text-gray-900">Gallery</Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <Link href="/citizens-voice" className="text-gray-700 hover:text-[#2d5016] font-medium text-sm">
+            <Link href="/citizens-voice" className="text-gray-700 hover:text-[#2d5016] font-medium text-sm transition-colors relative group">
               Citizens' Voice
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#2d5016] transition-all group-hover:w-full"></span>
             </Link>
-            <Link href="/blogs" className="text-gray-700 hover:text-[#2d5016] font-medium text-sm">
+            <Link href="/blogs" className="text-gray-700 hover:text-[#2d5016] font-medium text-sm transition-colors relative group">
               Blogs
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#2d5016] transition-all group-hover:w-full"></span>
             </Link>
-            <Link href="/contact" className="text-gray-700 hover:text-[#2d5016] font-medium text-sm">
+            <Link href="/contact" className="text-gray-700 hover:text-[#2d5016] font-medium text-sm transition-colors relative group">
               Contact
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#2d5016] transition-all group-hover:w-full"></span>
             </Link>
-            <Link href="/about" className="text-gray-700 hover:text-[#2d5016] font-medium text-sm">
+            <Link href="/about" className="text-gray-700 hover:text-[#2d5016] font-medium text-sm transition-colors relative group">
               About Us
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#2d5016] transition-all group-hover:w-full"></span>
             </Link>
           </nav>
 
           <button 
-            className="md:hidden"
+            className="md:hidden p-2 rounded-lg hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle mobile menu"
           >
@@ -406,8 +414,8 @@ export default function Header() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t bg-[#f5f0e8]">
-            <nav className="px-4 py-4 space-y-4">
+          <div className="md:hidden border-t border-gray-200 bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] shadow-lg">
+            <nav className="px-4 py-4 space-y-2">
               {/* News Link */}
               <Link 
                 href="/news" 

@@ -3,7 +3,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
-import { ArrowLeft, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
+import { ArrowLeft, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, DollarSign, Building2, TrendingUp } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
@@ -250,11 +250,80 @@ export default function LoansTrackerPage() {
           <p className="text-gray-600 text-lg">Track government loans and development projects</p>
         </div>
 
+        {/* Statistics Cards */}
+        {!loading && allLoans.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            {/* Total Loans */}
+            <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
+                <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
+              </div>
+              <div className="relative z-10 flex items-center gap-4">
+                <div className="flex-shrink-0">
+                  <div className="p-3 bg-white/60 rounded-lg shadow-sm">
+                    <DollarSign className="w-6 h-6 text-[#2d5016]" />
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-600 text-sm mb-1">Total Loans</p>
+                  <p className="text-2xl font-bold text-gray-900">{filteredLoans.length.toLocaleString()}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Total Sources */}
+            <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
+                <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
+              </div>
+              <div className="relative z-10 flex items-center gap-4">
+                <div className="flex-shrink-0">
+                  <div className="p-3 bg-white/60 rounded-lg shadow-sm">
+                    <Building2 className="w-6 h-6 text-[#2d5016]" />
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-600 text-sm mb-1">Loan Sources</p>
+                  <p className="text-2xl font-bold text-gray-900">{sourcesSummary.length}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Total Amount */}
+            <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
+                <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
+              </div>
+              <div className="relative z-10 flex items-center gap-4">
+                <div className="flex-shrink-0">
+                  <div className="p-3 bg-white/60 rounded-lg shadow-sm">
+                    <TrendingUp className="w-6 h-6 text-[#2d5016]" />
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-600 text-sm mb-1">Total Amount</p>
+                  <p className="text-xl font-bold text-gray-900">
+                    {filteredLoans.length > 0 
+                      ? formatCurrency(
+                          filteredLoans.reduce((sum, loan) => sum + (loan.approved_amount || 0), 0),
+                          filteredLoans[0].currency
+                        )
+                      : 'N/A'}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Main Content - Table and Chart */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Loan Debt Table */}
-          <div className="lg:col-span-2 bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">LOAN DEBT</h2>
+          <div className="lg:col-span-2 bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+            <div className="bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] px-6 py-4 border-b border-gray-200">
+              <h2 className="text-xl font-bold text-gray-900">Loan Debt</h2>
+            </div>
+            <div className="p-6">
 
             {/* Search */}
             <div className="mb-4">
@@ -285,10 +354,10 @@ export default function LoansTrackerPage() {
             {/* Table */}
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-[#fafaf8]">
+                <thead className="bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8]">
                   <tr>
                     <th 
-                      className="px-4 py-3 text-left text-sm font-semibold text-gray-700 cursor-pointer hover:bg-[#f5f0e8] transition-colors group"
+                      className="px-4 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-white/50 transition-colors group"
                       onClick={() => handleSort('sector')}
                       title="Click to sort"
                     >
@@ -305,7 +374,7 @@ export default function LoansTrackerPage() {
                       </div>
                     </th>
                     <th 
-                      className="px-4 py-3 text-left text-sm font-semibold text-gray-700 cursor-pointer hover:bg-[#f5f0e8] transition-colors group"
+                      className="px-4 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-white/50 transition-colors group"
                       onClick={() => handleSort('label')}
                       title="Click to sort"
                     >
@@ -322,7 +391,7 @@ export default function LoansTrackerPage() {
                       </div>
                     </th>
                     <th 
-                      className="px-4 py-3 text-left text-sm font-semibold text-gray-700 cursor-pointer hover:bg-[#f5f0e8] transition-colors group"
+                      className="px-4 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-white/50 transition-colors group"
                       onClick={() => handleSort('approved_amount')}
                       title="Click to sort"
                     >
@@ -340,12 +409,12 @@ export default function LoansTrackerPage() {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
+                <tbody className="bg-white divide-y divide-gray-200">
                   {paginatedLoans.map((loan) => (
-                    <tr key={loan.id} className="hover:bg-[#f5f0e8] transition-colors">
-                      <td className="px-4 py-4 text-sm text-gray-900">{loan.sector_display}</td>
+                    <tr key={loan.id} className="hover:bg-[#fafaf8] transition-colors">
+                      <td className="px-4 py-4 text-sm font-medium text-gray-900">{loan.sector_display}</td>
                       <td className="px-4 py-4 text-sm text-gray-700">{loan.label}</td>
-                      <td className="px-4 py-4 text-sm font-medium text-gray-900">
+                      <td className="px-4 py-4 text-sm font-semibold text-gray-900">
                         {formatCurrency(loan.approved_amount, loan.currency)}
                       </td>
                     </tr>
@@ -357,13 +426,13 @@ export default function LoansTrackerPage() {
             {/* Pagination */}
             <div className="mt-6 flex items-center justify-between border-t border-gray-200 pt-4">
               <div className="text-sm text-gray-600">
-                Page {page} of {totalPages}
+                Showing page {page} of {totalPages} ({filteredLoans.length} total loans)
               </div>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setPage(1)}
                   disabled={page === 1}
-                  className="p-2 rounded-md border border-gray-300 hover:bg-[#f5f0e8] disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="p-2 rounded-md border border-gray-300 hover:bg-[#f5f0e8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   title="First page"
                 >
                   <ChevronsLeft className="w-4 h-4" />
@@ -371,18 +440,18 @@ export default function LoansTrackerPage() {
                 <button
                   onClick={() => setPage(page - 1)}
                   disabled={page === 1}
-                  className="p-2 rounded-md border border-gray-300 hover:bg-[#f5f0e8] disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="p-2 rounded-md border border-gray-300 hover:bg-[#f5f0e8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   title="Previous page"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
-                <div className="px-4 py-2 text-sm font-medium">
+                <div className="px-4 py-2 text-sm font-medium text-gray-700">
                   Per Page: {pageSize}
                 </div>
                 <button
                   onClick={() => setPage(page + 1)}
                   disabled={page >= totalPages}
-                  className="p-2 rounded-md border border-gray-300 hover:bg-[#f5f0e8] disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="p-2 rounded-md border border-gray-300 hover:bg-[#f5f0e8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   title="Next page"
                 >
                   <ChevronRight className="w-4 h-4" />
@@ -390,17 +459,18 @@ export default function LoansTrackerPage() {
                 <button
                   onClick={() => setPage(totalPages)}
                   disabled={page >= totalPages}
-                  className="p-2 rounded-md border border-gray-300 hover:bg-[#f5f0e8] disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="p-2 rounded-md border border-gray-300 hover:bg-[#f5f0e8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   title="Last page"
                 >
                   <ChevronsRight className="w-4 h-4" />
                 </button>
               </div>
             </div>
+            </div>
           </div>
 
           {/* Loan Sources Chart */}
-          <div className="bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6">
             <h2 className="text-xl font-bold text-gray-900 mb-6">LOAN SOURCES</h2>
 
             {sourcesSummary.length > 0 ? (
@@ -461,7 +531,7 @@ export default function LoansTrackerPage() {
         </div>
 
         {/* Footer Info */}
-        <div className="mt-8 bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="mt-8 bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6">
           <h3 className="text-sm font-semibold text-gray-700 mb-2">About This Data</h3>
           <p className="text-sm text-gray-600">
             Loan data includes government-approved loans and development projects from various international and bilateral sources.

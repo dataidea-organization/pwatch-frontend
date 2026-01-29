@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
-import { ArrowLeft, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Download, FileText } from 'lucide-react'
+import { ArrowLeft, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Download, FileText, FolderOpen, Calendar } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 
@@ -208,8 +208,69 @@ export default function BudgetsPage() {
           <p className="text-gray-600 mt-2">National budget documents and financial plans</p>
         </div>
 
-        <div className="bg-[#fafaf8] rounded-lg border border-gray-200 shadow-sm">
-          <div className="p-4 border-b border-gray-200">
+        {/* Statistics Cards */}
+        {!loading && allBudgets.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            {/* Total Budgets */}
+            <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
+                <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
+              </div>
+              <div className="relative z-10 flex items-center gap-4">
+                <div className="flex-shrink-0">
+                  <div className="p-3 bg-white/60 rounded-lg shadow-sm">
+                    <FolderOpen className="w-6 h-6 text-[#2d5016]" />
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-600 text-sm mb-1">Total Budgets</p>
+                  <p className="text-2xl font-bold text-gray-900">{filteredBudgets.length}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Unique Years */}
+            <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
+                <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
+              </div>
+              <div className="relative z-10 flex items-center gap-4">
+                <div className="flex-shrink-0">
+                  <div className="p-3 bg-white/60 rounded-lg shadow-sm">
+                    <Calendar className="w-6 h-6 text-[#2d5016]" />
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-600 text-sm mb-1">Financial Years</p>
+                  <p className="text-2xl font-bold text-gray-900">
+                    {new Set(filteredBudgets.map(b => b.financial_year)).size}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Total Amount */}
+            <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
+                <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
+              </div>
+              <div className="relative z-10 flex items-center gap-4">
+                <div className="flex-shrink-0">
+                  <div className="p-3 bg-white/60 rounded-lg shadow-sm">
+                    <FileText className="w-6 h-6 text-[#2d5016]" />
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-600 text-sm mb-1">Documents</p>
+                  <p className="text-2xl font-bold text-gray-900">{filteredBudgets.length}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+          <div className="bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] px-6 py-4 border-b border-gray-200">
             <div className="flex gap-3 items-center">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10" size={20} />
@@ -226,7 +287,7 @@ export default function BudgetsPage() {
                 <Button
                   variant="outline"
                   onClick={() => setSearchQuery('')}
-                  className="bg-[#fafaf8] text-gray-700 hover:bg-[#f5f0e8] border-gray-300"
+                  className="bg-white text-gray-700 hover:bg-[#f5f0e8] border-gray-300"
                 >
                   Clear
                 </Button>
@@ -236,10 +297,10 @@ export default function BudgetsPage() {
 
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-[#fafaf8]">
+              <thead className="bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8]">
                 <tr>
                   <th 
-                    className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-[#f5f0e8] transition-colors group"
+                    className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-white/50 transition-colors group"
                     onClick={() => handleSort('name')}
                     title="Click to sort"
                   >
@@ -257,7 +318,7 @@ export default function BudgetsPage() {
                     </div>
                   </th>
                   <th 
-                    className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-[#f5f0e8] transition-colors group"
+                    className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-white/50 transition-colors group"
                     onClick={() => handleSort('financial_year')}
                     title="Click to sort"
                   >
@@ -274,7 +335,7 @@ export default function BudgetsPage() {
                     </div>
                   </th>
                   <th 
-                    className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-[#f5f0e8] transition-colors group"
+                    className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-white/50 transition-colors group"
                     onClick={() => handleSort('budget_total_amount')}
                     title="Click to sort"
                   >
@@ -290,12 +351,12 @@ export default function BudgetsPage() {
                       </span>
                     </div>
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200">
+              <tbody className="bg-white divide-y divide-gray-200">
                 {paginatedBudgets.length === 0 ? (
                   <tr>
                     <td colSpan={4} className="px-6 py-12 text-center">
@@ -310,14 +371,14 @@ export default function BudgetsPage() {
                   </tr>
                 ) : (
                   paginatedBudgets.map((budget) => (
-                    <tr key={budget.id} className="hover:bg-[#f5f0e8] transition-colors">
+                    <tr key={budget.id} className="hover:bg-[#fafaf8] transition-colors">
                       <td className="px-6 py-4">
-                        <div className="font-medium text-gray-900">{budget.name}</div>
+                        <div className="font-semibold text-gray-900">{budget.name}</div>
                       </td>
-                      <td className="px-6 py-4 text-gray-600">
-                        {budget.financial_year}
+                      <td className="px-6 py-4">
+                        <span className="text-sm text-gray-700 font-medium">{budget.financial_year}</span>
                       </td>
-                      <td className="px-6 py-4 text-gray-600">
+                      <td className="px-6 py-4">
                         <span className="font-semibold text-[#2d5016]">
                           {formatCurrency(budget.budget_total_amount)}
                         </span>
@@ -327,7 +388,7 @@ export default function BudgetsPage() {
                           href={budget.file}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 bg-[#2d5016] text-white px-4 py-2 rounded-md hover:bg-[#1b3d26] transition-colors text-sm"
+                          className="inline-flex items-center gap-2 bg-[#2d5016] text-white px-4 py-2 rounded-lg hover:bg-[#1b3d26] transition-colors text-sm shadow-sm hover:shadow-md"
                         >
                           <Download size={16} />
                           Download
@@ -341,7 +402,7 @@ export default function BudgetsPage() {
           </div>
 
           {sortedBudgets.length > 0 && (
-            <div className="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
+            <div className="px-6 py-4 border-t border-gray-200 flex items-center justify-between bg-white">
               <div className="text-sm text-gray-600">
                 Showing {((page - 1) * pageSize) + 1} to {Math.min(page * pageSize, totalCount)} of {totalCount} budgets
               </div>
@@ -349,7 +410,7 @@ export default function BudgetsPage() {
                 <button
                   onClick={() => setPage(1)}
                   disabled={page === 1}
-                  className="p-2 rounded-md hover:bg-[#f5f0e8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="p-2 rounded-md border border-gray-300 hover:bg-[#f5f0e8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   title="First page"
                 >
                   <ChevronsLeft size={20} />
@@ -357,7 +418,7 @@ export default function BudgetsPage() {
                 <button
                   onClick={() => setPage(page - 1)}
                   disabled={page === 1}
-                  className="p-2 rounded-md hover:bg-[#f5f0e8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="p-2 rounded-md border border-gray-300 hover:bg-[#f5f0e8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   title="Previous page"
                 >
                   <ChevronLeft size={20} />
@@ -368,7 +429,7 @@ export default function BudgetsPage() {
                 <button
                   onClick={() => setPage(page + 1)}
                   disabled={page === totalPages}
-                  className="p-2 rounded-md hover:bg-[#f5f0e8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="p-2 rounded-md border border-gray-300 hover:bg-[#f5f0e8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   title="Next page"
                 >
                   <ChevronRight size={20} />
@@ -376,22 +437,19 @@ export default function BudgetsPage() {
                 <button
                   onClick={() => setPage(totalPages)}
                   disabled={page === totalPages}
-                  className="p-2 rounded-md hover:bg-[#f5f0e8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="p-2 rounded-md border border-gray-300 hover:bg-[#f5f0e8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   title="Last page"
                 >
                   <ChevronsRight size={20} />
                 </button>
               </div>
-              <div className="text-sm text-gray-600">
-                Per Page: {pageSize}
-              </div>
             </div>
           )}
         </div>
 
-        <div className="mt-6 bg-[#fafaf8] rounded-lg border border-gray-200 shadow-sm p-6">
+        <div className="mt-8 bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-2">About Budget Documents</h2>
-          <p className="text-gray-600">
+          <p className="text-gray-600 text-sm">
             Access official national budget documents and supplementary budgets. These documents provide detailed
             information on government revenue, expenditure, and financial planning for each fiscal year.
           </p>

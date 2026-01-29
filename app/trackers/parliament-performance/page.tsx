@@ -125,55 +125,80 @@ export default function ParliamentPerformancePage() {
         </div>
 
         {/* Summary Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div className="bg-[#fafaf8] rounded-lg border border-gray-300 shadow-md p-6">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-[#2d5016] bg-opacity-10 rounded-full flex items-center justify-center">
-                <Users className="w-6 h-6 text-[#2d5016]" />
+        {!loading && allMps.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            {/* Total MPs */}
+            <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
+                <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
               </div>
-              <div>
-                <p className="text-2xl font-bold text-gray-900">{summaryStats.totalMPs}</p>
-                <p className="text-sm text-gray-600">Total MPs</p>
+              <div className="relative z-10 flex items-center gap-4">
+                <div className="flex-shrink-0">
+                  <div className="p-3 bg-white/60 rounded-lg shadow-sm">
+                    <Users className="w-6 h-6 text-[#2d5016]" />
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-600 text-sm mb-1">Total MPs</p>
+                  <p className="text-2xl font-bold text-gray-900">{summaryStats.totalMPs}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Total Districts */}
+            <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
+                <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
+              </div>
+              <div className="relative z-10 flex items-center gap-4">
+                <div className="flex-shrink-0">
+                  <div className="p-3 bg-white/60 rounded-lg shadow-sm">
+                    <MapPin className="w-6 h-6 text-[#2d5016]" />
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-600 text-sm mb-1">Districts</p>
+                  <p className="text-2xl font-bold text-gray-900">{summaryStats.totalDistricts}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Total Parties */}
+            <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
+                <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
+              </div>
+              <div className="relative z-10 flex items-center gap-4">
+                <div className="flex-shrink-0">
+                  <div className="p-3 bg-white/60 rounded-lg shadow-sm">
+                    <Building2 className="w-6 h-6 text-[#2d5016]" />
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-600 text-sm mb-1">Political Parties</p>
+                  <p className="text-2xl font-bold text-gray-900">{summaryStats.totalParties}</p>
+                </div>
               </div>
             </div>
           </div>
-          <div className="bg-[#fafaf8] rounded-lg border border-gray-300 shadow-md p-6">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                <MapPin className="w-6 h-6 text-blue-600" />
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-gray-900">{summaryStats.totalDistricts}</p>
-                <p className="text-sm text-gray-600">Districts</p>
-              </div>
-            </div>
-          </div>
-          <div className="bg-[#fafaf8] rounded-lg border border-gray-300 shadow-md p-6">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                <Building2 className="w-6 h-6 text-purple-600" />
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-gray-900">{summaryStats.totalParties}</p>
-                <p className="text-sm text-gray-600">Political Parties</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        )}
 
         {/* Map and MPs Panel */}
         <div className="relative">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Map Section */}
             <div className="lg:col-span-2">
-              <div className="bg-[#fafaf8] rounded-lg border border-gray-300 shadow-md p-4">
-                <h2 className="text-lg font-semibold text-gray-900 mb-4">Uganda District Map</h2>
-                <p className="text-sm text-gray-600 mb-4">
-                  Click on a district to view its Members of Parliament. Districts are colored by region.
-                </p>
-                
-                {/* Region Legend */}
-                <div className="flex flex-wrap gap-3 mb-4">
+              <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+                <div className="bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] px-6 py-4 border-b border-gray-200">
+                  <h2 className="text-lg font-semibold text-gray-900">Uganda District Map</h2>
+                </div>
+                <div className="p-6">
+                  <p className="text-sm text-gray-600 mb-4">
+                    Click on a district to view its Members of Parliament. Districts are colored by region.
+                  </p>
+                  
+                  {/* Region Legend */}
+                  <div className="flex flex-wrap gap-3 mb-4">
                   <div className="flex items-center gap-2 text-sm">
                     <div className="w-4 h-4 rounded" style={{ backgroundColor: '#6B8E5A' }}></div>
                     <span className="text-gray-900 font-medium">Central</span>
@@ -198,29 +223,30 @@ export default function ParliamentPerformancePage() {
                     <div className="w-4 h-4 rounded" style={{ backgroundColor: '#8B7D6B' }}></div>
                     <span className="text-gray-900 font-medium">Karamoja</span>
                   </div>
-                </div>
-
-                {loading ? (
-                  <div className="w-full h-[500px] bg-gray-100 rounded-lg flex items-center justify-center">
-                    <div className="flex flex-col items-center gap-4">
-                      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#2d5016]"></div>
-                      <p className="text-gray-600">Loading MPs data...</p>
-                    </div>
                   </div>
-                ) : (
-                  <UgandaMap
-                    onDistrictClick={handleDistrictClick}
-                    districtMPCounts={districtMPCounts}
-                    selectedDistrict={selectedDistrict}
-                  />
-                )}
+
+                  {loading ? (
+                    <div className="w-full h-[500px] bg-gray-100 rounded-lg flex items-center justify-center">
+                      <div className="flex flex-col items-center gap-4">
+                        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#2d5016]"></div>
+                        <p className="text-gray-600">Loading MPs data...</p>
+                      </div>
+                    </div>
+                  ) : (
+                    <UgandaMap
+                      onDistrictClick={handleDistrictClick}
+                      districtMPCounts={districtMPCounts}
+                      selectedDistrict={selectedDistrict}
+                    />
+                  )}
+                </div>
               </div>
             </div>
 
             {/* MPs Panel - Always visible */}
             <div className="lg:col-span-1">
-              <div className="bg-[#fafaf8] rounded-lg border border-gray-300 shadow-md h-full">
-                <div className="p-4 border-b border-gray-300 flex items-center justify-between sticky top-0 bg-[#fafaf8] z-10">
+              <div className="bg-white rounded-xl shadow-md border border-gray-200 h-full overflow-hidden">
+                <div className="bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] px-6 py-4 border-b border-gray-200 flex items-center justify-between sticky top-0 z-10">
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900">
                       {selectedDistrict ? `${selectedDistrict} District` : 'District MPs'}
@@ -262,10 +288,10 @@ export default function ParliamentPerformancePage() {
                         <Link
                           key={mp.id}
                           href={`/trackers/mps/${mp.id}`}
-                          className="block bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors"
+                          className="block bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-lg p-4 hover:bg-white hover:shadow-md transition-all border border-gray-200"
                         >
                           <div className="flex items-start gap-4">
-                            <div className="w-16 h-16 rounded-full bg-gray-200 overflow-hidden flex-shrink-0">
+                            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#2d5016] to-[#1b3d26] overflow-hidden flex-shrink-0 shadow-md">
                               {mp.photo ? (
                                 <Image
                                   src={mp.photo}
@@ -275,7 +301,7 @@ export default function ParliamentPerformancePage() {
                                   className="w-full h-full object-cover"
                                 />
                               ) : (
-                                <div className="w-full h-full flex items-center justify-center text-gray-400">
+                                <div className="w-full h-full flex items-center justify-center text-white">
                                   <Users size={24} />
                                 </div>
                               )}
@@ -285,7 +311,7 @@ export default function ParliamentPerformancePage() {
                               <p className="text-sm text-gray-600 truncate">{mp.constituency || 'N/A'}</p>
                               <div className="mt-2 flex items-center gap-2">
                                 <span
-                                  className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium text-white"
+                                  className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold text-white shadow-sm"
                                   style={{ backgroundColor: getPartyColor(mp.party) }}
                                 >
                                   {mp.party || 'N/A'}
@@ -300,10 +326,10 @@ export default function ParliamentPerformancePage() {
                 </div>
 
                 {selectedDistrict && districtMPs.length > 0 && (
-                  <div className="p-4 border-t border-gray-200">
+                  <div className="p-4 border-t border-gray-200 bg-white">
                     <Link
                       href={`/trackers/mps?district=${encodeURIComponent(selectedDistrict || '')}`}
-                      className="block w-full text-center py-2 px-4 bg-[#2d5016] text-white rounded-lg hover:bg-[#1b3d26] transition-colors text-sm font-medium"
+                      className="block w-full text-center py-2 px-4 bg-[#2d5016] text-white rounded-lg hover:bg-[#1b3d26] transition-colors text-sm font-medium shadow-sm hover:shadow-md"
                     >
                       View All in MPs Tracker
                     </Link>
@@ -315,7 +341,7 @@ export default function ParliamentPerformancePage() {
         </div>
 
         {/* Instructions */}
-        <div className="mt-8 bg-[#fafaf8] rounded-lg border border-gray-300 shadow-md p-6">
+        <div className="mt-8 bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-3">How to Use</h3>
           <ul className="list-disc list-inside text-gray-600 space-y-2 text-sm">
             <li>Hover over a district to see its name, region, and number of MPs</li>

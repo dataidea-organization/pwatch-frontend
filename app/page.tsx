@@ -164,7 +164,7 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Hero Image Section */}
           <div className="lg:col-span-2">
-            <div className="relative h-[400px] rounded-lg overflow-hidden group">
+            <div className="relative h-[400px] rounded-xl overflow-hidden shadow-xl group">
               {/* Image Carousel */}
               {loading ? (
                 <div className="absolute inset-0 bg-gray-200 animate-pulse" />
@@ -199,14 +199,14 @@ export default function Home() {
               {/* Navigation Arrows */}
               <button
                 onClick={goToPrevious}
-                className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-2 transition-all opacity-0 group-hover:opacity-100"
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 transition-all opacity-0 group-hover:opacity-100 hover:scale-110 shadow-lg"
                 aria-label="Previous slide"
               >
                 <ChevronLeft className="w-6 h-6 text-white" />
               </button>
               <button
                 onClick={goToNext}
-                className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-2 transition-all opacity-0 group-hover:opacity-100"
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 transition-all opacity-0 group-hover:opacity-100 hover:scale-110 shadow-lg"
                 aria-label="Next slide"
               >
                 <ChevronRight className="w-6 h-6 text-white" />
@@ -257,10 +257,11 @@ export default function Home() {
 
           {/* Hot in Parliament Section - Only visible on large screens */}
           <div className="hidden lg:block">
-            <div className="bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 p-4 h-[400px] overflow-y-auto">
-              <h3 className="text-xl font-bold text-gray-900 mb-4 sticky top-0 bg-[#fafaf8] pb-2 border-b border-gray-300">
-                Latest in Parliament
-              </h3>
+            <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden h-[400px] flex flex-col">
+              <div className="bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] px-6 py-4 border-b border-gray-200">
+                <h3 className="text-xl font-bold text-gray-900">Latest in Parliament</h3>
+              </div>
+              <div className="flex-1 overflow-y-auto p-4">
               {hotInParliament.length === 0 ? (
                 <div className="text-center py-8 text-gray-500">
                   <p className="text-sm">No latest items available</p>
@@ -277,7 +278,7 @@ export default function Home() {
                         href={itemUrl}
                         className="block group"
                       >
-                        <div className="relative rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer h-48 w-full">
+                        <div className="relative rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer h-48 w-full hover:-translate-y-1">
                           {item.image ? (
                             <>
                               <img
@@ -322,6 +323,7 @@ export default function Home() {
                   })}
                 </div>
               )}
+              </div>
             </div>
           </div>
         </div>
@@ -343,16 +345,19 @@ export default function Home() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {newsArticles.map((article) => (
+              {newsArticles.map((article, index) => (
                 <Link key={article.id} href={`/news/${article.slug}`}>
-                  <div className="relative rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer h-full min-h-[300px] flex flex-col">
+                  <div 
+                    className="relative rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer h-full min-h-[300px] flex flex-col hover:scale-[1.02] hover:-translate-y-1 animate-fade-in-up group"
+                    style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'both' }}
+                  >
                     <img
                       src={article.image 
                         ? (article.image.startsWith('http') ? article.image : `${API_BASE_URL.replace('/api', '')}${article.image}`)
                         : '/images/default-news.jpg'
                       }
                       alt={article.title}
-                      className="absolute inset-0 w-full h-full object-cover"
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                     {/* Dark gradient overlay at bottom */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
@@ -407,65 +412,65 @@ export default function Home() {
         {/* Trackers Section */}
         <div className="mt-12">
           <h3 className="text-2xl font-bold text-gray-800 mb-4">Trackers</h3>
-          <div className="bg-[#fafaf8] rounded-lg overflow-hidden">
+          <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
             {/* Tabs */}
-          <div className="bg-[#f5f0e8] px-4 py-2 flex flex-wrap gap-2 border border-[#fafaf8]">
+          <div className="bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] px-4 py-2 flex flex-wrap gap-2 border-b border-gray-200">
             <button
               onClick={() => setActiveTab('mps')}
-              className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
+              className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
                 activeTab === 'mps'
-                  ? 'bg-[#fafaf8] text-gray-900'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'bg-white text-gray-900 shadow-sm'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'
               }`}
             >
               + Members of Parliament
             </button>
             <button
               onClick={() => setActiveTab('bills')}
-              className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
+              className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
                 activeTab === 'bills'
-                  ? 'bg-[#fafaf8] text-gray-900'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'bg-white text-gray-900 shadow-sm'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'
               }`}
             >
               + Bills Tracker
             </button>
             <button
               onClick={() => setActiveTab('loans')}
-              className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
+              className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
                 activeTab === 'loans'
-                  ? 'bg-[#fafaf8] text-gray-900'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'bg-white text-gray-900 shadow-sm'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'
               }`}
             >
               + Loans Tracker
             </button>
             <button
               onClick={() => setActiveTab('budgets')}
-              className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
+              className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
                 activeTab === 'budgets'
-                  ? 'bg-[#fafaf8] text-gray-900'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'bg-white text-gray-900 shadow-sm'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'
               }`}
             >
               + Budget Tracker
             </button>
             <button
               onClick={() => setActiveTab('hansards')}
-              className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
+              className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
                 activeTab === 'hansards'
-                  ? 'bg-[#fafaf8] text-gray-900'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'bg-white text-gray-900 shadow-sm'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'
               }`}
             >
               + Hansards Tracker
             </button>
             <button
               onClick={() => setActiveTab('order-paper')}
-              className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
+              className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
                 activeTab === 'order-paper'
-                  ? 'bg-[#fafaf8] text-gray-900'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'bg-white text-gray-900 shadow-sm'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'
               }`}
             >
               + Order Paper Tracker
@@ -494,7 +499,7 @@ export default function Home() {
                           <Link
                             key={mp.id}
                             href={`/trackers/mps/${mp.id}`}
-                            className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0 hover:bg-[#fafaf8] transition-colors cursor-pointer"
+                            className="flex items-center gap-3 py-3 px-3 rounded-lg border-b border-gray-100 last:border-0 hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all cursor-pointer hover:shadow-sm"
                           >
                             <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
                             <div className="flex-1 min-w-0">
@@ -508,7 +513,7 @@ export default function Home() {
                     )}
                     <div className="mt-4 text-left">
                       <Link href="/trackers/mps">
-                        <Button className="bg-[#2d5016] hover:bg-[#1b3d26] text-white">
+                        <Button className="bg-[#2d5016] hover:bg-[#1b3d26] text-white rounded-lg shadow-sm hover:shadow-md">
                           See all MPs
                         </Button>
                       </Link>
@@ -529,7 +534,7 @@ export default function Home() {
                           <Link
                             key={bill.id}
                             href={`/trackers/bills/${bill.id}`}
-                            className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0 hover:bg-[#fafaf8] transition-colors cursor-pointer"
+                            className="flex items-center gap-3 py-3 px-3 rounded-lg border-b border-gray-100 last:border-0 hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all cursor-pointer hover:shadow-sm"
                           >
                             <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
                             <div className="flex-1 min-w-0">
@@ -543,7 +548,7 @@ export default function Home() {
                     )}
                     <div className="mt-4 text-left">
                       <Link href="/trackers/bills">
-                        <Button className="bg-[#2d5016] hover:bg-[#1b3d26] text-white">
+                        <Button className="bg-[#2d5016] hover:bg-[#1b3d26] text-white rounded-lg shadow-sm hover:shadow-md">
                           See all Bills
                         </Button>
                       </Link>
@@ -561,7 +566,7 @@ export default function Home() {
                     ) : (
                       <div className="space-y-2">
                         {trackersData.loans.map((loan) => (
-                          <div key={loan.id} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
+                          <div key={loan.id} className="flex items-center gap-3 py-3 px-3 rounded-lg border-b border-gray-100 last:border-0 hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all hover:shadow-sm">
                             <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
                             <div className="flex-1 min-w-0">
                               <p className="text-sm text-gray-800 truncate">
@@ -574,7 +579,7 @@ export default function Home() {
                     )}
                     <div className="mt-4 text-left">
                       <Link href="/trackers/loans">
-                        <Button className="bg-[#2d5016] hover:bg-[#1b3d26] text-white">
+                        <Button className="bg-[#2d5016] hover:bg-[#1b3d26] text-white rounded-lg shadow-sm hover:shadow-md">
                           See all Loans
                         </Button>
                       </Link>
@@ -592,7 +597,7 @@ export default function Home() {
                     ) : (
                       <div className="space-y-2">
                         {trackersData.budgets.map((budget) => (
-                          <div key={budget.id} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
+                          <div key={budget.id} className="flex items-center gap-3 py-3 px-3 rounded-lg border-b border-gray-100 last:border-0 hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all hover:shadow-sm">
                             <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
                             <div className="flex-1 min-w-0">
                               {budget.file ? (
@@ -616,7 +621,7 @@ export default function Home() {
                     )}
                     <div className="mt-4 text-left">
                       <Link href="/trackers/budgets">
-                        <Button className="bg-[#2d5016] hover:bg-[#1b3d26] text-white">
+                        <Button className="bg-[#2d5016] hover:bg-[#1b3d26] text-white rounded-lg shadow-sm hover:shadow-md">
                           See all Budgets
                         </Button>
                       </Link>
@@ -634,7 +639,7 @@ export default function Home() {
                     ) : (
                       <div className="space-y-2">
                         {trackersData.hansards.map((hansard) => (
-                          <div key={hansard.id} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
+                          <div key={hansard.id} className="flex items-center gap-3 py-3 px-3 rounded-lg border-b border-gray-100 last:border-0 hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all hover:shadow-sm">
                             <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
                             <div className="flex-1 min-w-0">
                               {hansard.file ? (
@@ -658,7 +663,7 @@ export default function Home() {
                     )}
                     <div className="mt-4 text-left">
                       <Link href="/trackers/hansards">
-                        <Button className="bg-[#2d5016] hover:bg-[#1b3d26] text-white">
+                        <Button className="bg-[#2d5016] hover:bg-[#1b3d26] text-white rounded-lg shadow-sm hover:shadow-md">
                           See all Hansards
                         </Button>
                       </Link>
@@ -676,7 +681,7 @@ export default function Home() {
                     ) : (
                       <div className="space-y-2">
                         {trackersData.order_papers.map((paper) => (
-                          <div key={paper.id} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
+                          <div key={paper.id} className="flex items-center gap-3 py-3 px-3 rounded-lg border-b border-gray-100 last:border-0 hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all hover:shadow-sm">
                             <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
                             <div className="flex-1 min-w-0">
                               {paper.file ? (
@@ -700,7 +705,7 @@ export default function Home() {
                     )}
                     <div className="mt-4 text-left">
                       <Link href="/trackers/order-paper">
-                        <Button className="bg-[#2d5016] hover:bg-[#1b3d26] text-white">
+                        <Button className="bg-[#2d5016] hover:bg-[#1b3d26] text-white rounded-lg shadow-sm hover:shadow-md">
                           See all Order Papers
                         </Button>
                       </Link>
@@ -716,25 +721,25 @@ export default function Home() {
         {/* Resources Section */}
         <div className="mt-12">
           <h3 className="text-2xl font-bold text-gray-800 mb-4">Resources</h3>
-          <div className="bg-[#fafaf8] rounded-lg overflow-hidden">
+          <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
             {/* Tabs */}
-          <div className="bg-[#f5f0e8] px-4 py-2 flex flex-wrap gap-2 border border-[#fafaf8]">
+          <div className="bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] px-4 py-2 flex flex-wrap gap-2 border-b border-gray-200">
             <button
               onClick={() => setActiveResourceTab('reports')}
-              className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
+              className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
                 activeResourceTab === 'reports'
-                  ? 'bg-[#fafaf8] text-gray-900'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'bg-white text-gray-900 shadow-sm'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'
               }`}
             >
               + Reports
             </button>
             <button
               onClick={() => setActiveResourceTab('statements')}
-              className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
+              className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
                 activeResourceTab === 'statements'
-                  ? 'bg-[#fafaf8] text-gray-900'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'bg-white text-gray-900 shadow-sm'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'
               }`}
             >
               + Statements
@@ -742,7 +747,7 @@ export default function Home() {
           </div>
 
           {/* Content Area */}
-          <div className="bg-[#fafaf8] p-4">
+          <div className="bg-white p-6">
             {resourcesLoading ? (
               <div className="text-center py-8">
                 <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-[#2d5016]"></div>
@@ -760,7 +765,7 @@ export default function Home() {
                     ) : (
                       <div className="space-y-2">
                         {resourcesData.reports.map((report) => (
-                          <div key={report.id} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
+                          <div key={report.id} className="flex items-center gap-3 py-3 px-3 rounded-lg border-b border-gray-100 last:border-0 hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all hover:shadow-sm">
                             <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
                             <div className="flex-1 min-w-0">
                               {report.file ? (
@@ -782,7 +787,7 @@ export default function Home() {
                     )}
                     <div className="mt-4 text-left">
                       <Link href="/resources">
-                        <Button className="bg-[#2d5016] hover:bg-[#1b3d26] text-white">
+                        <Button className="bg-[#2d5016] hover:bg-[#1b3d26] text-white rounded-lg shadow-sm hover:shadow-md">
                           See all Reports
                         </Button>
                       </Link>
@@ -800,7 +805,7 @@ export default function Home() {
                     ) : (
                       <div className="space-y-2">
                         {resourcesData.statements.map((statement) => (
-                          <div key={statement.id} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
+                          <div key={statement.id} className="flex items-center gap-3 py-3 px-3 rounded-lg border-b border-gray-100 last:border-0 hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all hover:shadow-sm">
                             <Folder className="w-4 h-4 text-[#a0522d] flex-shrink-0" />
                             <div className="flex-1 min-w-0">
                               {statement.file ? (
@@ -822,7 +827,7 @@ export default function Home() {
                     )}
                     <div className="mt-4 text-left">
                       <Link href="/resources">
-                        <Button className="bg-[#2d5016] hover:bg-[#1b3d26] text-white">
+                        <Button className="bg-[#2d5016] hover:bg-[#1b3d26] text-white rounded-lg shadow-sm hover:shadow-md">
                           See all Statements
                         </Button>
                       </Link>
@@ -851,17 +856,20 @@ export default function Home() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {blogPosts.map((post) => (
+              {blogPosts.map((post, index) => (
                 <Link key={post.id} href={`/blogs/${post.slug}`}>
-                  <div className="relative rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer h-full min-h-[350px] flex flex-col">
-                    <img
-                      src={post.image 
-                        ? (post.image.startsWith('http') ? post.image : `${API_BASE_URL.replace('/api', '')}${post.image}`)
-                        : '/images/default-blog.jpg'
-                      }
-                      alt={post.title}
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
+                  <div 
+                    className="relative rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer h-full min-h-[350px] flex flex-col hover:scale-[1.02] hover:-translate-y-1 animate-fade-in-up group"
+                    style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'both' }}
+                  >
+                      <img
+                        src={post.image 
+                          ? (post.image.startsWith('http') ? post.image : `${API_BASE_URL.replace('/api', '')}${post.image}`)
+                          : '/images/default-blog.jpg'
+                        }
+                        alt={post.title}
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
                     {/* Dark gradient overlay at bottom */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                     {/* Content overlay */}

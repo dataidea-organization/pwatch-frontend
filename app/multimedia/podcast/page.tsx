@@ -224,7 +224,7 @@ export default function PodcastPage() {
         </div>
 
         {/* Search and Filter Section */}
-        <div className="bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+        <div className="bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 mb-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
               <div className="relative">
@@ -234,7 +234,7 @@ export default function PodcastPage() {
                   placeholder="Search podcasts..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 text-gray-900 placeholder:text-gray-400 border-gray-300 focus:border-gray-400"
+                  className="w-full pl-10 pr-4 text-gray-900 placeholder:text-gray-400 border-gray-300 focus:border-gray-400 bg-white"
                   style={{ color: '#111827' }}
                 />
               </div>
@@ -243,7 +243,7 @@ export default function PodcastPage() {
               <select
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2d5016] focus:border-transparent text-gray-900 bg-[#fafaf8]"
+                className="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2d5016] focus:border-transparent text-gray-900 bg-white shadow-sm"
               >
                 <option value="all">All Categories</option>
                 {categories.map((cat) => (
@@ -259,7 +259,7 @@ export default function PodcastPage() {
                     setSearchQuery('');
                     setCategoryFilter('all');
                   }}
-                  className="bg-[#fafaf8] text-gray-700 hover:bg-[#f5f0e8] border-gray-300"
+                  className="bg-white text-gray-700 hover:bg-[#f5f0e8] border-gray-300 shadow-sm"
                 >
                   Clear
                 </Button>
@@ -270,7 +270,7 @@ export default function PodcastPage() {
 
         {/* Podcasts Grid */}
         {sortedPodcasts.length === 0 ? (
-          <div className="bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 p-12 text-center">
+          <div className="bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-12 text-center">
             <p className="text-gray-500 text-lg">No podcasts found</p>
             {(searchQuery || categoryFilter !== 'all') && (
               <p className="text-gray-400 text-sm mt-2">Try adjusting your search or filters</p>
@@ -285,7 +285,7 @@ export default function PodcastPage() {
               return (
                 <div
                   key={podcast.id}
-                  className="bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow"
+                  className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
                 >
                   {/* Thumbnail */}
                   <div className="relative h-48 w-full bg-[#f5f0e8]">
@@ -320,7 +320,7 @@ export default function PodcastPage() {
                     </div>
                     {podcast.episode_number && (
                       <div className="absolute top-2 left-2">
-                        <span className="px-2 py-1 bg-[#2d5016] text-white text-xs font-medium rounded">
+                        <span className="px-3 py-1 bg-[#2d5016] text-white text-xs font-semibold rounded-full shadow-sm">
                           Episode {podcast.episode_number}
                         </span>
                       </div>
@@ -360,7 +360,7 @@ export default function PodcastPage() {
                     {/* Category */}
                     {podcast.category && (
                       <div className="mb-4">
-                        <span className="px-2 py-1 bg-[#f5f0e8] text-gray-700 text-xs rounded">
+                        <span className="px-3 py-1 bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] text-gray-700 text-xs rounded-full shadow-sm border border-gray-200 font-medium">
                           {podcast.category}
                         </span>
                       </div>
@@ -373,7 +373,7 @@ export default function PodcastPage() {
                           {podcast.tags.split(',').slice(0, 3).map((tag, idx) => (
                             <span
                               key={idx}
-                              className="px-2 py-1 bg-[#ddd0b8] text-gray-700 text-xs rounded"
+                              className="px-2 py-1 bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] text-gray-700 text-xs rounded shadow-sm border border-gray-200"
                             >
                               {tag.trim()}
                             </span>
@@ -392,7 +392,7 @@ export default function PodcastPage() {
                       href={podcast.youtube_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#2d5016] text-white text-sm font-medium rounded-md hover:bg-[#1b3d26] transition-colors"
+                      className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#2d5016] text-white text-sm font-medium rounded-lg hover:bg-[#1b3d26] transition-colors shadow-sm hover:shadow-md"
                     >
                       <Play className="w-4 h-4" />
                       Watch on YouTube
@@ -405,7 +405,7 @@ export default function PodcastPage() {
         )}
 
         {/* Footer Info */}
-        <div className="mt-8 bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="mt-8 bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6">
           <h3 className="text-sm font-semibold text-gray-700 mb-2">About Our Podcasts</h3>
           <p className="text-sm text-gray-600">
             Our podcasts feature in-depth discussions on parliamentary matters, governance, and civic engagement.

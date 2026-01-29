@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, DollarSign, TrendingUp, BarChart3 } from 'lucide-react';
 
 interface DebtData {
   id: number;
@@ -127,27 +127,68 @@ export default function DebtTrackerPage() {
 
         {/* Top Stats Cards */}
         {latestData && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8">
-            <div className="bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
-              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">National Debt</h3>
-              <p className="text-2xl md:text-3xl font-bold text-[#2d5016]">
-                UGX {(latestData.national_debt / 1000000).toLocaleString()}M
-              </p>
-              <p className="text-xs text-gray-500 mt-2">As of {latestData.year}</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            {/* National Debt */}
+            <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
+                <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
+              </div>
+              <div className="relative z-10 flex items-center gap-4">
+                <div className="flex-shrink-0">
+                  <div className="p-3 bg-white/60 rounded-lg shadow-sm">
+                    <DollarSign className="w-6 h-6 text-[#2d5016]" />
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-600 text-sm mb-1">National Debt</p>
+                  <p className="text-xl font-bold text-gray-900">
+                    UGX {(latestData.national_debt / 1000000).toLocaleString()}M
+                  </p>
+                  <p className="text-xs text-gray-500 mt-1">As of {latestData.year}</p>
+                </div>
+              </div>
             </div>
-            <div className="bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
-              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Interest</h3>
-              <p className="text-2xl md:text-3xl font-bold text-[#2d5016]">
-                UGX {(latestData.interest / 1000000).toLocaleString()}M
-              </p>
-              <p className="text-xs text-gray-500 mt-2">As of {latestData.year}</p>
+
+            {/* Interest */}
+            <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
+                <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
+              </div>
+              <div className="relative z-10 flex items-center gap-4">
+                <div className="flex-shrink-0">
+                  <div className="p-3 bg-white/60 rounded-lg shadow-sm">
+                    <TrendingUp className="w-6 h-6 text-[#2d5016]" />
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-600 text-sm mb-1">Interest</p>
+                  <p className="text-xl font-bold text-gray-900">
+                    UGX {(latestData.interest / 1000000).toLocaleString()}M
+                  </p>
+                  <p className="text-xs text-gray-500 mt-1">As of {latestData.year}</p>
+                </div>
+              </div>
             </div>
-            <div className="bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
-              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Total Expenditure</h3>
-              <p className="text-2xl md:text-3xl font-bold text-[#2d5016]">
-                UGX {(latestData.total_expenditure / 1000000).toLocaleString()}M
-              </p>
-              <p className="text-xs text-gray-500 mt-2">As of {latestData.year}</p>
+
+            {/* Total Expenditure */}
+            <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
+                <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
+              </div>
+              <div className="relative z-10 flex items-center gap-4">
+                <div className="flex-shrink-0">
+                  <div className="p-3 bg-white/60 rounded-lg shadow-sm">
+                    <BarChart3 className="w-6 h-6 text-[#2d5016]" />
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-600 text-sm mb-1">Total Expenditure</p>
+                  <p className="text-xl font-bold text-gray-900">
+                    UGX {(latestData.total_expenditure / 1000000).toLocaleString()}M
+                  </p>
+                  <p className="text-xs text-gray-500 mt-1">As of {latestData.year}</p>
+                </div>
+              </div>
             </div>
           </div>
         )}
@@ -155,8 +196,11 @@ export default function DebtTrackerPage() {
         {/* Main Content - Chart and Sidebar */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Chart Section */}
-          <div className="lg:col-span-2 bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">GDP and National Debt Trends</h2>
+          <div className="lg:col-span-2 bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+            <div className="bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] px-6 py-4 border-b border-gray-200">
+              <h2 className="text-xl font-bold text-gray-900">GDP and National Debt Trends</h2>
+            </div>
+            <div className="p-6">
             <ResponsiveContainer width="100%" height={400}>
               <AreaChart
                 data={debtData}
@@ -202,11 +246,12 @@ export default function DebtTrackerPage() {
                 />
               </AreaChart>
             </ResponsiveContainer>
+            </div>
           </div>
 
           {/* Sidebar Metrics */}
           {latestData && (
-            <div className="bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6">
               <h3 className="text-lg font-bold text-gray-900 mb-6">Per Capita Metrics</h3>
               <div className="space-y-6">
                 {/* Debt Per Citizen */}
@@ -274,7 +319,7 @@ export default function DebtTrackerPage() {
         </div>
 
         {/* Data Source Footer */}
-        <div className="mt-8 bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="mt-8 bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6">
           <h3 className="text-sm font-semibold text-gray-700 mb-2">About This Data</h3>
           <p className="text-sm text-gray-600">
             National debt and economic data is collected from official government sources and updated annually.

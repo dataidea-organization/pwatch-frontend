@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
-import { ArrowLeft, Calendar, FileText } from 'lucide-react'
+import { ArrowLeft, Calendar, FileText, TrendingUp, Clock } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 interface OrderPaper {
@@ -96,6 +96,47 @@ export default function OrderPaperPage() {
     return allOrderPapers.filter((orderPaper) => !orderPaper.date_received).length
   }, [allOrderPapers])
 
+  // Statistics calculations
+  const stats = useMemo(() => {
+    const totalOrderPapers = allOrderPapers.length
+    const totalYears = years.length
+    
+    // Helper function to count order papers per year
+    const countForYear = (year: number) => {
+      return allOrderPapers.filter((orderPaper) => {
+        if (!orderPaper.date_received) return false
+        return new Date(orderPaper.date_received).getFullYear() === year
+      }).length
+    }
+    
+    // Find most active year
+    let mostActiveYear = null
+    let maxCount = 0
+    years.forEach((year) => {
+      const count = countForYear(year)
+      if (count > maxCount) {
+        maxCount = count
+        mostActiveYear = year
+      }
+    })
+
+    // Count recent additions (last 30 days)
+    const thirtyDaysAgo = new Date()
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
+    const recentCount = allOrderPapers.filter((orderPaper) => {
+      if (!orderPaper.created_at) return false
+      return new Date(orderPaper.created_at) >= thirtyDaysAgo
+    }).length
+
+    return {
+      totalOrderPapers,
+      totalYears,
+      mostActiveYear,
+      maxCount,
+      recentCount,
+    }
+  }, [allOrderPapers, years])
+
   if (loading && allOrderPapers.length === 0) {
     return (
       <div className="min-h-screen bg-[#f5f0e8]">
@@ -143,6 +184,95 @@ export default function OrderPaperPage() {
 
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Order Papers</h1>
+        </div>
+
+        {/* Statistics Cards */}
+        {!loading && allOrderPapers.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6">
+            {/* Total Order Papers */}
+            <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
+                <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
+              </div>
+              <div className="relative z-10 flex items-center gap-4">
+                <div className="flex-shrink-0">
+                  <div className="p-3 bg-white/60 rounded-lg shadow-sm">
+                    <FileText className="w-6 h-6 text-[#2d5016]" />
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-600 text-sm mb-1">Total Order Papers</p>
+                  <p className="text-2xl font-bold text-gray-900">{stats.totalOrderPapers.toLocaleString()}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Years Covered */}
+            <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
+                <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
+              </div>
+              <div className="relative z-10 flex items-center gap-4">
+                <div className="flex-shrink-0">
+                  <div className="p-3 bg-white/60 rounded-lg shadow-sm">
+                    <Calendar className="w-6 h-6 text-[#2d5016]" />
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-600 text-sm mb-1">Years Covered</p>
+                  <p className="text-2xl font-bold text-gray-900">{stats.totalYears}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Most Active Year */}
+            <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
+                <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
+              </div>
+              <div className="relative z-10 flex items-center gap-4">
+                <div className="flex-shrink-0">
+                  <div className="p-3 bg-white/60 rounded-lg shadow-sm">
+                    <TrendingUp className="w-6 h-6 text-[#2d5016]" />
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-600 text-sm mb-1">Most Active Year</p>
+                  <p className="text-2xl font-bold text-gray-900">
+                    {stats.mostActiveYear || 'N/A'}
+                  </p>
+                  {stats.mostActiveYear && (
+                    <p className="text-xs text-gray-500 mt-1">
+                      {stats.maxCount} {stats.maxCount === 1 ? 'order paper' : 'order papers'}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Recent Additions */}
+            <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
+                <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
+              </div>
+              <div className="relative z-10 flex items-center gap-4">
+                <div className="flex-shrink-0">
+                  <div className="p-3 bg-white/60 rounded-lg shadow-sm">
+                    <Clock className="w-6 h-6 text-[#2d5016]" />
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-600 text-sm mb-1">Last 30 Days</p>
+                  <p className="text-2xl font-bold text-gray-900">{stats.recentCount}</p>
+                  <p className="text-xs text-gray-500 mt-1">New order papers</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Description */}
+        <div className="mb-8">
           <p className="text-gray-600 text-lg">Select a year to view parliamentary order papers outlining daily business and proceedings</p>
         </div>
 
@@ -256,9 +386,9 @@ export default function OrderPaperPage() {
           </div>
         )}
 
-        <div className="mt-8 bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="mt-8 bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-2">About Order Papers</h2>
-          <p className="text-gray-600">
+          <p className="text-gray-600 text-sm">
             Order Papers outline the business to be conducted during parliamentary sessions. They include questions,
             motions, bills, and other items scheduled for debate and consideration by Members of Parliament.
           </p>

@@ -7,12 +7,12 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#2d5016] text-white">
+    <footer className="bg-gradient-to-br from-[#2d5016] to-[#1b3d26] text-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* About Section */}
           <div>
-            <Link href="/" className="inline-block mb-4 bg-[#f5f0e8] p-2 rounded">
+            <Link href="/" className="inline-block mb-4 bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] p-3 rounded-xl shadow-md hover:shadow-lg transition-all hover:scale-105">
               <Image
                 src="/images/PWATCH LOGO.png"
                 alt="Parliament Watch Uganda Logo"
@@ -31,34 +31,34 @@ export default function Footer() {
           {/* Quick Links */}
           <div>
             <h3 className="text-lg font-semibold mb-4 border-b border-white/20 pb-2">Quick Links</h3>
-            <ul className="space-y-2">
+            <ul className="space-y-2.5">
               <li>
-                <Link href="/" className="text-sm text-gray-200 hover:text-white transition-colors">
+                <Link href="/" className="text-sm text-gray-200 hover:text-white transition-colors inline-block hover:translate-x-1 transform duration-200">
                   Home
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="text-sm text-gray-200 hover:text-white transition-colors">
+                <Link href="/about" className="text-sm text-gray-200 hover:text-white transition-colors inline-block hover:translate-x-1 transform duration-200">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/news" className="text-sm text-gray-200 hover:text-white transition-colors">
+                <Link href="/news" className="text-sm text-gray-200 hover:text-white transition-colors inline-block hover:translate-x-1 transform duration-200">
                   News & Updates
                 </Link>
               </li>
               <li>
-                <Link href="/blogs" className="text-sm text-gray-200 hover:text-white transition-colors">
+                <Link href="/blogs" className="text-sm text-gray-200 hover:text-white transition-colors inline-block hover:translate-x-1 transform duration-200">
                   Blogs
                 </Link>
               </li>
               <li>
-                <Link href="/citizens-voice" className="text-sm text-gray-200 hover:text-white transition-colors">
+                <Link href="/citizens-voice" className="text-sm text-gray-200 hover:text-white transition-colors inline-block hover:translate-x-1 transform duration-200">
                   Citizens' Voice
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-sm text-gray-200 hover:text-white transition-colors">
+                <Link href="/contact" className="text-sm text-gray-200 hover:text-white transition-colors inline-block hover:translate-x-1 transform duration-200">
                   Contact Us
                 </Link>
               </li>
@@ -68,34 +68,34 @@ export default function Footer() {
           {/* Trackers & Resources */}
           <div>
             <h3 className="text-lg font-semibold mb-4 border-b border-white/20 pb-2">Trackers & Resources</h3>
-            <ul className="space-y-2">
+            <ul className="space-y-2.5">
               <li>
-                <Link href="/trackers/mps" className="text-sm text-gray-200 hover:text-white transition-colors">
+                <Link href="/trackers/mps" className="text-sm text-gray-200 hover:text-white transition-colors inline-block hover:translate-x-1 transform duration-200">
                   Members of Parliament
                 </Link>
               </li>
               <li>
-                <Link href="/trackers/bills" className="text-sm text-gray-200 hover:text-white transition-colors">
+                <Link href="/trackers/bills" className="text-sm text-gray-200 hover:text-white transition-colors inline-block hover:translate-x-1 transform duration-200">
                   Bills Tracker
                 </Link>
               </li>
               <li>
-                <Link href="/trackers/budgets" className="text-sm text-gray-200 hover:text-white transition-colors">
+                <Link href="/trackers/budgets" className="text-sm text-gray-200 hover:text-white transition-colors inline-block hover:translate-x-1 transform duration-200">
                   Budget Tracker
                 </Link>
               </li>
               <li>
-                <Link href="/trackers/loans" className="text-sm text-gray-200 hover:text-white transition-colors">
+                <Link href="/trackers/loans" className="text-sm text-gray-200 hover:text-white transition-colors inline-block hover:translate-x-1 transform duration-200">
                   Loans Tracker
                 </Link>
               </li>
               <li>
-                <a href="https://www.youtube.com/@Centre4PolicyAnalysis" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-200 hover:text-white transition-colors">
+                <a href="https://www.youtube.com/@Centre4PolicyAnalysis" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-200 hover:text-white transition-colors inline-block hover:translate-x-1 transform duration-200">
                   Explainers
                 </a>
               </li>
               <li>
-                <Link href="/resources/reports-briefs" className="text-sm text-gray-200 hover:text-white transition-colors">
+                <Link href="/resources/reports-briefs" className="text-sm text-gray-200 hover:text-white transition-colors inline-block hover:translate-x-1 transform duration-200">
                   Reports & Briefs
                 </Link>
               </li>
@@ -107,20 +107,24 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-4 border-b border-white/20 pb-2">Contact Information</h3>
             <ul className="space-y-3 text-sm text-gray-200">
               <li>
-                <div className="flex items-start gap-2">
-                  <svg className="w-4 h-4 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
+                <div className="flex items-start gap-3">
+                  <div className="p-1.5 bg-white/10 rounded-lg flex-shrink-0">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
                   <a href="mailto:info@cepa.or.ug" className="hover:text-white transition-colors">
                     info@cepa.or.ug
                   </a>
                 </div>
               </li>
               <li>
-                <div className="flex items-start gap-2">
-                  <svg className="w-4 h-4 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
+                <div className="flex items-start gap-3">
+                  <div className="p-1.5 bg-white/10 rounded-lg flex-shrink-0">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                  </div>
                   <div>
                     <a href="tel:+256414237498" className="block hover:text-white transition-colors">
                     +256 393 228 160
@@ -129,11 +133,13 @@ export default function Footer() {
                 </div>
               </li>
               <li>
-                <div className="flex items-start gap-2">
-                  <svg className="w-4 h-4 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
+                <div className="flex items-start gap-3">
+                  <div className="p-1.5 bg-white/10 rounded-lg flex-shrink-0">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
                   <div className="text-gray-200">
                     Plot 3, Ssunna Close,<br />
                     Ntinda, Kampala,<br />
@@ -151,7 +157,7 @@ export default function Footer() {
                   href="https://x.com/pwatchug" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-200 hover:text-white transition-colors"
+                  className="p-2 bg-white/10 rounded-lg text-gray-200 hover:text-white hover:bg-white/20 transition-all hover:scale-110 transform duration-200"
                   aria-label="X (Twitter)"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -162,7 +168,7 @@ export default function Footer() {
                   href="https://www.tiktok.com/@pwatchug" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-200 hover:text-white transition-colors"
+                  className="p-2 bg-white/10 rounded-lg text-gray-200 hover:text-white hover:bg-white/20 transition-all hover:scale-110 transform duration-200"
                   aria-label="TikTok"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -173,7 +179,7 @@ export default function Footer() {
                   href="https://www.linkedin.com/company/cepa-_-parliament-watch-uganda" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-200 hover:text-white transition-colors"
+                  className="p-2 bg-white/10 rounded-lg text-gray-200 hover:text-white hover:bg-white/20 transition-all hover:scale-110 transform duration-200"
                   aria-label="LinkedIn"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -184,7 +190,7 @@ export default function Footer() {
                   href="https://www.facebook.com/pwatchug" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-200 hover:text-white transition-colors"
+                  className="p-2 bg-white/10 rounded-lg text-gray-200 hover:text-white hover:bg-white/20 transition-all hover:scale-110 transform duration-200"
                   aria-label="Facebook"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -195,7 +201,7 @@ export default function Footer() {
                   href="https://parliamentwatch.ug" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-200 hover:text-white transition-colors"
+                  className="p-2 bg-white/10 rounded-lg text-gray-200 hover:text-white hover:bg-white/20 transition-all hover:scale-110 transform duration-200"
                   aria-label="Website"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -214,15 +220,15 @@ export default function Footer() {
               <p>&copy; {currentYear} Parliament Watch Uganda. All rights reserved.</p>
             </div>
             <div className="flex flex-wrap items-center gap-4 text-xs text-gray-300">
-              <Link href="/contact" className="hover:text-white transition-colors">
+              <Link href="/contact" className="hover:text-white transition-colors hover:underline">
                 Privacy Policy
               </Link>
               <span className="text-white/30">|</span>
-              <Link href="/contact" className="hover:text-white transition-colors">
+              <Link href="/contact" className="hover:text-white transition-colors hover:underline">
                 Terms of Use
               </Link>
               <span className="text-white/30">|</span>
-              <Link href="/contact" className="hover:text-white transition-colors">
+              <Link href="/contact" className="hover:text-white transition-colors hover:underline">
                 Accessibility
               </Link>
             </div>

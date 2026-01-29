@@ -166,16 +166,19 @@ export default function BlogsPage() {
             ) : (
               <>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                  {blogPosts.map((post) => (
+                  {blogPosts.map((post, index) => (
                     <Link key={post.id} href={`/blogs/${post.slug}`}>
-                      <div className="relative rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer h-full min-h-[350px] flex flex-col">
+                      <div 
+                        className="relative rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer h-full min-h-[350px] flex flex-col hover:scale-[1.02] hover:-translate-y-1 animate-fade-in-up group"
+                        style={{ animationDelay: `${index * 50}ms`, animationFillMode: 'both' }}
+                      >
                         <img
                           src={post.image 
                             ? (post.image.startsWith('http') ? post.image : `${API_BASE_URL.replace('/api', '')}${post.image}`)
                             : '/images/default-blog.jpg'
                           }
                           alt={post.title}
-                          className="absolute inset-0 w-full h-full object-cover"
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                         />
                         {/* Dark gradient overlay at bottom */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />

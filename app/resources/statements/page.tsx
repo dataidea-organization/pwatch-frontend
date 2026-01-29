@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
-import { ArrowLeft, Calendar, FileText } from 'lucide-react'
+import { ArrowLeft, Calendar, FileText, TrendingUp, Clock } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 interface Statement {
@@ -97,6 +97,47 @@ export default function StatementsPage() {
     return allStatements.filter((statement) => !statement.date_received).length
   }, [allStatements])
 
+  // Statistics calculations
+  const stats = useMemo(() => {
+    const totalStatements = allStatements.length
+    const totalYears = years.length
+    
+    // Helper function to count statements per year
+    const countForYear = (year: number) => {
+      return allStatements.filter((statement) => {
+        if (!statement.date_received) return false
+        return new Date(statement.date_received).getFullYear() === year
+      }).length
+    }
+    
+    // Find most active year
+    let mostActiveYear = null
+    let maxCount = 0
+    years.forEach((year) => {
+      const count = countForYear(year)
+      if (count > maxCount) {
+        maxCount = count
+        mostActiveYear = year
+      }
+    })
+
+    // Count recent additions (last 30 days)
+    const thirtyDaysAgo = new Date()
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
+    const recentCount = allStatements.filter((statement) => {
+      if (!statement.created_at) return false
+      return new Date(statement.created_at) >= thirtyDaysAgo
+    }).length
+
+    return {
+      totalStatements,
+      totalYears,
+      mostActiveYear,
+      maxCount,
+      recentCount,
+    }
+  }, [allStatements, years])
+
   if (loading && allStatements.length === 0) {
     return (
       <div className="min-h-screen bg-[#f5f0e8]">
@@ -141,6 +182,95 @@ export default function StatementsPage() {
 
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Statements</h1>
+        </div>
+
+        {/* Statistics Cards */}
+        {!loading && allStatements.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6">
+            {/* Total Statements */}
+            <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
+                <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
+              </div>
+              <div className="relative z-10 flex items-center gap-4">
+                <div className="flex-shrink-0">
+                  <div className="p-3 bg-white/60 rounded-lg shadow-sm">
+                    <FileText className="w-6 h-6 text-[#2d5016]" />
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-600 text-sm mb-1">Total Statements</p>
+                  <p className="text-2xl font-bold text-gray-900">{stats.totalStatements.toLocaleString()}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Years Covered */}
+            <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
+                <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
+              </div>
+              <div className="relative z-10 flex items-center gap-4">
+                <div className="flex-shrink-0">
+                  <div className="p-3 bg-white/60 rounded-lg shadow-sm">
+                    <Calendar className="w-6 h-6 text-[#2d5016]" />
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-600 text-sm mb-1">Years Covered</p>
+                  <p className="text-2xl font-bold text-gray-900">{stats.totalYears}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Most Active Year */}
+            <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
+                <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
+              </div>
+              <div className="relative z-10 flex items-center gap-4">
+                <div className="flex-shrink-0">
+                  <div className="p-3 bg-white/60 rounded-lg shadow-sm">
+                    <TrendingUp className="w-6 h-6 text-[#2d5016]" />
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-600 text-sm mb-1">Most Active Year</p>
+                  <p className="text-2xl font-bold text-gray-900">
+                    {stats.mostActiveYear || 'N/A'}
+                  </p>
+                  {stats.mostActiveYear && (
+                    <p className="text-xs text-gray-500 mt-1">
+                      {stats.maxCount} {stats.maxCount === 1 ? 'statement' : 'statements'}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Recent Additions */}
+            <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
+                <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
+              </div>
+              <div className="relative z-10 flex items-center gap-4">
+                <div className="flex-shrink-0">
+                  <div className="p-3 bg-white/60 rounded-lg shadow-sm">
+                    <Clock className="w-6 h-6 text-[#2d5016]" />
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-600 text-sm mb-1">Last 30 Days</p>
+                  <p className="text-2xl font-bold text-gray-900">{stats.recentCount}</p>
+                  <p className="text-xs text-gray-500 mt-1">New statements</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Description */}
+        <div className="mb-8">
           <p className="text-gray-600 text-lg">Select a year to view official statements and position papers from CEPA</p>
         </div>
 
@@ -254,7 +384,7 @@ export default function StatementsPage() {
           </div>
         )}
 
-        <div className="mt-8 bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="mt-8 bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6">
           <h3 className="text-sm font-semibold text-gray-700 mb-2">About Statements</h3>
           <p className="text-sm text-gray-600">
             Official statements, position papers, and policy positions from CEPA on key governance and parliamentary issues.
