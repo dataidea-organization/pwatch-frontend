@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { fetchBill } from '@/lib/api';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import { ArrowLeft, FileText, ClipboardList, CheckCircle2 } from 'lucide-react';
 
 export default async function BillDetailsPage({
   params
