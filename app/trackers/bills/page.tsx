@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo, Suspense } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowLeft, FileText, BookOpen, CheckCircle, Clock, Award, XCircle, FileCheck, Users, PenTool, ArrowRight, Search } from 'lucide-react';
 import { fetchBills, BillList } from '@/lib/api';
 import { Input } from '@/components/ui/input';
@@ -198,6 +199,46 @@ function BillsTrackerPageContent() {
     <div className="min-h-screen bg-[#f5f0e8]">
 
       <main className="relative">
+        {/* Breadcrumb and Hero */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="mb-6">
+            <Link href="/trackers" className="inline-flex items-center text-[#2d5016] hover:text-[#1b3d26] transition-colors">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Trackers
+            </Link>
+          </div>
+
+          {/* Hero Section - full-cover image with text on dark overlay at bottom (height matches home page hero) */}
+          <div className="relative mb-10 h-[400px] overflow-hidden rounded-2xl shadow-xl">
+            <Image
+              src="/images/bills.jpg"
+              alt="Bills tracker - legislative bills and acts"
+              fill
+              className="object-cover"
+              sizes="100vw"
+              priority
+            />
+            <div
+              className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"
+              aria-hidden
+            />
+            <div className="absolute inset-x-0 bottom-0 z-10 px-6 py-6 sm:px-8 sm:py-8 md:px-10 md:py-10">
+              <div className="max-w-2xl">
+                <div className="inline-flex items-center gap-2 rounded-lg bg-white/15 px-3 py-1.5 mb-3">
+                  <FileText className="w-4 h-4 text-white" aria-hidden />
+                  <span className="text-sm font-medium text-white/90">Legislative process</span>
+                </div>
+                <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl mb-3">
+                  Bills Tracker
+                </h1>
+                <p className="text-base text-white/90 leading-relaxed sm:text-lg">
+                  Track bills through the legislative process from draft to assent. Browse by status,
+                  search by title or mover, and follow how a bill becomes an Act of Parliament.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* How a Bill Becomes an Act Section */}
         <div className="bg-[#f5f0e8] border-b">

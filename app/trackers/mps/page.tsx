@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { Users, Building2, MapPin, ArrowLeft } from 'lucide-react';
 import { fetchMPs, fetchMPSummary, MP, MPSummary } from '@/lib/api';
@@ -318,18 +319,41 @@ export default function MPsPage() {
     <div className="min-h-screen bg-[#f5f0e8]">
 
       <main className="max-w-7xl mx-auto px-4 py-8">
-        {/* Header Section */}
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
-            Members of Parliament
-          </h1>
-          <p className="text-gray-600">
-            Browse and search for your representatives in Parliament
-          </p>
-          <div className="flex items-center gap-2 mt-1">
-            <p className="text-sm text-gray-500">
-              {filteredMps.length} {filteredMps.length === 1 ? 'MP' : 'MPs'} found
-            </p>
+        <div className="mb-6">
+          <Link href="/trackers" className="inline-flex items-center text-[#2d5016] hover:text-[#1b3d26] transition-colors">
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Trackers
+          </Link>
+        </div>
+
+        {/* Hero Section - full-cover image with text on dark overlay at bottom (height matches home page hero) */}
+        <div className="relative mb-10 h-[400px] overflow-hidden rounded-2xl shadow-xl">
+          <Image
+            src="/images/mps.jpg"
+            alt="Members of Parliament - browse and search for your representatives"
+            fill
+            className="object-cover"
+            sizes="100vw"
+            priority
+          />
+          <div
+            className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"
+            aria-hidden
+          />
+          <div className="absolute inset-x-0 bottom-0 z-10 px-6 py-6 sm:px-8 sm:py-8 md:px-10 md:py-10">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 rounded-lg bg-white/15 px-3 py-1.5 mb-3">
+                <Users className="w-4 h-4 text-white" aria-hidden />
+                <span className="text-sm font-medium text-white/90">Your representatives</span>
+              </div>
+              <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl mb-3">
+                Members of Parliament
+              </h1>
+              <p className="text-base text-white/90 leading-relaxed sm:text-lg">
+                Browse and search for your representatives in Parliament. Filter by party or
+                district, search by name or constituency, and view MP profiles and contact details.
+              </p>
+            </div>
           </div>
         </div>
 

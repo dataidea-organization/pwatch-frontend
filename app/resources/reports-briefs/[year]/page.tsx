@@ -26,6 +26,8 @@ interface PaginatedResponse {
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api'
 
+const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
 export default function ReportsBriefsYearPage() {
   const params = useParams()
   const year = params?.year as string
@@ -35,6 +37,7 @@ export default function ReportsBriefsYearPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
+  const [selectedMonth, setSelectedMonth] = useState<number | null>(null)
   const [page, setPage] = useState(1)
   const pageSize = 15
 
@@ -46,7 +49,7 @@ export default function ReportsBriefsYearPage() {
 
   useEffect(() => {
     setPage(1)
-  }, [searchQuery])
+  }, [searchQuery, selectedMonth])
 
   const loadAllReports = async () => {
     try {
@@ -91,18 +94,38 @@ export default function ReportsBriefsYearPage() {
     })
   }, [allReports, yearNumber])
 
+  // Months that have at least one report in this year
+  const monthsWithData = useMemo(() => {
+    const months = new Set<number>()
+    reportsForYear.forEach((report) => {
+      if (report.date_received) {
+        months.add(new Date(report.date_received).getMonth() + 1) // 1-12
+      }
+    })
+    return Array.from(months).sort((a, b) => a - b)
+  }, [reportsForYear])
+
+  // Filter by selected month
+  const reportsForYearAndMonth = useMemo(() => {
+    if (selectedMonth === null) return reportsForYear
+    return reportsForYear.filter((report) => {
+      if (!report.date_received) return false
+      return new Date(report.date_received).getMonth() + 1 === selectedMonth
+    })
+  }, [reportsForYear, selectedMonth])
+
   // Client-side filtering
   const filteredReports = useMemo(() => {
-    if (!searchQuery.trim()) return reportsForYear
+    if (!searchQuery.trim()) return reportsForYearAndMonth
 
     const query = searchQuery.toLowerCase()
-    return reportsForYear.filter((report) => {
+    return reportsForYearAndMonth.filter((report) => {
       return (
         report.name.toLowerCase().includes(query) ||
         (report.description && report.description.toLowerCase().includes(query))
       )
     })
-  }, [reportsForYear, searchQuery])
+  }, [reportsForYearAndMonth, searchQuery])
 
   // Client-side pagination
   const paginatedReports = useMemo(() => {
@@ -183,6 +206,40 @@ export default function ReportsBriefsYearPage() {
         </div>
 
         <div className="bg-[#fafaf8] rounded-lg border border-gray-200 shadow-sm">
+          {/* Month filter */}
+          {monthsWithData.length > 0 && (
+            <div className="p-4 border-b border-gray-200">
+              <p className="text-sm font-medium text-gray-700 mb-2">Filter by month</p>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={() => setSelectedMonth(null)}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    selectedMonth === null
+                      ? 'bg-[#2d5016] text-white'
+                      : 'bg-white border border-gray-300 text-gray-700 hover:bg-[#f5f0e8]'
+                  }`}
+                >
+                  All
+                </button>
+                {monthsWithData.map((monthNum) => (
+                  <button
+                    key={monthNum}
+                    type="button"
+                    onClick={() => setSelectedMonth(monthNum)}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      selectedMonth === monthNum
+                        ? 'bg-[#2d5016] text-white'
+                        : 'bg-white border border-gray-300 text-gray-700 hover:bg-[#f5f0e8]'
+                    }`}
+                  >
+                    {MONTH_NAMES[monthNum - 1]}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div className="p-4 border-b border-gray-200">
             <div className="flex gap-3 items-center">
               <div className="relative flex-1">

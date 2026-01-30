@@ -2,8 +2,9 @@
 
 import { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
-import { ArrowLeft, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, DollarSign, Building2 } from 'lucide-react';
+import { ArrowLeft, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, DollarSign } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
@@ -244,52 +245,36 @@ export default function LoansTrackerPage() {
           </Link>
         </div>
 
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Loans Tracker</h1>
-          <p className="text-gray-600 text-lg">Track government loans and development projects</p>
-        </div>
-
-        {/* Statistics Cards */}
-        {!loading && allLoans.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            {/* Total Loans */}
-            <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
-              <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
-                <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
+        {/* Hero Section - full-cover image with text on dark overlay at bottom (height matches home page hero) */}
+        <div className="relative mb-10 h-[400px] overflow-hidden rounded-2xl shadow-xl">
+          <Image
+            src="/images/loans.jpg"
+            alt="Loans tracker - government loans and development projects"
+            fill
+            className="object-cover"
+            sizes="100vw"
+            priority
+          />
+          <div
+            className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"
+            aria-hidden
+          />
+          <div className="absolute inset-x-0 bottom-0 z-10 px-6 py-6 sm:px-8 sm:py-8 md:px-10 md:py-10">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 rounded-lg bg-white/15 px-3 py-1.5 mb-3">
+                <DollarSign className="w-4 h-4 text-white" aria-hidden />
+                <span className="text-sm font-medium text-white/90">Government loans & development</span>
               </div>
-              <div className="relative z-10 flex items-center gap-4">
-                <div className="flex-shrink-0">
-                  <div className="p-3 bg-white/60 rounded-lg shadow-sm">
-                    <DollarSign className="w-6 h-6 text-[#2d5016]" />
-                  </div>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-gray-600 text-sm mb-1">Total Loans</p>
-                  <p className="text-2xl font-bold text-gray-900">{filteredLoans.length.toLocaleString()}</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Total Sources */}
-            <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
-              <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
-                <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
-              </div>
-              <div className="relative z-10 flex items-center gap-4">
-                <div className="flex-shrink-0">
-                  <div className="p-3 bg-white/60 rounded-lg shadow-sm">
-                    <Building2 className="w-6 h-6 text-[#2d5016]" />
-                  </div>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-gray-600 text-sm mb-1">Loan Sources</p>
-                  <p className="text-2xl font-bold text-gray-900">{sourcesSummary.length}</p>
-                </div>
-              </div>
+              <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl mb-3">
+                Loans Tracker
+              </h1>
+              <p className="text-base text-white/90 leading-relaxed sm:text-lg">
+                Track government loans and development projects. Browse by year and month, search by sector
+                or source, and explore approved amounts and funding for parliamentary and national projects.
+              </p>
             </div>
           </div>
-        )}
+        </div>
 
         {/* Main Content - Table and Chart */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

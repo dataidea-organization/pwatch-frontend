@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowLeft, Calendar, FileText, TrendingUp, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -185,9 +186,36 @@ export default function HansardsTrackerPage() {
           </Link>
         </div>
 
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Hansards</h1>
+        {/* Hero Section - full-cover image with text on dark overlay at bottom (height matches home page hero) */}
+        <div className="relative mb-10 h-[400px] overflow-hidden rounded-2xl shadow-xl">
+          <Image
+            src="/images/hansards.jpg"
+            alt="Parliament building - home of legislative debates and proceedings"
+            fill
+            className="object-cover"
+            sizes="100vw"
+            priority
+          />
+          <div
+            className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"
+            aria-hidden
+          />
+          <div className="absolute inset-x-0 bottom-0 z-10 px-6 py-6 sm:px-8 sm:py-8 md:px-10 md:py-10">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 rounded-lg bg-white/15 px-3 py-1.5 mb-3">
+                <FileText className="w-4 h-4 text-white" aria-hidden />
+                <span className="text-sm font-medium text-white/90">Parliamentary records</span>
+              </div>
+              <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl mb-3">
+                Hansards
+              </h1>
+              <p className="text-base text-white/90 leading-relaxed sm:text-lg">
+                Hansards are the official transcripts of parliamentary debates and proceedings in Uganda.
+                Browse by year and month, search sessions, and download transcripts to stay informed about
+                legislative discussions, motions, and votes in Parliament.
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Statistics Cards */}

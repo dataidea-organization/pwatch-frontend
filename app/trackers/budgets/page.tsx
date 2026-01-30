@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowLeft, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Download, FileText, FolderOpen, Calendar } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -204,8 +205,37 @@ export default function BudgetsPage() {
             <ArrowLeft size={20} />
             Back to Trackers
           </Link>
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900">Budgets</h1>
-          <p className="text-gray-600 mt-2">National budget documents and financial plans</p>
+        </div>
+
+        {/* Hero Section - full-cover image with text on dark overlay at bottom (height matches home page hero) */}
+        <div className="relative mb-10 h-[400px] overflow-hidden rounded-2xl shadow-xl">
+          <Image
+            src="/images/budget.jpg"
+            alt="Budgets - national budget documents and financial plans"
+            fill
+            className="object-cover"
+            sizes="100vw"
+            priority
+          />
+          <div
+            className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"
+            aria-hidden
+          />
+          <div className="absolute inset-x-0 bottom-0 z-10 px-6 py-6 sm:px-8 sm:py-8 md:px-10 md:py-10">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 rounded-lg bg-white/15 px-3 py-1.5 mb-3">
+                <FolderOpen className="w-4 h-4 text-white" aria-hidden />
+                <span className="text-sm font-medium text-white/90">National budget</span>
+              </div>
+              <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl mb-3">
+                Budgets
+              </h1>
+              <p className="text-base text-white/90 leading-relaxed sm:text-lg">
+                Browse national budget documents and financial plans by financial year. Search and
+                download budget documents to stay informed about government spending and fiscal plans.
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Statistics Cards */}

@@ -26,6 +26,8 @@ interface PaginatedResponse {
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
 
+const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
 export default function HansardsYearPage() {
   const params = useParams();
   const year = params?.year as string;
@@ -35,6 +37,7 @@ export default function HansardsYearPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
   const [page, setPage] = useState(1);
   const [sortField, setSortField] = useState<'name' | 'date' | 'created_at' | null>(null);
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
@@ -48,7 +51,7 @@ export default function HansardsYearPage() {
 
   useEffect(() => {
     setPage(1);
-  }, [searchQuery]);
+  }, [searchQuery, selectedMonth]);
 
   const loadAllHansards = async () => {
     try {
@@ -93,15 +96,35 @@ export default function HansardsYearPage() {
     });
   }, [allHansards, yearNumber]);
 
+  // Months that have at least one hansard in this year
+  const monthsWithData = useMemo(() => {
+    const months = new Set<number>();
+    hansardsForYear.forEach((hansard) => {
+      if (hansard.date) {
+        months.add(new Date(hansard.date).getMonth() + 1); // 1-12
+      }
+    });
+    return Array.from(months).sort((a, b) => a - b);
+  }, [hansardsForYear]);
+
+  // Filter by selected month
+  const hansardsForYearAndMonth = useMemo(() => {
+    if (selectedMonth === null) return hansardsForYear;
+    return hansardsForYear.filter((hansard) => {
+      if (!hansard.date) return false;
+      return new Date(hansard.date).getMonth() + 1 === selectedMonth;
+    });
+  }, [hansardsForYear, selectedMonth]);
+
   // Client-side filtering - filter based on search query
   const filteredHansards = useMemo(() => {
-    if (!searchQuery.trim()) return hansardsForYear;
+    if (!searchQuery.trim()) return hansardsForYearAndMonth;
 
     const query = searchQuery.toLowerCase();
-    return hansardsForYear.filter((hansard) => {
+    return hansardsForYearAndMonth.filter((hansard) => {
       return hansard.name.toLowerCase().includes(query);
     });
-  }, [hansardsForYear, searchQuery]);
+  }, [hansardsForYearAndMonth, searchQuery]);
 
   // Client-side sorting - sort the filtered hansards array
   const sortedHansards = useMemo(() => {
@@ -233,6 +256,40 @@ export default function HansardsYearPage() {
 
         {/* Main Content */}
         <div className="bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 p-6">
+          {/* Month filter */}
+          {monthsWithData.length > 0 && (
+            <div className="mb-6">
+              <p className="text-sm font-medium text-gray-700 mb-2">Filter by month</p>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={() => setSelectedMonth(null)}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    selectedMonth === null
+                      ? 'bg-[#2d5016] text-white'
+                      : 'bg-white border border-gray-300 text-gray-700 hover:bg-[#f5f0e8]'
+                  }`}
+                >
+                  All
+                </button>
+                {monthsWithData.map((monthNum) => (
+                  <button
+                    key={monthNum}
+                    type="button"
+                    onClick={() => setSelectedMonth(monthNum)}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      selectedMonth === monthNum
+                        ? 'bg-[#2d5016] text-white'
+                        : 'bg-white border border-gray-300 text-gray-700 hover:bg-[#f5f0e8]'
+                    }`}
+                  >
+                    {MONTH_NAMES[monthNum - 1]}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Search */}
           <div className="mb-6">
             <div className="flex gap-3 items-center">
