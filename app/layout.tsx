@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ChatbotWidget from "@/components/ChatbotWidget";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 const gabarito = Gabarito({
   variable: "--font-gabarito",
@@ -37,6 +38,7 @@ export default function RootLayout({
             <Header />
             {children}
             <Footer />
+            <WhatsAppButton />
             <ChatbotWidget />
           </body>
     </html>
