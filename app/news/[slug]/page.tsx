@@ -164,61 +164,78 @@ export default function NewsDetailPage() {
         </div>
 
         {/* Hero Image Section */}
-        <div className="relative h-[500px] md:h-[600px] rounded-2xl overflow-hidden mb-8 shadow-xl">
+        <div className="relative h-[480px] sm:h-[520px] md:h-[560px] lg:h-[600px] rounded-2xl overflow-hidden mb-8 shadow-xl ring-1 ring-black/5">
           <img
             src={article.image 
               ? (article.image.startsWith('http') ? article.image : `${API_BASE_URL.replace('/api', '')}${article.image}`)
               : '/images/default-news.jpg'
             }
             alt={article.title}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transition-transform duration-700 ease-out"
             style={{ objectPosition: 'center 30%' }}
           />
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
-          
+          {/* Gradient overlay – stronger at bottom for readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent" />
+          {/* Subtle vignette at edges */}
+          <div className="absolute inset-0 shadow-[inset_0_0_80px_rgba(0,0,0,0.3)]" aria-hidden />
+          {/* Decorative blur – brand accent */}
+          <div className="absolute bottom-0 right-0 w-64 h-64 translate-x-1/3 translate-y-1/3 opacity-20 pointer-events-none">
+            <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-3xl" />
+          </div>
+
           {/* Content Overlay */}
-          <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
+          <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 md:p-10 lg:p-12">
             <div className="max-w-4xl">
               {/* Category Badge */}
-              <div className="mb-4">
-                <span className="inline-block px-4 py-2 bg-[#2d5016] text-white text-sm font-semibold rounded-full">
+              <div className="mb-3 md:mb-4">
+                <span className="inline-block px-4 py-2 bg-[#2d5016] text-white text-sm font-semibold rounded-full shadow-lg shadow-black/20">
                   {article.category_display || article.category}
                 </span>
               </div>
-              
-              {/* Title */}
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+
+              {/* Title – text shadow for contrast on any image */}
+              <h1 
+                className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-bold text-white mb-5 md:mb-6 leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]"
+                style={{ textShadow: '0 2px 12px rgba(0,0,0,0.6), 0 4px 24px rgba(0,0,0,0.4)' }}
+              >
                 {article.title}
               </h1>
-              
-              {/* Meta Information */}
-              <div className="flex flex-wrap items-center gap-6 text-white/90">
+
+              {/* Meta row – separators and clearer share */}
+              <div className="flex flex-wrap items-center gap-4 sm:gap-5 text-white/95">
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4" />
+                  <Calendar className="w-4 h-4 flex-shrink-0 opacity-90" />
                   <span className="text-sm">{formatDate(article.published_date)}</span>
                 </div>
+                <span className="hidden sm:inline w-px h-4 bg-white/50" aria-hidden />
                 <div className="flex items-center gap-2">
-                  <User className="w-4 h-4" />
+                  <User className="w-4 h-4 flex-shrink-0 opacity-90" />
                   <span className="text-sm">{article.author}</span>
                 </div>
                 {readingTime > 0 && (
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4" />
-                    <span className="text-sm">{readingTime} min read</span>
-                  </div>
+                  <>
+                    <span className="hidden sm:inline w-px h-4 bg-white/50" aria-hidden />
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-4 h-4 flex-shrink-0 opacity-90" />
+                      <span className="text-sm">{readingTime} min read</span>
+                    </div>
+                  </>
                 )}
+                <span className="hidden sm:inline w-px h-4 bg-white/50" aria-hidden />
                 <div className="flex items-center gap-2">
-                  <Eye className="w-4 h-4" />
+                  <Eye className="w-4 h-4 flex-shrink-0 opacity-90" />
                   <span className="text-sm">{article.view_count ?? 0} views</span>
                 </div>
+                <span className="hidden sm:inline w-px h-4 bg-white/50" aria-hidden />
                 <button
+                  type="button"
                   onClick={handleShare}
-                  className="flex items-center gap-2 hover:text-white transition-colors"
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/50 bg-white/10 hover:bg-white/20 hover:border-white/70 text-white transition-colors"
                   title="Share article"
+                  aria-label="Share this article"
                 >
                   <Share2 className="w-4 h-4" />
-                  <span className="text-sm">Share</span>
+                  <span className="text-sm font-medium">Share</span>
                 </button>
               </div>
             </div>

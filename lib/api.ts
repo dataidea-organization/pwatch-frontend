@@ -201,6 +201,38 @@ export interface HotInParliamentItem {
   image: string | null;
   link_url: string | null;
   published_date: string;
+  view_count: number;
+}
+
+export interface HotInParliamentCommentItem {
+  id: number;
+  author_name: string;
+  body: string;
+  created_at: string;
+}
+
+export async function fetchHotInParliamentComments(slug: string): Promise<HotInParliamentCommentItem[]> {
+  const response = await fetch(`${API_BASE_URL}/news/hot-in-parliament/${slug}/comments/`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch comments');
+  }
+  return response.json();
+}
+
+export async function submitHotInParliamentComment(
+  slug: string,
+  data: { author_name: string; author_email: string; body: string }
+): Promise<HotInParliamentCommentItem> {
+  const response = await fetch(`${API_BASE_URL}/news/hot-in-parliament/${slug}/comments/`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error((err as { detail?: string }).detail || 'Failed to submit comment');
+  }
+  return response.json();
 }
 
 export interface HotInParliamentResponse {

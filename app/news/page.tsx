@@ -3,6 +3,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { fetchNews, NewsArticle } from '@/lib/api';
+import { Calendar, User } from 'lucide-react';
+
+const API_MEDIA = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:8000';
 
 const NEWS_CATEGORIES = [
   { value: '', label: 'All Categories' },
@@ -12,6 +15,12 @@ const NEWS_CATEGORIES = [
   { value: 'governance', label: 'Governance' },
   { value: 'accountability', label: 'Accountability' },
 ];
+
+function articleImageUrl(image: string | null): string {
+  if (!image) return '/images/default-news.jpg';
+  if (image.startsWith('http')) return image;
+  return `${API_MEDIA}${image.startsWith('/') ? '' : '/'}${image}`;
+}
 
 export default function NewsPage() {
   const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
@@ -91,15 +100,26 @@ export default function NewsPage() {
     });
   };
 
-  // Show full page loading only on initial load
+  const formatDateShort = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    });
+  };
+
   if (initialLoad && loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8]">
-        <main className="bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] py-12">
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="text-center">
-              <p className="text-gray-600">Loading news articles...</p>
-            </div>
+      <div className="min-h-screen bg-[#fafaf8]">
+        <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+          <div className="border-b border-gray-200 pb-6 mb-8">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">News</h1>
+            <p className="text-gray-600 text-sm sm:text-base">If it happened in Parliament, it&apos;s right here.</p>
+          </div>
+          <div className="text-center py-16">
+            <div className="inline-block w-8 h-8 border-2 border-[#2d5016] border-t-transparent rounded-full animate-spin" />
+            <p className="text-gray-600 mt-4">Loading news...</p>
           </div>
         </main>
       </div>
@@ -108,145 +128,115 @@ export default function NewsPage() {
 
   if (error && newsArticles.length === 0 && !initialLoad) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8]">
-        <main className="bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] py-12">
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="text-center mb-8">
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
-                If it happened in Parliament, it&apos;s right here
-              </h1>
-            </div>
-
-            {/* Search and Filter Section */}
-            <div className="mb-8 bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6">
-              <div className="flex flex-col md:flex-row gap-4">
-                {/* Search Input */}
-                <div className="flex-1">
-                  <div className="relative">
-                    <input
-                      type="text"
-                      placeholder="Search news articles..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full px-4 py-3 pl-10 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#2d5016] focus:border-transparent text-gray-800 bg-white shadow-sm"
-                    />
-                    <svg
-                      className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                      />
-                    </svg>
-                  </div>
-                </div>
-
-                {/* Category Filter */}
-                <div className="md:w-64">
-                  <select
-                    value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#2d5016] focus:border-transparent text-gray-800 bg-white cursor-pointer shadow-sm"
-                  >
-                    {NEWS_CATEGORIES.map((category) => (
-                      <option key={category.value} value={category.value}>
-                        {category.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+      <div className="min-h-screen bg-[#fafaf8]">
+        <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+          <header className="border-b border-gray-200 pb-6 mb-8">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">News</h1>
+            <p className="text-gray-600 text-sm sm:text-base mb-6">
+              If it happened in Parliament, it&apos;s right here.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <div className="flex-1 relative">
+                <input
+                  type="search"
+                  placeholder="Search by keyword..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full px-4 py-2.5 pl-9 rounded-lg border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#2d5016]/40 focus:border-[#2d5016]"
+                />
+                <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <div className="sm:w-48">
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-lg border border-gray-300 bg-white text-gray-900 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#2d5016]/40 focus:border-[#2d5016]"
+                >
+                  {NEWS_CATEGORIES.map((category) => (
+                    <option key={category.value} value={category.value}>{category.label}</option>
+                  ))}
+                </select>
               </div>
             </div>
-
-            <div className="text-center">
-              <div className="bg-red-50 border border-red-200 text-red-800 rounded-xl p-4 shadow-sm inline-block mb-4">
-                <p className="font-medium">{error}</p>
-              </div>
-              <button
-                onClick={loadNews}
-                className="bg-[#2d5016] text-white px-6 py-2 rounded-lg hover:bg-[#1b3d26] transition-colors shadow-sm hover:shadow-md"
-              >
-                Try Again
-              </button>
-            </div>
+          </header>
+          <div className="bg-red-50 border border-red-200 text-red-800 rounded-lg p-4 mb-4">
+            <p className="font-medium">{error}</p>
           </div>
+          <button
+            onClick={loadNews}
+            className="bg-[#2d5016] text-white px-6 py-2.5 rounded-lg hover:bg-[#1b3d26] transition-colors font-medium"
+          >
+            Try again
+          </button>
         </main>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8]">
-      <main className="bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] py-12">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
-              If it happened in Parliament, it&apos;s right here
-            </h1>
-          </div>
-
-          {/* Search and Filter Section */}
-          <div className="mb-8 bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6">
-            <div className="flex flex-col md:flex-row gap-4">
-              {/* Search Input */}
-              <div className="flex-1">
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="Search news articles..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full px-4 py-3 pl-10 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#2d5016] focus:border-transparent text-gray-800 bg-white shadow-sm"
-                  />
-                  <svg
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    />
-                  </svg>
-                </div>
-              </div>
-
-              {/* Category Filter */}
-              <div className="md:w-64">
-                <select
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#2d5016] focus:border-transparent text-gray-800 bg-white cursor-pointer shadow-sm"
-                >
-                  {NEWS_CATEGORIES.map((category) => (
-                    <option key={category.value} value={category.value}>
-                      {category.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
+    <div className="min-h-screen bg-[#fafaf8]">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8 pb-12">
+        {/* News-style page header: title + search/filter bar */}
+        <header className="border-b border-gray-200 pb-6 mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">News</h1>
+          <p className="text-gray-600 text-sm sm:text-base mb-6">
+            If it happened in Parliament, it&apos;s right here.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+            <label htmlFor="news-search" className="sr-only">Search news</label>
+            <div className="flex-1 relative">
+              <input
+                id="news-search"
+                type="search"
+                placeholder="Search by keyword..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full px-4 py-2.5 pl-9 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#2d5016]/40 focus:border-[#2d5016]"
+                aria-label="Search news articles"
+              />
+              <svg
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            <div className="sm:w-48">
+              <label htmlFor="news-category" className="sr-only">Category</label>
+              <select
+                id="news-category"
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 bg-white text-gray-900 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#2d5016]/40 focus:border-[#2d5016]"
+                aria-label="Filter by category"
+              >
+                {NEWS_CATEGORIES.map((category) => (
+                  <option key={category.value} value={category.value}>
+                    {category.label}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
+        </header>
 
+        <div>
           {loading ? (
-            <div className="text-center py-12">
-              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#2d5016]"></div>
-              <p className="text-gray-600 mt-4">Loading news articles...</p>
+            <div className="text-center py-16">
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-2 border-[#2d5016] border-t-transparent" />
+              <p className="text-gray-600 mt-4">Loading news...</p>
             </div>
           ) : newsArticles.length === 0 ? (
-            <div className="text-center text-gray-600 py-12 bg-white rounded-xl shadow-md border border-gray-200">
-              <p className="text-lg mb-2 font-medium">
+            <div className="bg-white border border-gray-200 rounded-lg shadow-sm py-16 px-6 text-center">
+              <p className="text-gray-700 text-lg font-medium mb-2">
                 {debouncedSearch || selectedCategory
-                  ? 'No news articles found matching your criteria.'
-                  : 'No news articles available at the moment.'}
+                  ? 'No articles match your search or filter.'
+                  : 'No news articles at the moment.'}
               </p>
               {(debouncedSearch || selectedCategory) && (
                 <button
@@ -254,103 +244,144 @@ export default function NewsPage() {
                     setSearchQuery('');
                     setSelectedCategory('');
                   }}
-                  className="mt-4 text-[#2d5016] hover:text-[#1b3d26] font-medium hover:underline transition-colors"
+                  className="mt-3 text-[#2d5016] hover:text-[#1b3d26] font-medium underline transition-colors"
                 >
                   Clear filters
                 </button>
               )}
             </div>
           ) : (
-            <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {newsArticles.map((article, index) => (
-                  <Link
-                    key={article.id}
-                    href={`/news/${article.slug}`}
-                    className="relative rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer h-full min-h-[300px] flex flex-col hover:scale-[1.02] hover:-translate-y-1 animate-fade-in-up group"
-                    style={{ animationDelay: `${index * 50}ms`, animationFillMode: 'both' }}
-                  >
-                    <img
-                      src={article.image 
-                        ? (article.image.startsWith('http') ? article.image : `${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:8000'}${article.image}`)
-                        : '/images/default-news.jpg'
-                      }
-                      alt={article.title}
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    {/* Dark gradient overlay at bottom */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                    {/* Content overlay */}
-                    <div className="relative mt-auto p-4 z-10">
-                      <h3 className="font-bold text-white text-sm mb-3 line-clamp-3">
-                        {article.title}
-                      </h3>
-                      <div className="flex items-center gap-2 text-xs text-white/90 mb-2">
-                        <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                          />
-                        </svg>
-                        <span>{formatDate(article.published_date)}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-xs text-white/90">
-                        <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                          />
-                        </svg>
-                        <span>{article.author}</span>
+            <div className="space-y-10">
+              {/* Top story – first article */}
+              {newsArticles[0] && (
+                <article className="border-b border-gray-200 pb-8">
+                  <Link href={`/news/${newsArticles[0].slug}`} className="group block">
+                    <div className="overflow-hidden rounded-lg bg-gray-100">
+                      <img
+                        src={articleImageUrl(newsArticles[0].image)}
+                        alt={newsArticles[0].title}
+                        className="w-full h-[280px] sm:h-[360px] object-cover object-[50%_25%] transition-transform duration-300 group-hover:scale-[1.02]"
+                      />
+                    </div>
+                    <div className="mt-4">
+                      <span className="inline-block px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-[#2d5016] bg-[#2d5016]/10 rounded mb-3">
+                        {newsArticles[0].category_display || newsArticles[0].category}
+                      </span>
+                      <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight group-hover:text-[#2d5016] transition-colors line-clamp-3">
+                        {newsArticles[0].title}
+                      </h2>
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-3 text-sm text-gray-500">
+                        <span className="flex items-center gap-1.5">
+                          <User className="w-4 h-4 text-gray-400" />
+                          {newsArticles[0].author}
+                        </span>
+                        <span className="flex items-center gap-1.5">
+                          <Calendar className="w-4 h-4 text-gray-400" />
+                          {formatDate(newsArticles[0].published_date)}
+                        </span>
                       </div>
                     </div>
                   </Link>
-                ))}
-              </div>
+                </article>
+              )}
+
+              {/* Secondary stories – next 2 */}
+              {newsArticles.length > 1 && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+                  {newsArticles.slice(1, 3).map((article) => (
+                    <article key={article.id} className="border-b border-gray-200 pb-6 sm:pb-0 sm:border-b-0">
+                      <Link href={`/news/${article.slug}`} className="group block">
+                        <div className="overflow-hidden rounded-lg bg-gray-100">
+                          <img
+                            src={articleImageUrl(article.image)}
+                            alt={article.title}
+                            className="w-full h-[200px] object-cover object-[50%_25%] transition-transform duration-300 group-hover:scale-[1.02]"
+                          />
+                        </div>
+                        <div className="mt-3">
+                          <span className="text-xs font-semibold uppercase tracking-wide text-[#2d5016]">
+                            {article.category_display || article.category}
+                          </span>
+                          <h3 className="mt-1.5 text-lg font-bold text-gray-900 leading-snug line-clamp-2 group-hover:text-[#2d5016] transition-colors">
+                            {article.title}
+                          </h3>
+                          <p className="mt-2 text-sm text-gray-500">
+                            {article.author} · {formatDateShort(article.published_date)}
+                          </p>
+                        </div>
+                      </Link>
+                    </article>
+                  ))}
+                </div>
+              )}
+
+              {/* Latest news – list of remaining articles */}
+              {newsArticles.length > 3 && (
+                <section>
+                  <h2 className="text-lg font-bold text-gray-900 uppercase tracking-wide border-b border-gray-200 pb-2 mb-6">
+                    Latest news
+                  </h2>
+                  <ul className="divide-y divide-gray-200">
+                    {newsArticles.slice(3).map((article) => (
+                      <li key={article.id}>
+                        <Link
+                          href={`/news/${article.slug}`}
+                          className="flex gap-4 py-4 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2d5016] focus-visible:ring-offset-2 rounded"
+                        >
+                          <div className="flex-shrink-0 w-24 h-24 sm:w-28 sm:h-28 rounded-lg overflow-hidden bg-gray-100">
+                            <img
+                              src={articleImageUrl(article.image)}
+                              alt={article.title}
+                              className="w-full h-full object-cover object-[50%_25%] transition-transform duration-300 group-hover:scale-105"
+                            />
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <span className="text-xs font-semibold uppercase tracking-wide text-[#2d5016]">
+                              {article.category_display || article.category}
+                            </span>
+                            <h3 className="mt-0.5 font-bold text-gray-900 line-clamp-2 group-hover:text-[#2d5016] transition-colors">
+                              {article.title}
+                            </h3>
+                            <p className="mt-1 text-sm text-gray-500">
+                              {article.author} · {formatDateShort(article.published_date)}
+                            </p>
+                          </div>
+                          <span className="flex-shrink-0 self-center text-gray-400 group-hover:text-[#2d5016] transition-colors" aria-hidden>
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                          </span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
 
               {hasMore && (
-                <div className="mt-12 flex justify-center">
+                <div className="pt-4 flex justify-center">
                   <button
                     onClick={loadMore}
                     disabled={loadingMore}
-                    className="bg-[#2d5016] text-white px-8 py-3 rounded-lg hover:bg-[#1b3d26] transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md"
+                    className="bg-[#2d5016] text-white px-8 py-3 rounded-lg hover:bg-[#1b3d26] transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {loadingMore ? (
                       <span className="flex items-center gap-2">
-                        <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
+                        <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                         Loading...
                       </span>
                     ) : (
-                      'Load More Articles'
+                      'Load more'
                     )}
                   </button>
                 </div>
               )}
-            </>
+            </div>
           )}
 
           {error && newsArticles.length > 0 && (
-            <div className="mt-4 text-center">
-              <div className="bg-red-50 border border-red-200 text-red-800 rounded-xl p-4 shadow-sm inline-block">
-                <p className="font-medium">{error}</p>
-              </div>
+            <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800 text-sm font-medium text-center">
+              {error}
             </div>
           )}
         </div>

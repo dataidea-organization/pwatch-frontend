@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, Folder } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Folder, Eye, Share2 } from 'lucide-react';
 import { fetchHeroImages, fetchHeadlines, fetchHomeNewsSummary, fetchHomeBlogSummary, fetchHomeTrackersSummary, fetchHomeResourcesSummary, fetchHotInParliament, HeroImage, Headline, NewsArticle, BlogPost, HomeTrackersSummary, HomeResourcesSummary, HotInParliamentItem } from '@/lib/api';
 import Link from 'next/link';
 
@@ -282,7 +282,17 @@ export default function Home() {
                   {hotInParliament.map((item) => {
                     const content = item.content.replace(/<[^>]*>/g, '').substring(0, 100) + '...';
                     const itemUrl = `/hot-in-parliament/${item.slug}`;
-                    
+                    const handleShare = (e: React.MouseEvent) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      const url = typeof window !== 'undefined' ? `${window.location.origin}${itemUrl}` : itemUrl;
+                      if (navigator.share) {
+                        navigator.share({ title: item.title, url }).catch(() => {});
+                      } else {
+                        navigator.clipboard.writeText(url);
+                        alert('Link copied to clipboard!');
+                      }
+                    };
                     return (
                       <Link
                         key={item.id}
@@ -297,13 +307,11 @@ export default function Home() {
                                 alt={item.title}
                                 className="absolute inset-0 w-full h-full object-cover"
                               />
-                              {/* Dark gradient overlay at bottom */}
                               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
                             </>
                           ) : (
                             <div className="absolute inset-0 bg-gradient-to-br from-[#2d5016] to-[#1b3d26]" />
                           )}
-                          {/* Content overlay - positioned at bottom */}
                           <div className="absolute bottom-0 left-0 right-0 p-3 z-10">
                             <h4 className="font-semibold text-white text-sm mb-1.5 line-clamp-2">
                               {item.title}
@@ -311,21 +319,23 @@ export default function Home() {
                             <p className="text-xs text-white/90 line-clamp-2 mb-1.5">
                               {content}
                             </p>
-                            <div className="flex items-center gap-2 text-xs text-white/90">
-                              <svg
-                                className="w-3 h-3"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
+                            <div className="flex items-center justify-between gap-2 text-xs text-white/90">
+                              <div className="flex items-center gap-3">
+                                <span>{new Date(item.published_date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
+                                <span className="flex items-center gap-1">
+                                  <Eye className="w-3 h-3" />
+                                  {item.view_count ?? 0} views
+                                </span>
+                              </div>
+                              <button
+                                type="button"
+                                onClick={handleShare}
+                                className="p-1 rounded hover:bg-white/20 transition-colors"
+                                title="Share"
+                                aria-label="Share"
                               >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                                />
-                              </svg>
-                              <span>{new Date(item.published_date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
+                                <Share2 className="w-3.5 h-3.5" />
+                              </button>
                             </div>
                           </div>
                         </div>
