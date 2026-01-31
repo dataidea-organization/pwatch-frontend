@@ -2,12 +2,14 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Image from 'next/image';
 import { 
   fetchWhoWeAre, 
   fetchOurStory, 
   fetchWhatSetsUsApart, 
   fetchPartners, 
   fetchTeamMembers,
+  fetchPageHeroImage,
   WhoWeAre,
   OurStory,
   WhatSetsUsApart,
@@ -43,9 +45,16 @@ export default function AboutPage() {
   const [error, setError] = useState<string | null>(null);
   const [currentPartnerSlide, setCurrentPartnerSlide] = useState(0);
   const partnerCarouselRef = useRef<HTMLDivElement>(null);
+  const [heroImage, setHeroImage] = useState<string>('/images/about.jpg');
 
   useEffect(() => {
     loadData();
+    // Fetch dynamic hero image
+    fetchPageHeroImage('about').then((data) => {
+      if (data?.image) {
+        setHeroImage(data.image);
+      }
+    });
   }, []);
 
   // Auto-slide partners carousel
@@ -145,7 +154,29 @@ export default function AboutPage() {
 
   return (
     <div className="min-h-screen bg-[#f5f0e8]">
-      <main className="max-w-7xl mx-auto px-4 py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12">
+        {/* Hero Section */}
+        <div className="relative mb-10 h-[360px] overflow-hidden rounded-2xl shadow-xl">
+          <Image
+            src={heroImage}
+            alt="About Us - Learn more about Parliament Watch Uganda"
+            fill
+            className="object-cover"
+            sizes="100vw"
+            priority
+            unoptimized={heroImage.startsWith('http')}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 p-8">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-3 drop-shadow-lg">
+              About Us
+            </h1>
+            <p className="text-lg text-white/90 max-w-2xl drop-shadow">
+              Learn more about Parliament Watch Uganda and our mission
+            </p>
+          </div>
+        </div>
+
         {/* Who We Are Section */}
         {whoWeAre && (
           <section className="mb-16">
