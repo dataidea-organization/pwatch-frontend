@@ -1,10 +1,19 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
+import Script from 'next/script';
 import { Search, Calendar, CheckCircle, XCircle, TrendingUp, Users, BarChart3, MessageSquare, Send, AlertCircle } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { fetchPolls, voteOnPoll, fetchPollResults, Poll, PollOption, submitFeedback, FeedbackSubmission } from '@/lib/api';
+import { fetchPolls, voteOnPoll, fetchPollResults, Poll, submitFeedback, FeedbackSubmission, fetchXPollEmbeds, XPollEmbed } from '@/lib/api';
+
+declare global {
+  interface Window {
+    twttr?: {
+      widgets: { load: (el?: HTMLElement) => void };
+    };
+  }
+}
 
 export default function CitizensVoicePage() {
   const [allPolls, setAllPolls] = useState<Poll[]>([]);
@@ -26,9 +35,15 @@ export default function CitizensVoicePage() {
   });
   const [isSubmittingFeedback, setIsSubmittingFeedback] = useState(false);
   const [feedbackStatus, setFeedbackStatus] = useState<{ type: 'success' | 'error' | null; message: string }>({ type: null, message: '' });
+  const [twitterReady, setTwitterReady] = useState(false);
+  const [xPollEmbeds, setXPollEmbeds] = useState<XPollEmbed[]>([]);
 
   useEffect(() => {
     loadAllPolls();
+  }, []);
+
+  useEffect(() => {
+    fetchXPollEmbeds().then(setXPollEmbeds).catch(() => setXPollEmbeds([]));
   }, []);
 
   const loadAllPolls = async () => {
@@ -102,6 +117,20 @@ export default function CitizensVoicePage() {
 
     return filtered;
   }, [allPolls, searchQuery, statusFilter, categoryFilter, featuredFilter]);
+
+  // After Twitter widgets.js loads and X poll embeds are in the DOM, parse them so the full tweet (including poll) renders
+  useEffect(() => {
+    if (!twitterReady || xPollEmbeds.length === 0) return;
+    const t = typeof window !== 'undefined' ? window.twttr : undefined;
+    if (!t?.widgets?.load) return;
+    const run = () => t.widgets.load();
+    const id = setTimeout(run, 100);
+    const id2 = setTimeout(run, 500);
+    return () => {
+      clearTimeout(id);
+      clearTimeout(id2);
+    };
+  }, [twitterReady, xPollEmbeds.length]);
 
   const handleVote = async (pollId: number, optionId: number) => {
     try {
@@ -229,6 +258,11 @@ export default function CitizensVoicePage() {
 
   return (
     <div className="min-h-screen bg-[#f5f0e8]">
+      <Script
+        src="https://platform.twitter.com/widgets.js"
+        strategy="afterInteractive"
+        onLoad={() => setTwitterReady(true)}
+      />
       <main className="max-w-7xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
@@ -306,6 +340,29 @@ export default function CitizensVoicePage() {
           </div>
         </div>
 
+        {/* X Poll Embeds (standalone) */}
+        {xPollEmbeds.length > 0 && (
+          <div className="mb-10">
+            <h2 className="text-xl font-bold text-gray-900 mb-4">X Polls</h2>
+            <div className="space-y-6">
+              {xPollEmbeds.map((embed) => (
+                <div
+                  key={embed.id}
+                  className="bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 p-6 flex flex-col items-center [&_.twitter-tweet]:!max-w-full [&_iframe]:!max-w-full"
+                >
+                  {embed.title && (
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4 w-full">{embed.title}</h3>
+                  )}
+                  <div
+                    className="x-poll-embed-content"
+                    dangerouslySetInnerHTML={{ __html: embed.embed_html }}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Polls Grid */}
         {filteredPolls.length === 0 ? (
           <div className="bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 p-12 text-center">
@@ -330,11 +387,13 @@ export default function CitizensVoicePage() {
                   <div className="p-6 border-b border-gray-200">
                     <div className="flex items-start justify-between mb-2">
                       <h3 className="text-xl font-bold text-gray-900 flex-1">{poll.title}</h3>
-                      {poll.featured && (
-                        <span className="ml-2 px-2 py-1 bg-[#2d5016] text-white text-xs font-medium rounded">
-                          Featured
-                        </span>
-                      )}
+                      <div className="flex items-center gap-2 ml-2 flex-shrink-0">
+                        {poll.featured && (
+                          <span className="px-2 py-1 bg-[#2d5016] text-white text-xs font-medium rounded">
+                            Featured
+                          </span>
+                        )}
+                      </div>
                     </div>
                     {poll.description && (
                       <p className="text-gray-600 text-sm mb-3">{poll.description}</p>
@@ -384,82 +443,80 @@ export default function CitizensVoicePage() {
                   {/* Options */}
                   <div className="p-6">
                     {poll.options.length === 0 ? (
-                      <p className="text-gray-500 text-sm">No options available</p>
-                    ) : (
-                      <div className="space-y-3">
-                        {poll.options.map((option) => {
-                          const isVoting = votingPollId === poll.id;
-                          const optionResults = results?.results?.find((r: any) => r.option_id === option.id);
-                          const voteCount = optionResults?.vote_count ?? option.vote_count;
-                          const percentage = optionResults?.percentage ?? option.vote_percentage;
-                          const totalVotes = results?.total_votes ?? poll.total_votes;
+                          <p className="text-gray-500 text-sm">No options available</p>
+                        ) : (
+                          <div className="space-y-3">
+                            {poll.options.map((option) => {
+                              const isVoting = votingPollId === poll.id;
+                              const optionResults = results?.results?.find((r: any) => r.option_id === option.id);
+                              const voteCount = optionResults?.vote_count ?? option.vote_count;
+                              const percentage = optionResults?.percentage ?? option.vote_percentage;
 
-                          return (
-                            <div key={option.id} className="space-y-2">
-                              <div className="flex items-center justify-between">
-                                <label
-                                  className={`flex-1 cursor-pointer ${
-                                    poll.is_active && !hasVoted ? 'hover:bg-[#f5f0e8]' : ''
-                                  } p-3 rounded-lg border ${
-                                    hasVoted && optionResults
-                                      ? 'border-[#2d5016] bg-green-50'
-                                      : 'border-gray-200'
-                                  } transition-colors`}
-                                >
-                                  <div className="flex items-center gap-3">
-                                    {poll.is_active && !hasVoted ? (
-                                      <input
-                                        type="radio"
-                                        name={`poll-${poll.id}`}
-                                        value={option.id}
-                                        disabled={isVoting || !poll.is_active || hasVoted}
-                                        onChange={() => handleVote(poll.id, option.id)}
-                                        className="w-4 h-4 text-[#2d5016] focus:ring-[#2d5016]"
-                                      />
-                                    ) : null}
-                                    <span className="text-sm font-medium text-gray-900 flex-1">
-                                      {option.text}
-                                    </span>
-                                    {showResults && (
-                                      <span className="text-sm font-semibold text-[#2d5016]">
-                                        {percentage}%
-                                      </span>
-                                    )}
+                              return (
+                                <div key={option.id} className="space-y-2">
+                                  <div className="flex items-center justify-between">
+                                    <label
+                                      className={`flex-1 cursor-pointer ${
+                                        poll.is_active && !hasVoted ? 'hover:bg-[#f5f0e8]' : ''
+                                      } p-3 rounded-lg border ${
+                                        hasVoted && optionResults
+                                          ? 'border-[#2d5016] bg-green-50'
+                                          : 'border-gray-200'
+                                      } transition-colors`}
+                                    >
+                                      <div className="flex items-center gap-3">
+                                        {poll.is_active && !hasVoted ? (
+                                          <input
+                                            type="radio"
+                                            name={`poll-${poll.id}`}
+                                            value={option.id}
+                                            disabled={isVoting || !poll.is_active || hasVoted}
+                                            onChange={() => handleVote(poll.id, option.id)}
+                                            className="w-4 h-4 text-[#2d5016] focus:ring-[#2d5016]"
+                                          />
+                                        ) : null}
+                                        <span className="text-sm font-medium text-gray-900 flex-1">
+                                          {option.text}
+                                        </span>
+                                        {showResults && (
+                                          <span className="text-sm font-semibold text-[#2d5016]">
+                                            {percentage}%
+                                          </span>
+                                        )}
+                                      </div>
+                                    </label>
                                   </div>
-                                </label>
-                              </div>
-                              {showResults && (
-                                <div className="space-y-1">
-                                  <div className="flex items-center justify-between text-xs text-gray-600">
-                                    <span>{voteCount} votes</span>
-                                    <span>{percentage}%</span>
-                                  </div>
-                                  <div className="w-full bg-[#f5f0e8] rounded-full h-2">
-                                    <div
-                                      className="bg-[#2d5016] h-2 rounded-full transition-all duration-300"
-                                      style={{ width: `${percentage}%` }}
-                                    />
-                                  </div>
+                                  {showResults && (
+                                    <div className="space-y-1">
+                                      <div className="flex items-center justify-between text-xs text-gray-600">
+                                        <span>{voteCount} votes</span>
+                                        <span>{percentage}%</span>
+                                      </div>
+                                      <div className="w-full bg-[#f5f0e8] rounded-full h-2">
+                                        <div
+                                          className="bg-[#2d5016] h-2 rounded-full transition-all duration-300"
+                                          style={{ width: `${percentage}%` }}
+                                        />
+                                      </div>
+                                    </div>
+                                  )}
                                 </div>
-                              )}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    )}
+                              );
+                            })}
+                          </div>
+                        )}
 
-                    {/* View Results Button */}
-                    {poll.is_active && !hasVoted && poll.total_votes > 0 && (
-                      <Button
-                        variant="outline"
-                        onClick={() => loadResults(poll.id)}
-                        className="w-full mt-4"
-                        disabled={!!pollResults[poll.id]}
-                      >
-                        <BarChart3 className="w-4 h-4 mr-2" />
-                        {pollResults[poll.id] ? 'Results Loaded' : 'View Results'}
-                      </Button>
-                    )}
+                        {poll.is_active && !hasVoted && poll.total_votes > 0 && (
+                          <Button
+                            variant="outline"
+                            onClick={() => loadResults(poll.id)}
+                            className="w-full mt-4"
+                            disabled={!!pollResults[poll.id]}
+                          >
+                            <BarChart3 className="w-4 h-4 mr-2" />
+                            {pollResults[poll.id] ? 'Results Loaded' : 'View Results'}
+                          </Button>
+                        )}
 
                     {hasVoted && (
                       <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">

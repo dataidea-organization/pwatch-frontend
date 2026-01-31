@@ -837,6 +837,9 @@ export interface Poll {
   allow_multiple_votes: boolean;
   show_results_before_voting: boolean;
   featured: boolean;
+  is_x_poll: boolean;
+  x_poll_url: string | null;
+  x_poll_embed_html: string | null;
   options: PollOption[];
   total_votes: number;
   is_active: boolean;
@@ -921,6 +924,25 @@ export async function fetchPollResults(pollId: number): Promise<PollResults> {
     throw new Error('Failed to fetch poll results');
   }
   return response.json();
+}
+
+// X Poll Embeds API (standalone, not linked to Poll)
+export interface XPollEmbed {
+  id: number;
+  title: string;
+  embed_html: string;
+  order: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export async function fetchXPollEmbeds(): Promise<XPollEmbed[]> {
+  const response = await fetch(`${API_BASE_URL}/multimedia/x-poll-embeds/`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch X poll embeds');
+  }
+  const data = await response.json();
+  return Array.isArray(data) ? data : data.results ?? [];
 }
 
 // Contact API
