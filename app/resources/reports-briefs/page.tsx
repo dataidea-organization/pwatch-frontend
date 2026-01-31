@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowLeft, Calendar, FileText, TrendingUp, Clock } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { fetchPageHeroImage } from '@/lib/api'
 
 interface Report {
   id: number
@@ -29,9 +30,16 @@ export default function ReportsBriefsPage() {
   const [allReports, setAllReports] = useState<Report[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [heroImage, setHeroImage] = useState<string>('/images/reports.jpg')
 
   useEffect(() => {
     loadAllReports()
+    // Fetch dynamic hero image
+    fetchPageHeroImage('reports-briefs').then((data) => {
+      if (data?.image) {
+        setHeroImage(data.image)
+      }
+    })
   }, [])
 
   const loadAllReports = async () => {
@@ -184,12 +192,13 @@ export default function ReportsBriefsPage() {
         {/* Hero Section - full-cover image with text on dark overlay at bottom (height matches home page hero) */}
         <div className="relative mb-10 h-[400px] overflow-hidden rounded-2xl shadow-xl">
           <Image
-            src="/images/reports.jpg"
+            src={heroImage}
             alt="Reports and briefs - policy research and analysis"
             fill
             className="object-cover"
             sizes="100vw"
             priority
+            unoptimized={heroImage.startsWith('http')}
           />
           <div
             className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"

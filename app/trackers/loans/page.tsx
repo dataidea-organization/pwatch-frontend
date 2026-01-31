@@ -7,6 +7,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { ArrowLeft, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, DollarSign } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { fetchPageHeroImage } from '@/lib/api';
 
 interface Loan {
   id: number;
@@ -53,9 +54,16 @@ export default function LoansTrackerPage() {
   const [sortField, setSortField] = useState<'sector' | 'label' | 'approved_amount' | null>(null);
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   const pageSize = 10;
+  const [heroImage, setHeroImage] = useState<string>('/images/loans.jpg');
 
   useEffect(() => {
     loadAllLoans();
+    // Fetch dynamic hero image
+    fetchPageHeroImage('loans').then((data) => {
+      if (data?.image) {
+        setHeroImage(data.image);
+      }
+    });
   }, []);
 
   // Reset to page 1 when search query changes
@@ -248,12 +256,13 @@ export default function LoansTrackerPage() {
         {/* Hero Section - full-cover image with text on dark overlay at bottom (height matches home page hero) */}
         <div className="relative mb-10 h-[400px] overflow-hidden rounded-2xl shadow-xl">
           <Image
-            src="/images/loans.jpg"
+            src={heroImage}
             alt="Loans tracker - government loans and development projects"
             fill
             className="object-cover"
             sizes="100vw"
             priority
+            unoptimized={heroImage.startsWith('http')}
           />
           <div
             className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"

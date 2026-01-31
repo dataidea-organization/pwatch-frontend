@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { Calendar, CheckCircle, XCircle, TrendingUp, Users, BarChart3, MessageSquare, Send, AlertCircle } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { fetchPolls, voteOnPoll, fetchPollResults, Poll, submitFeedback, FeedbackSubmission, fetchXPollEmbeds, XPollEmbed } from '@/lib/api';
+import { fetchPolls, voteOnPoll, fetchPollResults, Poll, submitFeedback, FeedbackSubmission, fetchXPollEmbeds, XPollEmbed, fetchPageHeroImage } from '@/lib/api';
 
 declare global {
   interface Window {
@@ -34,9 +34,16 @@ export default function CitizensVoicePage() {
   const [feedbackStatus, setFeedbackStatus] = useState<{ type: 'success' | 'error' | null; message: string }>({ type: null, message: '' });
   const [twitterReady, setTwitterReady] = useState(false);
   const [xPollEmbeds, setXPollEmbeds] = useState<XPollEmbed[]>([]);
+  const [heroImage, setHeroImage] = useState<string>('/images/citizens-voice.jpg');
 
   useEffect(() => {
     loadAllPolls();
+    // Fetch dynamic hero image
+    fetchPageHeroImage('citizens-voice').then((data) => {
+      if (data?.image) {
+        setHeroImage(data.image);
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -228,12 +235,13 @@ export default function CitizensVoicePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4">
           <div className="relative mb-10 h-[360px] overflow-hidden rounded-2xl shadow-xl">
             <Image
-              src="/images/citizens-voice.jpg"
+              src={heroImage}
               alt="Citizens Voice - participate in polls and share your feedback"
               fill
               className="object-cover"
               sizes="100vw"
               priority
+              unoptimized={heroImage.startsWith('http')}
             />
             <div
               className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"

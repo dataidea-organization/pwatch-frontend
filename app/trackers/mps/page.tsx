@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { Users, Building2, MapPin, ArrowLeft } from 'lucide-react';
-import { fetchMPs, fetchMPSummary, fetchParliamentTerms, MP, MPSummary, ParliamentTerm } from '@/lib/api';
+import { fetchMPs, fetchMPSummary, fetchParliamentTerms, MP, MPSummary, ParliamentTerm, fetchPageHeroImage } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -66,6 +66,7 @@ export default function MPsPage() {
   const [districtDropdownOpen, setDistrictDropdownOpen] = useState(false);
   const [sortField, setSortField] = useState<'name' | 'party' | 'district' | 'constituency' | null>(null);
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
+  const [heroImage, setHeroImage] = useState<string>('/images/mps.jpg');
 
   const districtOptions = useMemo(() => {
     const set = new Set<string>();
@@ -223,6 +224,12 @@ export default function MPsPage() {
 
   useEffect(() => {
     fetchParliamentTerms().then(setParliamentTerms).catch(() => {});
+    // Fetch dynamic hero image
+    fetchPageHeroImage('mps').then((data) => {
+      if (data?.image) {
+        setHeroImage(data.image);
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -333,12 +340,13 @@ export default function MPsPage() {
         {/* Hero Section - full-cover image with text on dark overlay at bottom (height matches home page hero) */}
         <div className="relative mb-10 h-[400px] overflow-hidden rounded-2xl shadow-xl">
           <Image
-            src="/images/mps.jpg"
+            src={heroImage}
             alt="Members of Parliament - browse and search for your representatives"
             fill
             className="object-cover"
             sizes="100vw"
             priority
+            unoptimized={heroImage.startsWith('http')}
           />
           <div
             className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"

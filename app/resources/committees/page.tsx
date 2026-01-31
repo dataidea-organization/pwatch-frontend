@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { ArrowLeft, Search, ChevronLeft, ChevronRight, Users, Calendar, User } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { fetchCommittees, Committee } from '@/lib/api'
+import { fetchCommittees, Committee, fetchPageHeroImage } from '@/lib/api'
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api'
 
@@ -19,6 +19,16 @@ export default function CommitteesPage() {
   const [totalPages, setTotalPages] = useState(1)
   const [totalCount, setTotalCount] = useState(0)
   const pageSize = 12
+  const [heroImage, setHeroImage] = useState<string>('/images/committees.jpg')
+
+  useEffect(() => {
+    // Fetch dynamic hero image
+    fetchPageHeroImage('committees').then((data) => {
+      if (data?.image) {
+        setHeroImage(data.image)
+      }
+    })
+  }, [])
 
   useEffect(() => {
     fetchCommitteesData()
@@ -105,12 +115,13 @@ export default function CommitteesPage() {
         {/* Hero Section - full-cover image with text on dark overlay at bottom (height matches home page hero) */}
         <div className="relative mb-10 h-[400px] overflow-hidden rounded-2xl shadow-xl">
           <Image
-            src="/images/committees.jpg"
+            src={heroImage}
             alt="Parliamentary committees - explore committees, members, and documents"
             fill
             className="object-cover"
             sizes="100vw"
             priority
+            unoptimized={heroImage.startsWith('http')}
           />
           <div
             className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"

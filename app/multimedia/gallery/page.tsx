@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { ArrowLeft, Search, Calendar, User, X, Images } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { fetchGalleryImages, GalleryImage } from '@/lib/api';
+import { fetchGalleryImages, GalleryImage, fetchPageHeroImage } from '@/lib/api';
 
 type SortField = 'title' | 'event_date' | 'created_at' | null;
 type SortDirection = 'asc' | 'desc';
@@ -24,9 +24,16 @@ export default function GalleryPage() {
   const [sortField, setSortField] = useState<SortField>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
+  const [heroImage, setHeroImage] = useState<string>('/images/gallery.jpg');
 
   useEffect(() => {
     loadAllImages();
+    // Fetch dynamic hero image
+    fetchPageHeroImage('gallery').then((data) => {
+      if (data?.image) {
+        setHeroImage(data.image);
+      }
+    });
   }, []);
 
   // Reset when search or filters change
@@ -221,12 +228,13 @@ export default function GalleryPage() {
           {/* Hero Section */}
           <div className="relative mb-10 h-[360px] overflow-hidden rounded-2xl shadow-xl">
             <Image
-              src="/images/gallery.jpg"
+              src={heroImage}
               alt="Gallery - photographs from parliamentary events"
               fill
               className="object-cover"
               sizes="100vw"
               priority
+              unoptimized={heroImage.startsWith('http')}
             />
             <div
               className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"

@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { ArrowLeft, Search, Calendar, Clock, User, ExternalLink, Play, Radio } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { fetchXSpaces, XSpace } from '@/lib/api';
+import { fetchXSpaces, XSpace, fetchPageHeroImage } from '@/lib/api';
 
 type SortField = 'title' | 'scheduled_date' | 'host' | 'created_at' | null;
 type SortDirection = 'asc' | 'desc';
@@ -22,9 +22,16 @@ export default function XSpacesPage() {
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [sortField, setSortField] = useState<SortField>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+  const [heroImage, setHeroImage] = useState<string>('/images/x-spaces.jpg');
 
   useEffect(() => {
     loadAllXSpaces();
+    // Fetch dynamic hero image
+    fetchPageHeroImage('x-spaces').then((data) => {
+      if (data?.image) {
+        setHeroImage(data.image);
+      }
+    });
   }, []);
 
   // Reset when search or status filter changes
@@ -216,12 +223,13 @@ export default function XSpacesPage() {
           {/* Hero Section */}
           <div className="relative mb-10 h-[360px] overflow-hidden rounded-2xl shadow-xl">
             <Image
-              src="/images/x-spaces.jpg"
+              src={heroImage}
               alt="X Spaces - live discussions and recorded events"
               fill
               className="object-cover"
               sizes="100vw"
               priority
+              unoptimized={heroImage.startsWith('http')}
             />
             <div
               className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"

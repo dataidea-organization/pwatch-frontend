@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, FileText, BookOpen, CheckCircle, Clock, Award, XCircle, FileCheck, Users, PenTool, ArrowRight, Search } from 'lucide-react';
-import { fetchBills, BillList } from '@/lib/api';
+import { fetchBills, BillList, fetchPageHeroImage } from '@/lib/api';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import {
@@ -27,9 +27,16 @@ function BillsTrackerPageContent() {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortField, setSortField] = useState<SortField>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+  const [heroImage, setHeroImage] = useState<string>('/images/bills.jpg');
 
   useEffect(() => {
     loadAllBills();
+    // Fetch dynamic hero image
+    fetchPageHeroImage('bills').then((data) => {
+      if (data?.image) {
+        setHeroImage(data.image);
+      }
+    });
   }, []);
 
   const loadAllBills = async () => {
@@ -211,12 +218,13 @@ function BillsTrackerPageContent() {
           {/* Hero Section - full-cover image with text on dark overlay at bottom (height matches home page hero) */}
           <div className="relative mb-10 h-[400px] overflow-hidden rounded-2xl shadow-xl">
             <Image
-              src="/images/bills.jpg"
+              src={heroImage}
               alt="Bills tracker - legislative bills and acts"
               fill
               className="object-cover"
               sizes="100vw"
               priority
+              unoptimized={heroImage.startsWith('http')}
             />
             <div
               className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"

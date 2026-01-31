@@ -1344,6 +1344,32 @@ export async function searchGlobal(query: string, limit: number = 5, signal?: Ab
   return response.json();
 }
 
+// Page Hero Images API
+export interface PageHeroImage {
+  id: number;
+  page_slug: string;
+  page_name: string;
+  image: string;
+  alt_text: string;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export async function fetchPageHeroImage(pageSlug: string): Promise<PageHeroImage | null> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/settings/page-hero-images/${pageSlug}/`);
+    if (!response.ok) {
+      // Return null if not found or error - the page will use the default image
+      return null;
+    }
+    return response.json();
+  } catch (error) {
+    console.error(`Error fetching hero image for page ${pageSlug}:`, error);
+    return null;
+  }
+}
+
 // Chatbot API
 export interface ChatbotQuery {
   query: string;

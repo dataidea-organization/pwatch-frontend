@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { ArrowLeft, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Download, FileText, FolderOpen, Calendar } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { fetchPageHeroImage } from '@/lib/api'
 
 interface Budget {
   id: number
@@ -36,9 +37,16 @@ export default function BudgetsPage() {
   const [sortField, setSortField] = useState<'name' | 'financial_year' | 'budget_total_amount' | 'created_at' | null>(null)
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
   const pageSize = 15
+  const [heroImage, setHeroImage] = useState<string>('/images/budget.jpg')
 
   useEffect(() => {
     loadAllBudgets()
+    // Fetch dynamic hero image
+    fetchPageHeroImage('budgets').then((data) => {
+      if (data?.image) {
+        setHeroImage(data.image)
+      }
+    })
   }, [])
 
   // Reset to page 1 when search query changes
@@ -210,12 +218,13 @@ export default function BudgetsPage() {
         {/* Hero Section - full-cover image with text on dark overlay at bottom (height matches home page hero) */}
         <div className="relative mb-10 h-[400px] overflow-hidden rounded-2xl shadow-xl">
           <Image
-            src="/images/budget.jpg"
+            src={heroImage}
             alt="Budgets - national budget documents and financial plans"
             fill
             className="object-cover"
             sizes="100vw"
             priority
+            unoptimized={heroImage.startsWith('http')}
           />
           <div
             className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"

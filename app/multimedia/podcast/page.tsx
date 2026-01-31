@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { ArrowLeft, Search, Calendar, Clock, User, ExternalLink, Play, Headphones } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { fetchPodcasts, Podcast } from '@/lib/api';
+import { fetchPodcasts, Podcast, fetchPageHeroImage } from '@/lib/api';
 
 type SortField = 'title' | 'published_date' | 'host' | 'created_at' | null;
 type SortDirection = 'asc' | 'desc';
@@ -22,9 +22,16 @@ export default function PodcastPage() {
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [sortField, setSortField] = useState<SortField>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+  const [heroImage, setHeroImage] = useState<string>('/images/podcast.jpg');
 
   useEffect(() => {
     loadAllPodcasts();
+    // Fetch dynamic hero image
+    fetchPageHeroImage('podcast').then((data) => {
+      if (data?.image) {
+        setHeroImage(data.image);
+      }
+    });
   }, []);
 
   // Reset when search or category filter changes
@@ -222,12 +229,13 @@ export default function PodcastPage() {
           {/* Hero Section */}
           <div className="relative mb-10 h-[360px] overflow-hidden rounded-2xl shadow-xl">
             <Image
-              src="/images/podcast.jpg"
+              src={heroImage}
               alt="Podcasts - YouTube episodes on parliamentary matters"
               fill
               className="object-cover"
               sizes="100vw"
               priority
+              unoptimized={heroImage.startsWith('http')}
             />
             <div
               className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"
