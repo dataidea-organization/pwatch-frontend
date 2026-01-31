@@ -906,7 +906,7 @@ export async function voteOnPoll(pollId: number, optionId: number): Promise<any>
     headers: {
       'Content-Type': 'application/json',
     },
-    credentials: 'include',
+    credentials: 'omit',
     body: JSON.stringify({ option_id: optionId }),
   });
   if (!response.ok) {
