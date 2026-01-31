@@ -316,7 +316,7 @@ export default function XSpacesPage() {
                 {space.thumbnail ? (
                   <div className="relative h-48 w-full">
                     <img
-                      src={`${API_BASE_URL.replace('/api', '')}${space.thumbnail}`}
+                      src={space.thumbnail.startsWith('http') ? space.thumbnail : `${API_BASE_URL.replace('/api', '')}${space.thumbnail.startsWith('/') ? '' : '/'}${space.thumbnail}`}
                       alt={space.title}
                       className="w-full h-full object-cover"
                     />
