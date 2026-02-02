@@ -273,7 +273,7 @@ export default function CitizensVoicePage() {
               {xPollEmbeds.map((embed) => (
                 <div
                   key={embed.id}
-                  className="w-fit bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 p-6 flex flex-col items-center [&_.twitter-tweet]:!max-w-full [&_iframe]:!max-w-full"
+                  className="w-fit bg-white rounded-xl shadow-md border border-gray-200 p-6 flex flex-col items-center [&_.twitter-tweet]:!max-w-full [&_iframe]:!max-w-full"
                 >
                   {embed.title && (
                     <h3 className="text-lg font-semibold text-gray-900 mb-4 w-full">{embed.title}</h3>
@@ -293,7 +293,7 @@ export default function CitizensVoicePage() {
 
         {/* Polls Grid */}
         {allPolls.length === 0 ? (
-          <div className="bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 p-12 text-center">
+          <div className="bg-white rounded-xl shadow-md border border-gray-200 p-12 text-center">
             <p className="text-gray-500 text-lg">No polls found</p>
           </div>
         ) : (
@@ -306,10 +306,10 @@ export default function CitizensVoicePage() {
               return (
                 <div
                   key={poll.id}
-                  className="bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow"
+                  className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow"
                 >
                   {/* Header */}
-                  <div className="p-6 border-b border-gray-200">
+                  <div className="bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] p-6 border-b border-gray-200">
                     <div className="flex items-start justify-between mb-2">
                       <h3 className="text-xl font-bold text-gray-900 flex-1">{poll.title}</h3>
                       <div className="flex items-center gap-2 ml-2 flex-shrink-0">
@@ -474,10 +474,10 @@ export default function CitizensVoicePage() {
         )}
 
         {/* Feedback Form Section */}
-        <div className="mt-8 bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+        <div className="mt-8 bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-0">
             {/* Left Side - Form */}
-            <div className="lg:col-span-2 p-6 lg:p-8">
+            <div className="lg:col-span-2 p-6 lg:p-8 bg-white">
               <div className="flex items-center gap-2 mb-3">
                 <div className="p-2 bg-[#2d5016] rounded-lg">
                   <MessageSquare className="w-5 h-5 text-white" />
@@ -583,8 +583,11 @@ export default function CitizensVoicePage() {
             </div>
 
             {/* Right Side - Info/Visual */}
-            <div className="bg-[#f5f0e8] p-6 lg:p-8 border-t lg:border-t-0 lg:border-l border-gray-200">
-              <div className="space-y-6">
+            <div className="bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] p-6 lg:p-8 border-t lg:border-t-0 lg:border-l border-gray-200 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
+                <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
+              </div>
+              <div className="relative z-10 space-y-6">
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
                     <TrendingUp className="w-4 h-4 text-[#2d5016]" />
@@ -630,32 +633,37 @@ export default function CitizensVoicePage() {
         </div>
 
         {/* Info Section */}
-        <div className="mt-8 bg-[#fafaf8] rounded-lg shadow-sm border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-3">About Citizens Voice</h3>
-          <p className="text-gray-600 text-sm mb-3">
-            Citizens Voice is a platform for democratic engagement where you can participate in polls on various
-            parliamentary and governance topics. Your opinions matter and help shape public discourse.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-            <div className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-[#2d5016] mt-0.5" />
-              <div>
-                <h4 className="font-semibold text-gray-900 text-sm">Real-time Results</h4>
-                <p className="text-gray-600 text-xs">See how others are voting as results update in real-time</p>
+        <div className="mt-8 relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
+          <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
+            <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
+          </div>
+          <div className="relative z-10">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">About Citizens Voice</h3>
+            <p className="text-gray-600 text-sm mb-3">
+              Citizens Voice is a platform for democratic engagement where you can participate in polls on various
+              parliamentary and governance topics. Your opinions matter and help shape public discourse.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+              <div className="flex items-start gap-3">
+                <TrendingUp className="w-5 h-5 text-[#2d5016] mt-0.5" />
+                <div>
+                  <h4 className="font-semibold text-gray-900 text-sm">Real-time Results</h4>
+                  <p className="text-gray-600 text-xs">See how others are voting as results update in real-time</p>
+                </div>
               </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-[#2d5016] mt-0.5" />
-              <div>
-                <h4 className="font-semibold text-gray-900 text-sm">Your Voice Matters</h4>
-                <p className="text-gray-600 text-xs">Participate in polls on important governance and policy issues</p>
+              <div className="flex items-start gap-3">
+                <Users className="w-5 h-5 text-[#2d5016] mt-0.5" />
+                <div>
+                  <h4 className="font-semibold text-gray-900 text-sm">Your Voice Matters</h4>
+                  <p className="text-gray-600 text-xs">Participate in polls on important governance and policy issues</p>
+                </div>
               </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-[#2d5016] mt-0.5" />
-              <div>
-                <h4 className="font-semibold text-gray-900 text-sm">Transparent Process</h4>
-                <p className="text-gray-600 text-xs">View detailed results and statistics for all polls</p>
+              <div className="flex items-start gap-3">
+                <BarChart3 className="w-5 h-5 text-[#2d5016] mt-0.5" />
+                <div>
+                  <h4 className="font-semibold text-gray-900 text-sm">Transparent Process</h4>
+                  <p className="text-gray-600 text-xs">View detailed results and statistics for all polls</p>
+                </div>
               </div>
             </div>
           </div>
