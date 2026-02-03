@@ -45,7 +45,3 @@ Parliament Watch Uganda monitors and tracks the Ugandan Parliament on a regular 
 - **Contact Form**: Submit inquiries and feedback
 - **Donation**: Support the organization through donations
 - **About Us**: Learn about the organization's objectives and team members
-
-
-#fafaf8 - component background
-#f5f0e8 - page background
