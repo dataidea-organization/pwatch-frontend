@@ -1,6 +1,6 @@
 # Parliament Watch Website Frontend
 
-## Overview
+## Overview (Summary)
 
 Parliament Watch Uganda monitors and tracks the Ugandan Parliament on a regular basis, providing relevant data and expert insights. This frontend provides a comprehensive interface for accessing parliamentary data, news, blogs, trackers, multimedia content, and interactive features like a chatbot.
 
