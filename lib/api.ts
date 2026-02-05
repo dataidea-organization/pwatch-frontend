@@ -951,10 +951,19 @@ export async function fetchXPollEmbeds(): Promise<XPollEmbed[]> {
 }
 
 // Trivia API
+export interface TriviaOption {
+  id: number;
+  text: string;
+  is_correct: boolean;
+  order: number;
+  created_at: string;
+}
+
 export interface TriviaQuestion {
   id: number;
   question_text: string;
   answer_text: string;
+  options: TriviaOption[];
   order: number;
   created_at: string;
 }
