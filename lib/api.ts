@@ -1370,6 +1370,24 @@ export async function fetchPageHeroImage(pageSlug: string): Promise<PageHeroImag
   }
 }
 
+// Citizens Voice feedback links (admin-configured Google form URLs)
+export interface CitizensVoiceFeedbackLinks {
+  ask_mp_form_url: string;
+  comment_bill_form_url: string;
+  feedback_law_form_url: string;
+}
+
+export async function fetchCitizensVoiceFeedbackLinks(): Promise<CitizensVoiceFeedbackLinks | null> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/settings/citizens-voice-feedback/`);
+    if (!response.ok) return null;
+    return response.json();
+  } catch (error) {
+    console.error('Error fetching citizens voice feedback links:', error);
+    return null;
+  }
+}
+
 // Chatbot API
 export interface ChatbotQuery {
   query: string;
