@@ -3,10 +3,11 @@
 import { useState, useEffect } from 'react';
 import Script from 'next/script';
 import Image from 'next/image';
-import { Calendar, CheckCircle, XCircle, TrendingUp, Users, BarChart3, MessageSquare, Send, AlertCircle, User, FileText, Scale, Share2, ExternalLink } from 'lucide-react';
+import Link from 'next/link';
+import { Calendar, CheckCircle, XCircle, TrendingUp, Users, BarChart3, MessageSquare, Send, AlertCircle, User, FileText, Scale, Share2, ExternalLink, HelpCircle } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { fetchPolls, voteOnPoll, fetchPollResults, Poll, submitFeedback, FeedbackSubmission, fetchXPollEmbeds, XPollEmbed, fetchPageHeroImage, fetchCitizensVoiceFeedbackLinks, CitizensVoiceFeedbackLinks } from '@/lib/api';
+import { fetchPolls, voteOnPoll, fetchPollResults, Poll, submitFeedback, FeedbackSubmission, fetchXPollEmbeds, XPollEmbed, fetchPageHeroImage, fetchCitizensVoiceFeedbackLinks, CitizensVoiceFeedbackLinks, fetchTrivias, Trivia } from '@/lib/api';
 
 declare global {
   interface Window {
@@ -36,6 +37,7 @@ export default function CitizensVoicePage() {
   const [xPollEmbeds, setXPollEmbeds] = useState<XPollEmbed[]>([]);
   const [heroImage, setHeroImage] = useState<string>('/images/citizens-voice.jpg');
   const [feedbackLinks, setFeedbackLinks] = useState<CitizensVoiceFeedbackLinks | null>(null);
+  const [trivias, setTrivias] = useState<Trivia[]>([]);
 
   useEffect(() => {
     loadAllPolls();
@@ -46,6 +48,7 @@ export default function CitizensVoicePage() {
       }
     });
     fetchCitizensVoiceFeedbackLinks().then(setFeedbackLinks);
+    fetchTrivias().then(setTrivias).catch(() => setTrivias([]));
   }, []);
 
   useEffect(() => {
@@ -617,6 +620,50 @@ export default function CitizensVoicePage() {
                 </div>
               );
             })}
+          </div>
+        )}
+
+        {/* Trivia section */}
+        {trivias.length > 0 && (
+          <div className="mt-10">
+            <h2 className="text-xl font-bold text-gray-900 mb-4">Trivia</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {trivias.map((trivia) => (
+                <Link
+                  key={trivia.id}
+                  href={`/citizens-voice/trivia/${trivia.id}`}
+                  className="rounded-xl border border-gray-200 bg-white overflow-hidden shadow-md transition-all hover:shadow-lg hover:border-[#2d5016]/30 flex flex-col group"
+                >
+                  <div className="relative h-36 bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] flex items-center justify-center overflow-hidden">
+                    {trivia.image ? (
+                      <Image
+                        src={trivia.image}
+                        alt={trivia.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        unoptimized={trivia.image.startsWith('http')}
+                      />
+                    ) : (
+                      <HelpCircle className="w-14 h-14 text-[#2d5016]/40" />
+                    )}
+                  </div>
+                  <div className="p-5 flex flex-col flex-1">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-[#2d5016] transition-colors">
+                      {trivia.title}
+                    </h3>
+                    {trivia.description && (
+                      <p className="text-sm text-gray-600 mb-3 line-clamp-2 flex-1">
+                        {trivia.description}
+                      </p>
+                    )}
+                    <span className="text-sm font-medium text-[#2d5016] mt-auto">
+                      {trivia.question_count ?? trivia.questions?.length ?? 0} question{(trivia.question_count ?? trivia.questions?.length ?? 0) !== 1 ? 's' : ''} – Play
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
         )}
 

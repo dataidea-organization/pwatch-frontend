@@ -950,6 +950,44 @@ export async function fetchXPollEmbeds(): Promise<XPollEmbed[]> {
   return Array.isArray(data) ? data : data.results ?? [];
 }
 
+// Trivia API
+export interface TriviaQuestion {
+  id: number;
+  question_text: string;
+  answer_text: string;
+  order: number;
+  created_at: string;
+}
+
+export interface Trivia {
+  id: number;
+  title: string;
+  description: string;
+  image: string | null;
+  order: number;
+  question_count?: number;
+  questions?: TriviaQuestion[];
+  created_at: string;
+  updated_at: string;
+}
+
+export async function fetchTrivias(): Promise<Trivia[]> {
+  const response = await fetch(`${API_BASE_URL}/multimedia/trivia/`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch trivia');
+  }
+  const data = await response.json();
+  return Array.isArray(data) ? data : data.results ?? [];
+}
+
+export async function fetchTrivia(id: string): Promise<Trivia> {
+  const response = await fetch(`${API_BASE_URL}/multimedia/trivia/${id}/`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch trivia');
+  }
+  return response.json();
+}
+
 // Contact API
 export interface ContactSubmission {
   id?: number;
