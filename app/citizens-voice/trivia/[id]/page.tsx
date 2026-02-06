@@ -12,7 +12,7 @@ export default function TriviaRedirectPage() {
 
   useEffect(() => {
     if (!id) return;
-    router.replace(`/citizens-voice?trivia=${encodeURIComponent(id)}`);
+    router.replace(`/citizens-voice/trivia?trivia=${encodeURIComponent(id)}`);
   }, [id, router]);
 
   if (!id) {
@@ -20,7 +20,7 @@ export default function TriviaRedirectPage() {
       <div className="min-h-screen bg-[#f5f0e8] flex items-center justify-center">
         <div className="text-center max-w-md mx-auto px-4">
           <p className="text-red-700 mb-4">Invalid trivia link</p>
-          <Link href="/citizens-voice">
+          <Link href="/citizens-voice/trivia">
             <Button variant="outline">Back to Citizens Voice</Button>
           </Link>
         </div>

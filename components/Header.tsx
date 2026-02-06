@@ -388,10 +388,29 @@ export default function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <Link href="/citizens-voice" className="text-gray-700 hover:text-[#2d5016] font-medium text-sm transition-colors relative group">
-              Citizens' Voice
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#2d5016] transition-all group-hover:w-full"></span>
-            </Link>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="text-gray-700 hover:text-[#2d5016] font-medium text-sm h-auto p-0 transition-colors relative group">
+                  Citizens&apos; Voice
+                  <svg className="ml-1 w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#2d5016] transition-all group-hover:w-full"></span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-52 bg-white rounded-xl shadow-lg border border-gray-200 p-2">
+                <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
+                  <Link href="/citizens-voice" className="w-full cursor-pointer rounded-lg hover:bg-[#f5f0e8] transition-all text-gray-900">Engage</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
+                  <Link href="/citizens-voice/polls" className="w-full cursor-pointer rounded-lg hover:bg-[#f5f0e8] transition-all text-gray-900">Polls</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
+                  <Link href="/citizens-voice/trivia" className="w-full cursor-pointer rounded-lg hover:bg-[#f5f0e8] transition-all text-gray-900">Trivia</Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             <Link href="/blogs" className="text-gray-700 hover:text-[#2d5016] font-medium text-sm transition-colors relative group">
               Blogs
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#2d5016] transition-all group-hover:w-full"></span>
@@ -610,14 +629,50 @@ export default function Header() {
                 )}
               </div>
 
+              {/* Citizens' Voice Dropdown */}
+              <div>
+                <button
+                  onClick={() => setOpenMobileDropdown(openMobileDropdown === 'citizens-voice' ? null : 'citizens-voice')}
+                  className="w-full flex items-center justify-between text-gray-700 hover:text-[#2d5016] font-medium text-sm py-2"
+                >
+                  Citizens&apos; Voice
+                  <svg 
+                    className={`w-4 h-4 transition-transform ${openMobileDropdown === 'citizens-voice' ? 'rotate-180' : ''}`} 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {openMobileDropdown === 'citizens-voice' && (
+                  <div className="pl-4 space-y-2 mt-2">
+                    <Link 
+                      href="/citizens-voice" 
+                      className="block text-gray-600 hover:text-[#2d5016] text-sm py-1"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Engage
+                    </Link>
+                    <Link 
+                      href="/citizens-voice/polls" 
+                      className="block text-gray-600 hover:text-[#2d5016] text-sm py-1"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Polls
+                    </Link>
+                    <Link 
+                      href="/citizens-voice/trivia" 
+                      className="block text-gray-600 hover:text-[#2d5016] text-sm py-1"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Trivia
+                    </Link>
+                  </div>
+                )}
+              </div>
+
               {/* Direct Links */}
-              <Link 
-                href="/citizens-voice" 
-                className="block text-gray-700 hover:text-[#2d5016] font-medium text-sm py-2"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Citizens' Voice
-              </Link>
               <Link 
                 href="/blogs" 
                 className="block text-gray-700 hover:text-[#2d5016] font-medium text-sm py-2"
