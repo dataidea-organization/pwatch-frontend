@@ -400,13 +400,13 @@ export default function Header() {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-52 bg-white rounded-xl shadow-lg border border-gray-200 p-2">
                 <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
-                  <Link href="/citizens-voice" className="w-full cursor-pointer rounded-lg hover:bg-[#f5f0e8] transition-all text-gray-900">Engage</Link>
+                  <Link href="/citizens-voice" className="w-full cursor-pointer rounded-lg hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all text-gray-900 hover:text-gray-900 focus:text-gray-900">Engage</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
-                  <Link href="/citizens-voice/polls" className="w-full cursor-pointer rounded-lg hover:bg-[#f5f0e8] transition-all text-gray-900">Polls</Link>
+                  <Link href="/citizens-voice/polls" className="w-full cursor-pointer rounded-lg hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all text-gray-900 hover:text-gray-900 focus:text-gray-900">Polls</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
-                  <Link href="/citizens-voice/trivia" className="w-full cursor-pointer rounded-lg hover:bg-[#f5f0e8] transition-all text-gray-900">Trivia</Link>
+                  <Link href="/citizens-voice/trivia" className="w-full cursor-pointer rounded-lg hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all text-gray-900 hover:text-gray-900 focus:text-gray-900">Trivia</Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
