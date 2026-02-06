@@ -237,7 +237,7 @@ export default function ContactPage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <h3 className="font-semibold text-gray-900 mb-1 text-sm">WhatsApp</h3>
-                    <a href="https://wa.me/256393228160" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#2d5016] transition-colors text-sm block">
+                    <a href="https://wa.me/256706040460" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#2d5016] transition-colors text-sm block">
                       Chat on WhatsApp
                     </a>
                   </div>
@@ -279,7 +279,7 @@ export default function ContactPage() {
                 <h3 className="font-semibold text-gray-900 mb-4">Follow Us</h3>
                 <div className="flex items-center gap-4">
                   <a
-                    href="https://wa.me/256393228160"
+                    href="https://wa.me/256706040460"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-600 hover:text-[#2d5016] transition-colors hover:scale-110 transform duration-200"

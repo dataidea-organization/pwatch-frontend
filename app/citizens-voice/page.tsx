@@ -154,7 +154,7 @@ export default function CitizensVoicePage() {
               </p>
               <div className="flex flex-wrap items-center gap-2">
                 <a
-                  href="https://wa.me/256393228160"
+                  href="https://wa.me/256706040460"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2 bg-[#f5f0e8] rounded-lg text-gray-700 hover:bg-[#2d5016] hover:text-white transition-colors"

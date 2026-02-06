@@ -127,7 +127,7 @@ export default function Footer() {
                   </div>
                   <div>
                     <a href="tel:+256414237498" className="block hover:text-white transition-colors">
-                    +256 393 228 160
+                    +256 706 040 460
                     </a>
                   </div>
                 </div>
@@ -140,7 +140,7 @@ export default function Footer() {
                     </svg>
                   </div>
                   <a
-                    href="https://wa.me/256393228160"
+                    href="https://wa.me/256706040460"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:text-white transition-colors"
