@@ -1494,6 +1494,25 @@ export async function fetchCitizensVoiceFeedbackLinks(): Promise<CitizensVoiceFe
   }
 }
 
+// Footer Documents API
+export interface FooterDocuments {
+  terms_of_service: string | null;
+  privacy_policy: string | null;
+  accessibility: string | null;
+  updated_at: string;
+}
+
+export async function fetchFooterDocuments(): Promise<FooterDocuments | null> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/settings/footer-documents/`);
+    if (!response.ok) return null;
+    return response.json();
+  } catch (error) {
+    console.error('Error fetching footer documents:', error);
+    return null;
+  }
+}
+
 // Chatbot API
 export interface ChatbotQuery {
   query: string;

@@ -1,10 +1,33 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { fetchFooterDocuments } from '@/lib/api';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const [footerDocs, setFooterDocs] = useState<{
+    terms_of_service: string | null;
+    privacy_policy: string | null;
+    accessibility: string | null;
+  }>({
+    terms_of_service: null,
+    privacy_policy: null,
+    accessibility: null,
+  });
+
+  useEffect(() => {
+    fetchFooterDocuments().then((data) => {
+      if (data) {
+        setFooterDocs({
+          terms_of_service: data.terms_of_service,
+          privacy_policy: data.privacy_policy,
+          accessibility: data.accessibility,
+        });
+      }
+    });
+  }, []);
 
   return (
     <footer className="bg-gradient-to-br from-[#2d5016] to-[#1b3d26] text-white shadow-lg">
@@ -253,17 +276,50 @@ export default function Footer() {
               <p>&copy; {currentYear} Parliament Watch Uganda. All rights reserved.</p>
             </div>
             <div className="flex flex-wrap items-center gap-4 text-xs text-gray-300">
-              <Link href="/contact" className="hover:text-white transition-colors hover:underline">
-                Privacy Policy
-              </Link>
+              {footerDocs.privacy_policy ? (
+                <a 
+                  href={footerDocs.privacy_policy} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors hover:underline"
+                >
+                  Privacy Policy
+                </a>
+              ) : (
+                <Link href="/contact" className="hover:text-white transition-colors hover:underline">
+                  Privacy Policy
+                </Link>
+              )}
               <span className="text-white/30">|</span>
-              <Link href="/contact" className="hover:text-white transition-colors hover:underline">
-                Terms of Use
-              </Link>
+              {footerDocs.terms_of_service ? (
+                <a 
+                  href={footerDocs.terms_of_service} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors hover:underline"
+                >
+                  Terms of Use
+                </a>
+              ) : (
+                <Link href="/contact" className="hover:text-white transition-colors hover:underline">
+                  Terms of Use
+                </Link>
+              )}
               <span className="text-white/30">|</span>
-              <Link href="/contact" className="hover:text-white transition-colors hover:underline">
-                Accessibility
-              </Link>
+              {footerDocs.accessibility ? (
+                <a 
+                  href={footerDocs.accessibility} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors hover:underline"
+                >
+                  Accessibility
+                </a>
+              ) : (
+                <Link href="/contact" className="hover:text-white transition-colors hover:underline">
+                  Accessibility
+                </Link>
+              )}
             </div>
           </div>
         </div>
