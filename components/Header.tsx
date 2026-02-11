@@ -136,7 +136,6 @@ export default function Header() {
   const getResultTitle = (result: any): string => {
     return result.title || result.name || 'Untitled';
   };
-
   return (
     <header className="w-full bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] shadow-md sticky top-0 z-50">
       <div className="bg-gradient-to-r from-[#2d5016] to-[#1b3d26] px-4 py-2.5 flex items-center justify-between shadow-sm">
