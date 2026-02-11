@@ -1,299 +1,433 @@
-'use client'
+'use client';
 
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { ArrowLeft, Search, ChevronLeft, ChevronRight, FileText, Calendar, Tag, ExternalLink } from 'lucide-react'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { fetchPublications, Publication, fetchPageHeroImage } from '@/lib/api'
+import { useState, useEffect, useCallback } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { fetchPublications, Publication } from '@/lib/api';
+import { ArrowLeft, Calendar } from 'lucide-react';
+
+const PUBLICATION_TYPES = [
+  { value: 'all', label: 'All' },
+  { value: 'Policy Brief', label: 'Policy Brief' },
+  { value: 'Policy Paper', label: 'Policy Paper' },
+  { value: 'Research Report', label: 'Research Report' },
+  { value: 'Analysis', label: 'Analysis' },
+];
+
+function publicationImageUrl(pub: Publication): string {
+  if (pub.image) return pub.image;
+  return '/images/reports.jpg';
+}
 
 export default function PublicationsPage() {
-  const [publications, setPublications] = useState<Publication[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [searchQuery, setSearchQuery] = useState('')
-  const [typeFilter, setTypeFilter] = useState<string>('')
-  const [page, setPage] = useState(1)
-  const [totalPages, setTotalPages] = useState(1)
-  const [totalCount, setTotalCount] = useState(0)
-  const pageSize = 12
-  const [heroImage, setHeroImage] = useState<string>('/images/reports.jpg')
+  const [publications, setPublications] = useState<Publication[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [initialLoad, setInitialLoad] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+  const [selectedType, setSelectedType] = useState('all');
 
   useEffect(() => {
-    fetchPageHeroImage('publications').then((data) => {
-      if (data?.image) {
-        setHeroImage(data.image)
-      }
-    })
-  }, [])
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
-  useEffect(() => {
-    fetchPublicationsData()
-  }, [page, searchQuery, typeFilter])
-
-  const fetchPublicationsData = async () => {
+  const loadPublications = useCallback(async () => {
     try {
-      setLoading(true)
-      setError(null)
+      setLoading(true);
+      const filters: { type?: string; search?: string } = {};
+      if (selectedType !== 'all') filters.type = selectedType;
+      if (debouncedSearch.trim()) filters.search = debouncedSearch.trim();
 
-      const data = await fetchPublications(page, pageSize, {
-        search: searchQuery.trim() || undefined,
-        type: typeFilter || undefined,
+      const data = await fetchPublications(1, 12, {
+        ...filters,
         ordering: '-date',
-      })
-
-      setPublications(data.results)
-      setTotalCount(data.count)
-      setTotalPages(Math.ceil(data.count / pageSize))
+      });
+      setPublications(data.results);
+      setHasMore(data.next !== null);
+      setPage(1);
+      setError(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred')
-      console.error('Error fetching publications:', err)
+      setError('Failed to load publications. Please try again later.');
+      console.error('Error fetching publications:', err);
     } finally {
-      setLoading(false)
+      setLoading(false);
+      setInitialLoad(false);
     }
-  }
+  }, [selectedType, debouncedSearch]);
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault()
-    setPage(1)
-    fetchPublicationsData()
-  }
+  useEffect(() => {
+    loadPublications();
+  }, [loadPublications]);
 
-  const formatDate = (dateString: string | null): string => {
-    if (!dateString) return 'N/A'
-    const date = new Date(dateString)
-    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
-  }
+  const loadMore = async () => {
+    if (loadingMore) return;
+    try {
+      setLoadingMore(true);
+      const nextPage = page + 1;
+      const filters: { type?: string; search?: string } = {};
+      if (selectedType !== 'all') filters.type = selectedType;
+      if (debouncedSearch.trim()) filters.search = debouncedSearch.trim();
 
-  const publicationTypes = [
-    { value: '', label: 'All types' },
-    { value: 'Policy Brief', label: 'Policy Brief' },
-    { value: 'Policy Paper', label: 'Policy Paper' },
-    { value: 'Research Report', label: 'Research Report' },
-    { value: 'Analysis', label: 'Analysis' },
-  ]
+      const data = await fetchPublications(nextPage, 12, {
+        ...filters,
+        ordering: '-date',
+      });
+      setPublications((prev) => [...prev, ...data.results]);
+      setHasMore(data.next !== null);
+      setPage(nextPage);
+    } catch (err) {
+      setError('Failed to load more publications.');
+      console.error('Error fetching publications:', err);
+    } finally {
+      setLoadingMore(false);
+    }
+  };
 
-  if (loading && publications.length === 0) {
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  };
+
+  const formatDateShort = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    });
+  };
+
+  if (initialLoad && loading) {
     return (
-      <div className="min-h-screen bg-[#f5f0e8] flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#2d5016]"></div>
-          <p className="text-gray-600">Loading publications...</p>
-        </div>
+      <div className="min-h-screen bg-[#f5f0e8]">
+        <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+          <div className="mb-6">
+            <Link href="/resources" className="inline-flex items-center text-[#2d5016] hover:text-[#1b3d26] transition-colors text-sm">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Resources
+            </Link>
+          </div>
+          <div className="border-b border-gray-200 pb-6 mb-8">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">Publications</h1>
+            <p className="text-gray-600 text-sm sm:text-base">Research, policy briefs, and reports.</p>
+          </div>
+          <div className="text-center py-16">
+            <div className="inline-block w-8 h-8 border-2 border-[#2d5016] border-t-transparent rounded-full animate-spin" />
+            <p className="text-gray-600 mt-4">Loading publications...</p>
+          </div>
+        </main>
       </div>
-    )
+    );
   }
 
-  if (error) {
+  if (error && publications.length === 0 && !initialLoad) {
     return (
-      <div className="min-h-screen bg-[#f5f0e8] flex items-center justify-center p-4">
-        <div className="bg-red-50 border border-red-200 text-red-800 rounded-lg p-6 max-w-md w-full">
-          <h2 className="text-lg font-semibold mb-2">Error Loading Publications</h2>
-          <p className="mb-4">{error}</p>
-          <Button onClick={fetchPublicationsData} variant="green">
-            Try Again
-          </Button>
-        </div>
+      <div className="min-h-screen bg-[#f5f0e8]">
+        <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+          <div className="mb-6">
+            <Link href="/resources" className="inline-flex items-center text-[#2d5016] hover:text-[#1b3d26] transition-colors text-sm">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Resources
+            </Link>
+          </div>
+          <header className="border-b border-gray-200 pb-6 mb-8">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">Publications</h1>
+            <p className="text-gray-600 text-sm sm:text-base mb-6">Research, policy briefs, and reports.</p>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <div className="flex-1 relative">
+                <input
+                  type="search"
+                  placeholder="Search by keyword..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full px-4 py-2.5 pl-9 rounded-lg border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#2d5016]/40 focus:border-[#2d5016]"
+                />
+                <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+            </div>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {PUBLICATION_TYPES.map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => setSelectedType(opt.value)}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    selectedType === opt.value ? 'bg-[#2d5016] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </header>
+          <div className="bg-red-50 border border-red-200 text-red-800 rounded-lg p-4 mb-4">
+            <p className="font-medium">{error}</p>
+          </div>
+          <button
+            onClick={loadPublications}
+            className="bg-[#2d5016] text-white px-6 py-2.5 rounded-lg hover:bg-[#1b3d26] transition-colors font-medium"
+          >
+            Try again
+          </button>
+        </main>
       </div>
-    )
+    );
   }
 
   return (
     <div className="min-h-screen bg-[#f5f0e8]">
-      <main className="max-w-7xl mx-auto px-4 py-8">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8 pb-12">
         <div className="mb-6">
-          <Link href="/resources" className="inline-flex items-center text-[#2d5016] hover:text-[#1b3d26] mb-4 transition-colors">
-            <ArrowLeft className="mr-2" size={20} />
+          <Link href="/resources" className="inline-flex items-center text-[#2d5016] hover:text-[#1b3d26] transition-colors text-sm">
+            <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Resources
           </Link>
         </div>
 
-        <div className="relative mb-10 h-[400px] overflow-hidden rounded-2xl shadow-xl">
-          <Image
-            src={heroImage}
-            alt="Publications - research, policy briefs, and reports"
-            fill
-            className="object-cover"
-            sizes="100vw"
-            priority
-            unoptimized={heroImage.startsWith('http')}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" aria-hidden />
-          <div className="absolute inset-x-0 bottom-0 z-10 px-6 py-6 sm:px-8 sm:py-8 md:px-10 md:py-10">
-            <div className="max-w-2xl">
-              <div className="inline-flex items-center gap-2 rounded-lg bg-white/15 px-3 py-1.5 mb-3">
-                <FileText className="w-4 h-4 text-white" aria-hidden />
-                <span className="text-sm font-medium text-white/90">Research & policy</span>
-              </div>
-              <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl mb-3">
-                Publications
-              </h1>
-              <p className="text-base text-white/90 leading-relaxed sm:text-lg">
-                Browse research publications, policy briefs, and reports. Search by title or category and filter by type.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-[#fafaf8] rounded-lg border border-gray-200 shadow-sm mb-6">
-          <div className="p-4 border-b border-gray-200">
-            <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10" size={20} />
-                <Input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder={`Search through ${totalCount} publications...`}
-                  className="w-full pl-10 pr-4 text-gray-900 placeholder:text-gray-400 border-gray-300 focus:border-gray-400"
-                  style={{ color: '#111827' }}
-                />
-              </div>
-              <select
-                value={typeFilter}
-                onChange={(e) => {
-                  setTypeFilter(e.target.value)
-                  setPage(1)
-                }}
-                className="px-4 py-2 rounded-md border border-gray-300 bg-white text-gray-900 focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 min-w-[160px]"
+        <header className="border-b border-gray-200 pb-6 mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">Publications</h1>
+          <p className="text-gray-600 text-sm sm:text-base mb-6">
+            Research, policy briefs, and reports from CEPA.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-4">
+            <label htmlFor="publications-search" className="sr-only">
+              Search publications
+            </label>
+            <div className="flex-1 relative">
+              <input
+                id="publications-search"
+                type="search"
+                placeholder="Search by keyword..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full px-4 py-2.5 pl-9 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#2d5016]/40 focus:border-[#2d5016]"
+                aria-label="Search publications"
+              />
+              <svg
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden
               >
-                {publicationTypes.map((opt) => (
-                  <option key={opt.value || 'all'} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
-              {searchQuery && (
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => {
-                    setSearchQuery('')
-                    setPage(1)
-                  }}
-                  className="bg-[#fafaf8] text-gray-700 hover:bg-[#f5f0e8] border-gray-300"
-                >
-                  Clear
-                </Button>
-              )}
-              <Button type="submit" variant="green" className="bg-[#2d5016] text-white hover:bg-[#1b3d26]">
-                Search
-              </Button>
-            </form>
-          </div>
-        </div>
-
-        {publications.length === 0 ? (
-          <div className="bg-[#fafaf8] rounded-lg border border-gray-200 shadow-sm p-12 text-center">
-            <p className="text-gray-600 text-lg">No publications found.</p>
-            {(searchQuery || typeFilter) && (
-              <p className="text-gray-500 mt-2">Try adjusting your search or filters.</p>
-            )}
-          </div>
-        ) : (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-              {publications.map((pub) => (
-                <Link
-                  key={pub.id}
-                  href={`/resources/publications/${pub.id}`}
-                  className="bg-[#fafaf8] rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden block group"
-                >
-                  <div className="relative aspect-[16/10] bg-gray-100">
-                    {pub.image ? (
-                      <Image
-                        src={pub.image}
-                        alt=""
-                        fill
-                        className="object-cover group-hover:scale-[1.02] transition-transform duration-200"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        unoptimized={pub.image.startsWith('http')}
-                      />
-                    ) : (
-                      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#2d5016]/10 to-[#1b3d26]/5">
-                        <FileText className="w-16 h-16 text-[#2d5016]/40" />
-                      </div>
-                    )}
-                    {pub.featured && (
-                      <span className="absolute top-2 right-2 px-2 py-0.5 text-xs font-medium bg-[#2d5016] text-white rounded">
-                        Featured
-                      </span>
-                    )}
-                  </div>
-                  <div className="p-5">
-                    <div className="flex flex-wrap gap-2 mb-2">
-                      <span className="inline-flex items-center gap-1 text-xs font-medium text-[#2d5016] bg-[#2d5016]/10 px-2 py-0.5 rounded">
-                        {pub.type}
-                      </span>
-                      {pub.category && (
-                        <span className="inline-flex items-center gap-1 text-xs text-gray-600">
-                          <Tag className="w-3 h-3" />
-                          {pub.category}
-                        </span>
-                      )}
-                    </div>
-                    <h2 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-[#2d5016] transition-colors">
-                      {pub.title}
-                    </h2>
-                    <p className="text-gray-600 text-sm mb-3 line-clamp-2">{pub.description}</p>
-                    <div className="flex items-center gap-2 text-sm text-gray-500">
-                      <Calendar className="w-4 h-4 flex-shrink-0" />
-                      {formatDate(pub.date)}
-                    </div>
-                  </div>
-                </Link>
-              ))}
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
             </div>
+          </div>
+          <div className="flex flex-wrap gap-2" role="tablist" aria-label="Publication types">
+            {PUBLICATION_TYPES.map((opt) => (
+              <button
+                key={opt.value}
+                type="button"
+                role="tab"
+                aria-selected={selectedType === opt.value}
+                onClick={() => setSelectedType(opt.value)}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  selectedType === opt.value ? 'bg-[#2d5016] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        </header>
 
-            {totalPages > 1 && (
-              <div className="flex flex-wrap items-center justify-between gap-4 bg-[#fafaf8] rounded-lg border border-gray-200 shadow-sm p-4">
-                <div className="text-sm text-gray-600">
-                  Showing {((page - 1) * pageSize) + 1} to {Math.min(page * pageSize, totalCount)} of {totalCount}{' '}
-                  publications
+        <div>
+          {loading ? (
+            <div className="text-center py-16">
+              <div className="inline-block w-8 h-8 border-2 border-[#2d5016] border-t-transparent rounded-full animate-spin" />
+              <p className="text-gray-600 mt-4">Loading publications...</p>
+            </div>
+          ) : publications.length === 0 ? (
+            <div className="bg-white border border-gray-200 rounded-lg shadow-sm py-16 px-6 text-center">
+              <p className="text-gray-700 text-lg font-medium mb-2">
+                {debouncedSearch || selectedType !== 'all'
+                  ? 'No publications match your search or filter.'
+                  : 'No publications at the moment.'}
+              </p>
+              {(debouncedSearch || selectedType !== 'all') && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearchQuery('');
+                    setSelectedType('all');
+                  }}
+                  className="mt-3 text-[#2d5016] hover:text-[#1b3d26] font-medium underline transition-colors"
+                >
+                  Clear filters
+                </button>
+              )}
+            </div>
+          ) : (
+            <div className="space-y-10">
+              {publications[0] && (
+                <article className="border-b border-gray-200 pb-8">
+                  <Link href={`/resources/publications/${publications[0].id}`} className="group block">
+                    <div className="overflow-hidden rounded-lg bg-gray-100">
+                      <div className="relative w-full h-[280px] sm:h-[360px]">
+                        <Image
+                          src={publicationImageUrl(publications[0])}
+                          alt=""
+                          fill
+                          className="object-cover object-[50%_25%] transition-transform duration-300 group-hover:scale-[1.02]"
+                          sizes="(max-width: 768px) 100vw, 672px"
+                          unoptimized={publications[0].image?.startsWith('http')}
+                        />
+                        {publications[0].featured && (
+                          <span className="absolute top-3 right-3 px-2.5 py-1 text-xs font-semibold uppercase tracking-wide bg-[#2d5016] text-white rounded">
+                            Featured
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="mt-4">
+                      <span className="inline-block px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-[#2d5016] bg-[#2d5016]/10 rounded mb-3">
+                        {publications[0].type}
+                      </span>
+                      {publications[0].category && (
+                        <span className="ml-2 text-xs text-gray-500">{publications[0].category}</span>
+                      )}
+                      <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight group-hover:text-[#2d5016] transition-colors line-clamp-3">
+                        {publications[0].title}
+                      </h2>
+                      <p className="mt-2 text-gray-600 text-sm line-clamp-2">{publications[0].description}</p>
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-3 text-sm text-gray-500">
+                        <span className="flex items-center gap-1.5">
+                          <Calendar className="w-4 h-4 text-gray-400" />
+                          {formatDate(publications[0].date)}
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                </article>
+              )}
+
+              {publications.length > 1 && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+                  {publications.slice(1, 3).map((pub) => (
+                    <article key={pub.id} className="border-b border-gray-200 pb-6 sm:pb-0 sm:border-b-0">
+                      <Link href={`/resources/publications/${pub.id}`} className="group block">
+                        <div className="overflow-hidden rounded-lg bg-gray-100">
+                          <div className="relative w-full h-[200px]">
+                            <Image
+                              src={publicationImageUrl(pub)}
+                              alt=""
+                              fill
+                              className="object-cover object-[50%_25%] transition-transform duration-300 group-hover:scale-[1.02]"
+                              sizes="(max-width: 640px) 100vw, 50vw"
+                              unoptimized={pub.image?.startsWith('http')}
+                            />
+                            {pub.featured && (
+                              <span className="absolute top-2 right-2 px-2 py-0.5 text-xs font-medium bg-[#2d5016] text-white rounded">
+                                Featured
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <div className="mt-3">
+                          <span className="text-xs font-semibold uppercase tracking-wide text-[#2d5016]">
+                            {pub.type}
+                          </span>
+                          <h3 className="mt-1.5 text-lg font-bold text-gray-900 leading-snug line-clamp-2 group-hover:text-[#2d5016] transition-colors">
+                            {pub.title}
+                          </h3>
+                          <p className="mt-2 text-sm text-gray-500">
+                            {formatDateShort(pub.date)}
+                          </p>
+                        </div>
+                      </Link>
+                    </article>
+                  ))}
                 </div>
-                <div className="flex items-center gap-2">
-                  <Button
-                    variant="outline"
-                    onClick={() => setPage(1)}
-                    disabled={page === 1}
-                    className="bg-[#fafaf8] text-gray-700 hover:bg-[#f5f0e8] border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              )}
+
+              {publications.length > 3 && (
+                <section>
+                  <h2 className="text-lg font-bold text-gray-900 uppercase tracking-wide border-b border-gray-200 pb-2 mb-6">
+                    More publications
+                  </h2>
+                  <ul className="divide-y divide-gray-200">
+                    {publications.slice(3).map((pub) => (
+                      <li key={pub.id}>
+                        <Link
+                          href={`/resources/publications/${pub.id}`}
+                          className="flex gap-4 py-4 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2d5016] focus-visible:ring-offset-2 rounded"
+                        >
+                          <div className="relative flex-shrink-0 w-24 h-24 sm:w-28 sm:h-28 rounded-lg overflow-hidden bg-gray-100">
+                            <Image
+                              src={publicationImageUrl(pub)}
+                              alt=""
+                              fill
+                              className="object-cover object-[50%_25%] transition-transform duration-300 group-hover:scale-105"
+                              sizes="112px"
+                              unoptimized={pub.image?.startsWith('http')}
+                            />
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <span className="text-xs font-semibold uppercase tracking-wide text-[#2d5016]">
+                              {pub.type}
+                            </span>
+                            <h3 className="mt-0.5 font-bold text-gray-900 line-clamp-2 group-hover:text-[#2d5016] transition-colors">
+                              {pub.title}
+                            </h3>
+                            <p className="mt-1 text-sm text-gray-500">
+                              {formatDateShort(pub.date)}
+                            </p>
+                          </div>
+                          <span className="flex-shrink-0 self-center text-gray-400 group-hover:text-[#2d5016] transition-colors" aria-hidden>
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                          </span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
+
+              {hasMore && (
+                <div className="pt-4 flex justify-center">
+                  <button
+                    type="button"
+                    onClick={loadMore}
+                    disabled={loadingMore}
+                    className="bg-[#2d5016] text-white px-8 py-3 rounded-lg hover:bg-[#1b3d26] transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    First
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => setPage(page - 1)}
-                    disabled={page === 1}
-                    className="bg-[#fafaf8] text-gray-700 hover:bg-[#f5f0e8] border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <ChevronLeft size={20} />
-                  </Button>
-                  <span className="text-sm text-gray-700 px-3">
-                    Page {page} of {totalPages}
-                  </span>
-                  <Button
-                    variant="outline"
-                    onClick={() => setPage(page + 1)}
-                    disabled={page === totalPages}
-                    className="bg-[#fafaf8] text-gray-700 hover:bg-[#f5f0e8] border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <ChevronRight size={20} />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => setPage(totalPages)}
-                    disabled={page === totalPages}
-                    className="bg-[#fafaf8] text-gray-700 hover:bg-[#f5f0e8] border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    Last
-                  </Button>
+                    {loadingMore ? (
+                      <span className="flex items-center gap-2">
+                        <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        Loading...
+                      </span>
+                    ) : (
+                      'Load more'
+                    )}
+                  </button>
                 </div>
-              </div>
-            )}
-          </>
-        )}
+              )}
+            </div>
+          )}
+
+          {error && publications.length > 0 && (
+            <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800 text-sm font-medium text-center">
+              {error}
+            </div>
+          )}
+        </div>
       </main>
     </div>
-  )
+  );
 }
