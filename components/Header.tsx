@@ -318,6 +318,9 @@ export default function Header() {
                   <Link href="/resources/committees" className="w-full cursor-pointer rounded-lg hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all text-gray-900 hover:text-gray-900 focus:text-gray-900">Committees</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
+                  <Link href="/resources/publications" className="w-full cursor-pointer rounded-lg hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all text-gray-900 hover:text-gray-900 focus:text-gray-900">Publications</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
                   <a href="https://www.youtube.com/@Centre4PolicyAnalysis" target="_blank" rel="noopener noreferrer" className="w-full cursor-pointer rounded-lg hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all text-gray-900 hover:text-gray-900 focus:text-gray-900">Explainers</a>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
@@ -495,6 +498,13 @@ export default function Header() {
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       Committees
+                    </Link>
+                    <Link 
+                      href="/resources/publications" 
+                      className="block text-gray-600 hover:text-[#2d5016] text-sm py-1"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Publications
                     </Link>
                     <Link 
                       href="/chatbot" 

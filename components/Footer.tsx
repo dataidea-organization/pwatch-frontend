@@ -99,6 +99,11 @@ export default function Footer() {
                   Reports & Briefs
                 </Link>
               </li>
+              <li>
+                <Link href="/resources/publications" className="text-sm text-gray-200 hover:text-white transition-colors inline-block hover:translate-x-1 transform duration-200">
+                  Publications
+                </Link>
+              </li>
             </ul>
           </div>
 

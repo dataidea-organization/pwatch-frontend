@@ -561,6 +561,65 @@ export async function fetchCommittee(id: string): Promise<CommitteeDetail> {
   return response.json();
 }
 
+// Publication API (resources app)
+export interface Publication {
+  id: number;
+  title: string;
+  type: string;
+  date: string;
+  description: string;
+  category: string;
+  url: string | null;
+  pdf: string | null;
+  image: string | null;
+  featured: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface PublicationPaginatedResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Publication[];
+}
+
+export async function fetchPublications(
+  page: number = 1,
+  pageSize: number = 15,
+  filters?: {
+    search?: string;
+    type?: string;
+    category?: string;
+    featured?: boolean;
+    ordering?: string;
+  }
+): Promise<PublicationPaginatedResponse> {
+  const params = new URLSearchParams({
+    page: page.toString(),
+    page_size: pageSize.toString(),
+  });
+  if (filters?.search) params.append('search', filters.search);
+  if (filters?.type) params.append('type', filters.type);
+  if (filters?.category) params.append('category', filters.category);
+  if (filters?.featured !== undefined) params.append('featured', String(filters.featured));
+  if (filters?.ordering) params.append('ordering', filters.ordering);
+
+  const response = await fetch(`${API_BASE_URL}/resources/publications/?${params.toString()}`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch publications');
+  }
+  return response.json();
+}
+
+export async function fetchPublication(id: string): Promise<Publication> {
+  const response = await fetch(`${API_BASE_URL}/resources/publications/${id}/`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch publication');
+  }
+  return response.json();
+}
+
 // Home page trackers summary
 export interface HomeTrackersSummary {
   mps: Array<{
