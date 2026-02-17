@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { ArrowLeft, DollarSign, TrendingUp, BarChart3 } from 'lucide-react';
+import { fetchPageHeroImage } from '@/lib/api';
 
 interface DebtData {
   id: number;
@@ -26,8 +27,17 @@ export default function DebtTrackerPage() {
   const [latestData, setLatestData] = useState<DebtData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [heroImage, setHeroImage] = useState<string>('/images/debt.jpg');
 
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+
+  useEffect(() => {
+    fetchPageHeroImage('debt').then((data) => {
+      if (data?.image) {
+        setHeroImage(data.image);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     const fetchDebtData = async () => {
@@ -123,12 +133,13 @@ export default function DebtTrackerPage() {
         {/* Hero Section */}
         <div className="relative mb-10 h-[400px] overflow-hidden rounded-2xl shadow-xl">
           <Image
-            src="/images/debt.jpg"
+            src={heroImage}
             alt="National Debt Tracker - Uganda debt and economic indicators"
             fill
             className="object-cover"
             sizes="100vw"
             priority
+            unoptimized={heroImage.startsWith('http')}
           />
           <div
             className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"
