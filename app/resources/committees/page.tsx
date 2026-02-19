@@ -144,7 +144,7 @@ export default function CommitteesPage() {
           </div>
         </div>
 
-        <div className="bg-[#fafaf8] rounded-lg border border-gray-200 shadow-sm mb-6">
+        <div className="bg-white rounded-xl shadow-md border border-gray-200 mb-6">
           <div className="p-4 border-b border-gray-200">
             <form onSubmit={handleSearch} className="flex gap-3 items-center">
               <div className="relative flex-1">
@@ -183,7 +183,7 @@ export default function CommitteesPage() {
         </div>
 
         {committees.length === 0 ? (
-          <div className="bg-[#fafaf8] rounded-lg border border-gray-200 shadow-sm p-12 text-center">
+          <div className="bg-white rounded-xl shadow-md border border-gray-200 p-12 text-center">
             <p className="text-gray-600 text-lg">No committees found.</p>
             {searchQuery && (
               <p className="text-gray-500 mt-2">Try adjusting your search query.</p>
@@ -196,52 +196,67 @@ export default function CommitteesPage() {
                 <Link
                   key={committee.id}
                   href={`/resources/committees/${committee.id}`}
-                  className="bg-[#fafaf8] rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow p-6 block"
+                  className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 hover:shadow-xl hover:border-[#2d5016] transition-all duration-300 p-6 block overflow-hidden group"
                 >
-                  <h2 className="text-xl font-semibold text-gray-900 mb-3 line-clamp-2">
-                    {committee.title}
-                  </h2>
+                  {/* Decorative background pattern */}
+                  <div className="absolute top-0 right-0 w-24 h-24 opacity-5 group-hover:opacity-10 transition-opacity">
+                    <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
+                  </div>
                   
-                  {committee.description && (
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                      {committee.description}
-                    </p>
-                  )}
-
-                  <div className="space-y-2 text-sm">
-                    <div className="flex items-start gap-2 text-gray-700">
-                      <Calendar className="w-4 h-4 mt-0.5 flex-shrink-0 text-gray-500" />
-                      <span className="flex-1">
-                        <span className="font-medium">Term: </span>
-                        {formatTerm(committee.begin_date, committee.end_date)}
-                      </span>
-                    </div>
-
-                    {committee.chairperson_name && (
-                      <div className="flex items-start gap-2 text-gray-700">
-                        <User className="w-4 h-4 mt-0.5 flex-shrink-0 text-gray-500" />
-                        <span className="flex-1">
-                          <span className="font-medium">Chairperson: </span>
-                          {committee.chairperson_name}
-                        </span>
-                      </div>
+                  <div className="relative z-10">
+                    <h2 className="text-xl font-semibold text-gray-900 mb-3 line-clamp-2 group-hover:text-[#2d5016] transition-colors">
+                      {committee.title}
+                    </h2>
+                    
+                    {committee.description && (
+                      <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                        {committee.description}
+                      </p>
                     )}
 
-                    {committee.deputy_chairperson_name && (
+                    <div className="space-y-2 text-sm">
                       <div className="flex items-start gap-2 text-gray-700">
-                        <User className="w-4 h-4 mt-0.5 flex-shrink-0 text-gray-500" />
+                        <div className="p-1.5 bg-white/60 rounded-lg shadow-sm flex-shrink-0">
+                          <Calendar className="w-3.5 h-3.5 text-[#2d5016]" />
+                        </div>
                         <span className="flex-1">
-                          <span className="font-medium">Deputy Chairperson: </span>
-                          {committee.deputy_chairperson_name}
+                          <span className="font-medium">Term: </span>
+                          {formatTerm(committee.begin_date, committee.end_date)}
                         </span>
                       </div>
-                    )}
 
-                    <div className="flex items-center gap-2 text-gray-700">
-                      <Users className="w-4 h-4 flex-shrink-0 text-gray-500" />
-                      <span>
-                        <span className="font-medium">{committee.member_count}</span> member{committee.member_count !== 1 ? 's' : ''}
-                      </span>
+                      {committee.chairperson_name && (
+                        <div className="flex items-start gap-2 text-gray-700">
+                          <div className="p-1.5 bg-white/60 rounded-lg shadow-sm flex-shrink-0">
+                            <User className="w-3.5 h-3.5 text-[#2d5016]" />
+                          </div>
+                          <span className="flex-1">
+                            <span className="font-medium">Chairperson: </span>
+                            {committee.chairperson_name}
+                          </span>
+                        </div>
+                      )}
+
+                      {committee.deputy_chairperson_name && (
+                        <div className="flex items-start gap-2 text-gray-700">
+                          <div className="p-1.5 bg-white/60 rounded-lg shadow-sm flex-shrink-0">
+                            <User className="w-3.5 h-3.5 text-[#2d5016]" />
+                          </div>
+                          <span className="flex-1">
+                            <span className="font-medium">Deputy Chairperson: </span>
+                            {committee.deputy_chairperson_name}
+                          </span>
+                        </div>
+                      )}
+
+                      <div className="flex items-center gap-2 text-gray-700">
+                        <div className="p-1.5 bg-white/60 rounded-lg shadow-sm flex-shrink-0">
+                          <Users className="w-3.5 h-3.5 text-[#2d5016]" />
+                        </div>
+                        <span>
+                          <span className="font-medium">{committee.member_count}</span> member{committee.member_count !== 1 ? 's' : ''}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </Link>
@@ -249,7 +264,7 @@ export default function CommitteesPage() {
             </div>
 
             {totalPages > 1 && (
-              <div className="flex items-center justify-between bg-[#fafaf8] rounded-lg border border-gray-200 shadow-sm p-4">
+              <div className="flex items-center justify-between bg-white rounded-xl shadow-md border border-gray-200 p-4">
                 <div className="text-sm text-gray-600">
                   Showing {((page - 1) * pageSize) + 1} to {Math.min(page * pageSize, totalCount)} of {totalCount} committees
                 </div>
