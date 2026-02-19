@@ -68,12 +68,7 @@ export default async function CommitteeDetailPage({
                 <User className="w-5 h-5 text-[#2d5016]" />
                 <h3 className="text-sm font-medium text-gray-500">Chairperson</h3>
               </div>
-              <Link 
-                href={`/trackers/mps/${committee.chairperson.id}`}
-                className="text-[#2d5016] hover:text-[#1b3d26] font-semibold hover:underline"
-              >
-                {committee.chairperson.name}
-              </Link>
+              <p className="text-gray-900 font-semibold">{committee.chairperson}</p>
             </div>
           )}
 
@@ -83,12 +78,7 @@ export default async function CommitteeDetailPage({
                 <User className="w-5 h-5 text-[#2d5016]" />
                 <h3 className="text-sm font-medium text-gray-500">Deputy Chairperson</h3>
               </div>
-              <Link 
-                href={`/trackers/mps/${committee.deputy_chairperson.id}`}
-                className="text-[#2d5016] hover:text-[#1b3d26] font-semibold hover:underline"
-              >
-                {committee.deputy_chairperson.name}
-              </Link>
+              <p className="text-gray-900 font-semibold">{committee.deputy_chairperson}</p>
             </div>
           )}
 

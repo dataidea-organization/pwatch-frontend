@@ -515,8 +515,8 @@ export interface CommitteeDetail {
   description: string;
   begin_date: string | null;
   end_date: string | null;
-  chairperson: MP | null;
-  deputy_chairperson: MP | null;
+  chairperson: string | null;
+  deputy_chairperson: string | null;
   members: MP[];
   documents: CommitteeDocument[];
   created_at: string;

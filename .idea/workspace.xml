@@ -42,6 +42,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.Next.js: server-side.executor&quot;: &quot;Run&quot;,
     &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
     &quot;ts.external.directory.path&quot;: &quot;/Users/rtv-lpt-434/Work/cepa/pwatch/frontend/node_modules/typescript/lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
@@ -87,6 +88,8 @@
       <workItem from="1770619850078" duration="4695000" />
       <workItem from="1770788798132" duration="7580000" />
       <workItem from="1770877279722" duration="3601000" />
+      <workItem from="1771332286808" duration="12933000" />
+      <workItem from="1771420206996" duration="1861000" />
     </task>
     <servers />
   </component>
