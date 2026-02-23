@@ -168,7 +168,6 @@ export default function CommitteesPage() {
                   variant="outline"
                   onClick={() => {
                     setSearchQuery('')
-                    setPage(1)
                   }}
                   className="bg-[#fafaf8] text-gray-700 hover:bg-[#f5f0e8] border-gray-300"
                 >
