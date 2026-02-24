@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Gabarito } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
@@ -32,15 +33,27 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-          <body
-            className={`${gabarito.variable} antialiased font-sans`}
-          >
-            <Header />
-            {children}
-            <Footer />
-            <WhatsAppButton />
-            <ChatbotWidget />
-          </body>
+      <head>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-JQG3VM76CT"
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-config" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-JQG3VM76CT');
+          `}
+        </Script>
+      </head>
+      <body className={`${gabarito.variable} antialiased font-sans`}>
+        <Header />
+        {children}
+        <Footer />
+        <WhatsAppButton />
+        <ChatbotWidget />
+      </body>
     </html>
   );
 }
