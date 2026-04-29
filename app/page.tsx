@@ -102,10 +102,9 @@ export default function Home() {
       setBlogPosts([]);
     }
     
-    // Fetch Latest in Parliament items
+    // Fetch latest 3 items for home section
     try {
-      const hotData = await fetchHotInParliament();
-      console.log('Latest in Parliament data:', hotData);
+      const hotData = await fetchHotInParliament(1, 3);
       setHotInParliament(hotData.results || []);
     } catch (error) {
       console.error('Error loading latest in parliament:', error);
