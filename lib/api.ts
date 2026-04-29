@@ -236,11 +236,22 @@ export async function submitHotInParliamentComment(
 }
 
 export interface HotInParliamentResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
   results: HotInParliamentItem[];
 }
 
-export async function fetchHotInParliament(): Promise<HotInParliamentResponse> {
-  const response = await fetch(`${API_BASE_URL}/news/hot-in-parliament/`);
+export async function fetchHotInParliament(
+  page: number = 1,
+  pageSize: number = 12
+): Promise<HotInParliamentResponse> {
+  const params = new URLSearchParams({
+    page: page.toString(),
+    page_size: pageSize.toString(),
+  });
+
+  const response = await fetch(`${API_BASE_URL}/news/hot-in-parliament/?${params.toString()}`);
   if (!response.ok) {
     throw new Error('Failed to fetch hot in parliament');
   }
