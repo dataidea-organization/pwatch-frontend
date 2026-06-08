@@ -279,7 +279,6 @@ export default function Home() {
               ) : (
                 <div className="space-y-4">
                   {hotInParliament.map((item) => {
-                    const content = item.content.replace(/<[^>]*>/g, '').substring(0, 100) + '...';
                     const itemUrl = `/hot-in-parliament/${item.slug}`;
                     const handleShare = (e: React.MouseEvent) => {
                       e.preventDefault();
@@ -315,9 +314,6 @@ export default function Home() {
                             <h4 className="font-semibold text-white text-sm mb-1.5 line-clamp-2">
                               {item.title}
                             </h4>
-                            <p className="text-xs text-white/90 line-clamp-2 mb-1.5">
-                              {content}
-                            </p>
                             <div className="flex items-center justify-between gap-2 text-xs text-white/90">
                               <div className="flex items-center gap-3">
                                 <span>{new Date(item.published_date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
