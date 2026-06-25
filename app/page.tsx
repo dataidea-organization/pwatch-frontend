@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, Folder, Eye, Share2 } from 'lucide-react';
-import { fetchHeroImages, fetchHeadlines, fetchHomeNewsSummary, fetchHomeBlogSummary, fetchHomeTrackersSummary, fetchHomeResourcesSummary, fetchHotInParliament, HeroImage, Headline, NewsArticle, BlogPost, HomeTrackersSummary, HomeResourcesSummary, HotInParliamentItem } from '@/lib/api';
+import { ChevronLeft, ChevronRight, Folder } from 'lucide-react';
+import { fetchHeroImages, fetchHeadlines, fetchHomeNewsSummary, fetchHomeBlogSummary, fetchHomeTrackersSummary, fetchHomeResourcesSummary, HeroImage, Headline, NewsArticle, BlogPost, HomeTrackersSummary, HomeResourcesSummary } from '@/lib/api';
 import Link from 'next/link';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
@@ -29,7 +29,6 @@ export default function Home() {
   const [headlines, setHeadlines] = useState<Headline[]>([]);
   const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
-  const [hotInParliament, setHotInParliament] = useState<HotInParliamentItem[]>([]);
   const [loading, setLoading] = useState(true);
   
   // Trackers section state
@@ -102,15 +101,6 @@ export default function Home() {
       setBlogPosts([]);
     }
     
-    // Fetch latest 3 items for home section
-    try {
-      const hotData = await fetchHotInParliament(1, 3);
-      setHotInParliament(hotData.results || []);
-    } catch (error) {
-      console.error('Error loading latest in parliament:', error);
-      setHotInParliament([]);
-    }
-    
     setLoading(false);
   };
 
@@ -171,9 +161,9 @@ export default function Home() {
     <div className="min-h-screen bg-[#f5f0e8]">
 
       <main className="max-w-7xl mx-auto px-4 py-6 pb-20">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div>
           {/* Hero Image Section */}
-          <div className="lg:col-span-2">
+          <div>
             <div className="relative h-[400px] rounded-xl overflow-hidden shadow-xl group">
               {/* Image Carousel */}
               {loading ? (
@@ -262,84 +252,6 @@ export default function Home() {
                   ))}
                 </div>
               )}
-            </div>
-          </div>
-
-          {/* Hot in Parliament Section - Only visible on large screens */}
-          <div className="hidden lg:block">
-            <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden h-[400px] flex flex-col">
-              <div className="bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] px-6 py-4 border-b border-gray-200">
-                <h3 className="text-xl font-bold text-gray-900">Latest in Parliament</h3>
-              </div>
-              <div className="flex-1 overflow-y-auto p-4">
-              {hotInParliament.length === 0 ? (
-                <div className="text-center py-8 text-gray-500">
-                  <p className="text-sm">No latest items available</p>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {hotInParliament.map((item) => {
-                    const itemUrl = `/hot-in-parliament/${item.slug}`;
-                    const handleShare = (e: React.MouseEvent) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      const url = typeof window !== 'undefined' ? `${window.location.origin}${itemUrl}` : itemUrl;
-                      if (navigator.share) {
-                        navigator.share({ title: item.title, url }).catch(() => {});
-                      } else {
-                        navigator.clipboard.writeText(url);
-                        alert('Link copied to clipboard!');
-                      }
-                    };
-                    return (
-                      <Link
-                        key={item.id}
-                        href={itemUrl}
-                        className="block group"
-                      >
-                        <div className="relative rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer h-48 w-full hover:-translate-y-1">
-                          {item.image ? (
-                            <>
-                              <img
-                                src={item.image.startsWith('http') ? item.image : `${API_BASE_URL.replace('/api', '')}${item.image}`}
-                                alt={item.title}
-                                className="absolute inset-0 w-full h-full object-cover"
-                              />
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
-                            </>
-                          ) : (
-                            <div className="absolute inset-0 bg-gradient-to-br from-[#2d5016] to-[#1b3d26]" />
-                          )}
-                          <div className="absolute bottom-0 left-0 right-0 p-3 z-10">
-                            <h4 className="font-semibold text-white text-sm mb-1.5 line-clamp-2">
-                              {item.title}
-                            </h4>
-                            <div className="flex items-center justify-between gap-2 text-xs text-white/90">
-                              <div className="flex items-center gap-3">
-                                <span>{new Date(item.published_date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
-                                <span className="flex items-center gap-1">
-                                  <Eye className="w-3 h-3" />
-                                  {item.view_count ?? 0} views
-                                </span>
-                              </div>
-                              <button
-                                type="button"
-                                onClick={handleShare}
-                                className="p-1 rounded hover:bg-white/20 transition-colors"
-                                title="Share"
-                                aria-label="Share"
-                              >
-                                <Share2 className="w-3.5 h-3.5" />
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </Link>
-                    );
-                  })}
-                </div>
-              )}
-              </div>
             </div>
           </div>
         </div>
