@@ -160,7 +160,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#f5f0e8]">
       {/* Hero Image Section - full width */}
-      <section className="relative w-full h-[min(560px,75vh)] min-h-[400px] overflow-hidden group">
+      <section className="relative w-full h-[360px] sm:h-[420px] md:h-[min(560px,75vh)] overflow-hidden group">
         {/* Image Carousel */}
         {loading ? (
           <div className="absolute inset-0 bg-gray-200 animate-pulse" />
