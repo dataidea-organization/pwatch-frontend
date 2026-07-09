@@ -223,7 +223,7 @@ export default function Home() {
               Your Eye on Parliament
             </h2>
             <p className="text-base md:text-lg text-white/90 leading-relaxed">
-              We monitor and track the Ugandan Parliament on a regular basis, provide relevant data and expert insights.
+              Public Accountability. Public Participation. Civic Technology.
             </p>
             <Button
               variant="green"
