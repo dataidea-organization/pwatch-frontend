@@ -159,104 +159,112 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#f5f0e8]">
-
-      <main className="max-w-7xl mx-auto px-4 py-6 pb-20">
-        <div>
-          {/* Hero Image Section */}
-          <div>
-            <div className="relative h-[400px] rounded-xl overflow-hidden shadow-xl group">
-              {/* Image Carousel */}
-              {loading ? (
-                <div className="absolute inset-0 bg-gray-200 animate-pulse" />
-              ) : (
-                <div className="relative w-full h-full">
-                  {heroImages.map((heroImage, index) => (
-                    <div
-                      key={heroImage.id}
-                      className={`absolute inset-0 transition-opacity duration-1000 ${
-                        index === currentSlide ? 'opacity-100' : 'opacity-0'
-                      }`}
-                    >
-                      <img
-                        src={
-                          heroImage.image.startsWith('http') 
-                            ? heroImage.image 
-                            : heroImage.image.startsWith('/')
-                            ? heroImage.image
-                            : `${API_BASE_URL.replace('/api', '')}${heroImage.image}`
-                        }
-                        alt={heroImage.alt_text || heroImage.title || `Hero Image ${index + 1}`}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {/* Gradient Overlay - Left to Right for text visibility */}
-              <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/20 z-10" />
-
-              {/* Navigation Arrows */}
-              <button
-                onClick={goToPrevious}
-                className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 transition-all opacity-0 group-hover:opacity-100 hover:scale-110 shadow-lg"
-                aria-label="Previous slide"
+      {/* Hero Image Section - full width */}
+      <section className="relative w-full h-[min(560px,75vh)] min-h-[400px] overflow-hidden group">
+        {/* Image Carousel */}
+        {loading ? (
+          <div className="absolute inset-0 bg-gray-200 animate-pulse" />
+        ) : (
+          <div className="absolute inset-0">
+            {heroImages.map((heroImage, index) => (
+              <div
+                key={heroImage.id}
+                className={`absolute inset-0 transition-opacity duration-1000 ${
+                  index === currentSlide ? 'opacity-100' : 'opacity-0'
+                }`}
               >
-                <ChevronLeft className="w-6 h-6 text-white" />
-              </button>
-              <button
-                onClick={goToNext}
-                className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 transition-all opacity-0 group-hover:opacity-100 hover:scale-110 shadow-lg"
-                aria-label="Next slide"
-              >
-                <ChevronRight className="w-6 h-6 text-white" />
-              </button>
-
-              {/* Content Overlay */}
-              <div className="absolute bottom-8 left-8 z-20">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 max-w-2xl">
-                  We monitor and track the Ugandan Parliament on a regular basis, provide relevant data and expert insights.
-                </h2>
-                <Button 
-                  variant="green" 
-                  size="lg" 
-                  className="mt-6"
-                  onClick={() => {
-                    const newsSection = document.getElementById('news-section');
-                    if (newsSection) {
-                      newsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                  }}
-                >
-                  Here is How
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                </Button>
+                <Image
+                  src={
+                    heroImage.image.startsWith('http')
+                      ? heroImage.image
+                      : heroImage.image.startsWith('/')
+                      ? heroImage.image
+                      : `${API_BASE_URL.replace('/api', '')}${heroImage.image}`
+                  }
+                  alt={heroImage.alt_text || heroImage.title || `Hero Image ${index + 1}`}
+                  fill
+                  className="object-cover"
+                  sizes="100vw"
+                  priority={index === 0}
+                  unoptimized={
+                    heroImage.image.startsWith('http') ||
+                    !heroImage.image.startsWith('/')
+                  }
+                />
               </div>
+            ))}
+          </div>
+        )}
 
-              {/* Slide Indicators */}
-              {!loading && heroImages.length > 0 && (
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-                  {heroImages.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => goToSlide(index)}
-                      className={`transition-all ${
-                        index === currentSlide
-                          ? 'w-8 h-2 rounded-full bg-white'
-                          : 'w-2 h-2 rounded-full bg-white/50 hover:bg-white/75'
-                      }`}
-                      aria-label={`Go to slide ${index + 1}`}
-                    />
-                  ))}
-                </div>
-              )}
+        {/* Gradient Overlay - Left to Right for text visibility */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/20 z-10" />
+
+        {/* Navigation Arrows */}
+        <button
+          onClick={goToPrevious}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 transition-all opacity-0 group-hover:opacity-100 hover:scale-110 shadow-lg"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="w-6 h-6 text-white" />
+        </button>
+        <button
+          onClick={goToNext}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 transition-all opacity-0 group-hover:opacity-100 hover:scale-110 shadow-lg"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="w-6 h-6 text-white" />
+        </button>
+
+        {/* Content Overlay */}
+        <div className="absolute inset-x-0 bottom-0 z-20 px-4 pb-10 sm:px-8 md:px-10">
+          <div className="max-w-7xl mx-auto">
+            <div className="max-w-2xl">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
+              Your Eye on Parliament
+            </h2>
+            <p className="text-base md:text-lg text-white/90 leading-relaxed">
+              We monitor and track the Ugandan Parliament on a regular basis, provide relevant data and expert insights.
+            </p>
+            <Button
+              variant="green"
+              size="lg"
+              className="mt-6"
+              onClick={() => {
+                const newsSection = document.getElementById('news-section');
+                if (newsSection) {
+                  newsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+              }}
+            >
+              Here is How
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </Button>
             </div>
           </div>
         </div>
 
-              {/* News and Updates Section */}
+        {/* Slide Indicators */}
+        {!loading && heroImages.length > 0 && (
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+            {heroImages.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`transition-all ${
+                  index === currentSlide
+                    ? 'w-8 h-2 rounded-full bg-white'
+                    : 'w-2 h-2 rounded-full bg-white/50 hover:bg-white/75'
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
+        )}
+      </section>
+
+      <main className="max-w-7xl mx-auto px-4 py-6 pb-20">
         <div id="news-section" className="mt-8">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-2xl font-bold text-gray-800">News and Updates</h3>
