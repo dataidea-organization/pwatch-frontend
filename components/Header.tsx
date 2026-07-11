@@ -138,7 +138,7 @@ export default function Header() {
   };
   return (
     <header className="w-full bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] shadow-md sticky top-0 z-50">
-      <div className="bg-gradient-to-r from-[#2d5016] to-[#1b3d26] px-4 py-2.5 flex items-center justify-between shadow-sm">
+      <div className="bg-gradient-to-r from-[#2d5016] to-[#1b3d26] px-4 py-1.5 flex items-center justify-between shadow-sm">
         <div className="flex items-center gap-4">
           <a href="https://wa.me/256706040460" target="_blank" rel="noopener noreferrer" className="text-white hover:text-white/80 transition-colors hover:scale-110 transform duration-200" aria-label="WhatsApp">
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -279,7 +279,7 @@ export default function Header() {
       </div>
 
       <div className="border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
             <Image
               src="/images/PWATCH LOGO.png"
