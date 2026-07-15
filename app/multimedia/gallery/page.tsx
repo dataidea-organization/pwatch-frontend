@@ -12,6 +12,12 @@ type SortField = 'title' | 'event_date' | 'created_at' | null;
 type SortDirection = 'asc' | 'desc';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+const API_MEDIA = API_BASE_URL.replace(/\/api\/?$/, '');
+
+function mediaUrl(image: string): string {
+  if (image.startsWith('http')) return image;
+  return `${API_MEDIA}${image.startsWith('/') ? '' : '/'}${image}`;
+}
 
 export default function GalleryPage() {
   // Store all gallery images loaded from the server
@@ -335,7 +341,7 @@ export default function GalleryPage() {
                 {/* Image */}
                 <div className="relative h-64 w-full bg-[#f5f0e8] overflow-hidden">
                   <img
-                    src={`${API_BASE_URL.replace('/api', '')}${image.image}`}
+                    src={mediaUrl(image.image)}
                     alt={image.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
@@ -346,7 +352,7 @@ export default function GalleryPage() {
                       </span>
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-opacity flex items-center justify-center">
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
                     <div className="opacity-0 group-hover:opacity-100 transition-opacity text-white text-center px-4">
                       <p className="font-semibold text-sm mb-1">{image.title}</p>
                       {image.category && (
@@ -380,7 +386,7 @@ export default function GalleryPage() {
         {/* Image Modal */}
         {selectedImage && (
           <div
-            className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/75 z-50 flex items-center justify-center p-4"
             onClick={() => setSelectedImage(null)}
           >
             <div
@@ -400,7 +406,7 @@ export default function GalleryPage() {
               {/* Image */}
               <div className="px-4">
                 <img
-                  src={`${API_BASE_URL.replace('/api', '')}${selectedImage.image}`}
+                  src={mediaUrl(selectedImage.image)}
                   alt={selectedImage.title}
                   className="w-full h-auto rounded-lg"
                 />
