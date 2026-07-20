@@ -316,7 +316,14 @@ export default function PodcastPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {sortedPodcasts.map((podcast) => {
               const videoId = extractVideoId(podcast.youtube_url);
-              const thumbnailUrl = podcast.thumbnail || (videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : null);
+              const mediaBase = API_BASE_URL.replace(/\/api\/?$/, '');
+              const thumbnailUrl = podcast.thumbnail
+                ? podcast.thumbnail.startsWith('http')
+                  ? podcast.thumbnail
+                  : `${mediaBase}${podcast.thumbnail.startsWith('/') ? '' : '/'}${podcast.thumbnail}`
+                : videoId
+                  ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
+                  : null;
 
               return (
                 <div
@@ -325,13 +332,7 @@ export default function PodcastPage() {
                 >
                   {/* Thumbnail */}
                   <div className="relative h-48 w-full bg-[#f5f0e8]">
-                    {podcast.thumbnail ? (
-                      <img
-                        src={`${API_BASE_URL.replace('/api', '')}${podcast.thumbnail}`}
-                        alt={podcast.title}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : thumbnailUrl ? (
+                    {thumbnailUrl ? (
                       <img
                         src={thumbnailUrl}
                         alt={podcast.title}
