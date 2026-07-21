@@ -337,13 +337,19 @@ export default function PodcastPage() {
                         src={thumbnailUrl}
                         alt={podcast.title}
                         className="w-full h-full object-cover"
+                        onError={(e) => {
+                          const img = e.currentTarget;
+                          if (videoId && img.src.includes('maxresdefault')) {
+                            img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+                          }
+                        }}
                       />
                     ) : (
                       <div className="w-full h-full bg-gradient-to-br from-[#2d5016] to-[#1b3d26] flex items-center justify-center">
                         <Play className="w-16 h-16 text-white" />
                       </div>
                     )}
-                    <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-20 transition-opacity flex items-center justify-center">
+                    <div className="absolute inset-0 bg-black/0 hover:bg-black/20 transition-colors flex items-center justify-center">
                       <a
                         href={podcast.youtube_url}
                         target="_blank"
