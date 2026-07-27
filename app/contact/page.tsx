@@ -224,8 +224,8 @@ export default function ContactPage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <h3 className="font-semibold text-gray-900 mb-1 text-sm">Phone</h3>
-                    <a href="tel:+256414237498" className="text-gray-600 hover:text-[#2d5016] transition-colors text-sm block">
-                      +256 393 228 160
+                    <a href="tel:0393228160" className="text-gray-600 hover:text-[#2d5016] transition-colors text-sm block">
+                      0393228160
                     </a>
                   </div>
                 </div>

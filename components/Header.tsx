@@ -292,25 +292,10 @@ export default function Header() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-6">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="text-gray-700 hover:text-[#2d5016] font-medium text-sm h-auto p-0 transition-colors relative group">
-                  News & Updates
-                  <svg className="ml-1 w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#2d5016] transition-all group-hover:w-full"></span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-56 bg-white rounded-xl shadow-lg border border-gray-200 p-2">
-                <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
-                  <Link href="/news" className="w-full cursor-pointer rounded-lg hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all text-gray-900 hover:text-gray-900 focus:text-gray-900">News &amp; Updates</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild className="focus:bg-transparent focus:text-gray-900">
-                  <Link href="/hot-in-parliament" className="w-full cursor-pointer rounded-lg hover:bg-gradient-to-br hover:from-[#fafaf8] hover:to-[#f5f0e8] transition-all text-gray-900 hover:text-gray-900 focus:text-gray-900">Hot in Parliament</Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <Link href="/news" className="text-gray-700 hover:text-[#2d5016] font-medium text-sm transition-colors relative group">
+              News &amp; Updates
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#2d5016] transition-all group-hover:w-full"></span>
+            </Link>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -457,41 +442,13 @@ export default function Header() {
         {isMobileMenuOpen && (
           <div className="md:hidden border-t border-gray-200 bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] shadow-lg">
             <nav className="px-4 py-4 space-y-2">
-              {/* News & Updates Dropdown */}
-              <div>
-                <button
-                  onClick={() => setOpenMobileDropdown(openMobileDropdown === 'news-updates' ? null : 'news-updates')}
-                  className="w-full flex items-center justify-between text-gray-700 hover:text-[#2d5016] font-medium text-sm py-2"
-                >
-                  News &amp; Updates
-                  <svg
-                    className={`w-4 h-4 transition-transform ${openMobileDropdown === 'news-updates' ? 'rotate-180' : ''}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                {openMobileDropdown === 'news-updates' && (
-                  <div className="pl-4 space-y-2 mt-2">
-                    <Link
-                      href="/news"
-                      className="block text-gray-600 hover:text-[#2d5016] text-sm py-1"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      News &amp; Updates
-                    </Link>
-                    <Link
-                      href="/hot-in-parliament"
-                      className="block text-gray-600 hover:text-[#2d5016] text-sm py-1"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      Hot in Parliament
-                    </Link>
-                  </div>
-                )}
-              </div>
+              <Link
+                href="/news"
+                className="block text-gray-700 hover:text-[#2d5016] font-medium text-sm py-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                News &amp; Updates
+              </Link>
 
               {/* Resources Dropdown */}
               <div>
