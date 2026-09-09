@@ -38,6 +38,25 @@ const PARTY_COLORS: Record<string, string> = {
 // Fallback color for unknown parties
 const DEFAULT_PARTY_COLOR = '#6B7280';
 
+function toTitleCase(value: string): string {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+function uniqueLabelsCaseInsensitive(values: Array<string | null | undefined>): string[] {
+  const seen = new Map<string, string>();
+  for (const value of values) {
+    if (!value?.trim()) continue;
+    const key = value.trim().toLowerCase();
+    if (!seen.has(key)) {
+      seen.set(key, toTitleCase(value));
+    }
+  }
+  return Array.from(seen.values()).sort((a, b) => a.localeCompare(b));
+}
+
 // Function to get color for a party
 const getPartyColor = (party: string): string => {
   if (!party) return DEFAULT_PARTY_COLOR;
@@ -68,13 +87,10 @@ export default function MPsPage() {
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   const [heroImage, setHeroImage] = useState<string>('/images/mps.jpg');
 
-  const districtOptions = useMemo(() => {
-    const set = new Set<string>();
-    allMps.forEach((mp) => {
-      if (mp.district) set.add(mp.district);
-    });
-    return Array.from(set).sort((a, b) => a.localeCompare(b));
-  }, [allMps]);
+  const districtOptions = useMemo(
+    () => uniqueLabelsCaseInsensitive(allMps.map((mp) => mp.district)),
+    [allMps]
+  );
 
   const searchOptions = useMemo(() => {
     const set = new Set<string>();
@@ -190,13 +206,11 @@ export default function MPsPage() {
   const summary = useMemo(() => {
     const totalMps = filteredMps.length;
     
-    // Get unique parties and districts
     const partiesSet = new Set<string>();
-    const districtsSet = new Set<string>();
     filteredMps.forEach((mp) => {
       if (mp.party) partiesSet.add(mp.party);
-      if (mp.district) districtsSet.add(mp.district);
     });
+    const uniqueDistricts = uniqueLabelsCaseInsensitive(filteredMps.map((mp) => mp.district));
 
     // Calculate party distribution
     const partyCounts = new Map<string, number>();
@@ -217,7 +231,7 @@ export default function MPsPage() {
     return {
       total_mps: totalMps,
       total_parties: partiesSet.size,
-      total_districts: districtsSet.size,
+      total_districts: uniqueDistricts.length,
       party_distribution: partyDistribution
     };
   }, [filteredMps]);
