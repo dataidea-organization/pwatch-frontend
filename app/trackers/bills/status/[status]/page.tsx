@@ -49,8 +49,8 @@ export default function BillsStatusPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortField, setSortField] = useState<SortField>(null);
-  const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+  const [sortField, setSortField] = useState<SortField>('year_introduced');
+  const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
 
   useEffect(() => {
     if (status) {
@@ -118,8 +118,8 @@ export default function BillsStatusPage() {
           bValue = (b.status_display || '').toLowerCase();
           break;
         case 'year_introduced':
-          aValue = parseInt(a.year_introduced) || 0;
-          bValue = parseInt(b.year_introduced) || 0;
+          aValue = new Date(a.year_introduced).getTime() || 0;
+          bValue = new Date(b.year_introduced).getTime() || 0;
           break;
         case 'mover':
           aValue = (a.mover || '').toLowerCase();
