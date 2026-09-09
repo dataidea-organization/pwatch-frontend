@@ -168,7 +168,7 @@ export default function Footer() {
                     </svg>
                   </div>
                   <a
-                    href="https://wa.me/256706040460"
+                    href="https://wa.me/256769382596"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:text-white transition-colors"
@@ -199,7 +199,7 @@ export default function Footer() {
               <h4 className="text-sm font-semibold mb-3">Follow Us</h4>
               <div className="flex items-center gap-3">
                 <a
-                  href="https://wa.me/256393228160"
+                  href="https://wa.me/256769382596"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2 bg-white/10 rounded-lg text-gray-200 hover:text-white hover:bg-white/20 transition-all hover:scale-110 transform duration-200"
