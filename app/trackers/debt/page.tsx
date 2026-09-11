@@ -72,18 +72,50 @@ export default function DebtTrackerPage() {
     fetchDebtData();
   }, []);
 
-  const formatCurrency = (value: number) => {
-    return `UGX ${value.toLocaleString()}`;
+  const millionsToUGX = (millions: number) => Number(millions) * 1_000_000;
+
+  const formatCompactUGX = (ugx: number) => {
+    const abs = Math.abs(ugx);
+    const format = (value: number) =>
+      value.toLocaleString(undefined, { maximumFractionDigits: 2 });
+
+    if (abs >= 1_000_000_000_000) {
+      return `${format(ugx / 1_000_000_000_000)}T`;
+    }
+    if (abs >= 1_000_000_000) {
+      return `${format(ugx / 1_000_000_000)}B`;
+    }
+    if (abs >= 1_000_000) {
+      return `${format(ugx / 1_000_000)}M`;
+    }
+    if (abs >= 1_000) {
+      return `${format(ugx / 1_000)}K`;
+    }
+    return ugx.toLocaleString();
   };
 
-  const formatLargeNumber = (value: number) => {
-    if (value >= 1000000) {
-      return `${(value / 1000000).toFixed(0)}M`;
-    } else if (value >= 1000) {
-      return `${(value / 1000).toFixed(0)}K`;
+  const formatMillionsUGX = (millions: number) => `UGX ${formatCompactUGX(millionsToUGX(millions))}`;
+  const formatUGX = (ugx: number) => `UGX ${formatCompactUGX(ugx)}`;
+
+  const perCapitaMetrics = (() => {
+    if (!latestData) {
+      return null;
     }
-    return value.toString();
-  };
+    const population = Number(latestData.population) || 0;
+    const debtPerCitizen = population
+      ? millionsToUGX(latestData.national_debt) / population
+      : Number(latestData.debt_per_citizen) || 0;
+    const gdpPerCapita = population
+      ? millionsToUGX(latestData.gdp) / population
+      : Number(latestData.gdp_per_capita) || 0;
+    const perCapitaIncome = Number(latestData.per_capita_income) || 0;
+    const scale = Math.max(debtPerCitizen, gdpPerCapita, perCapitaIncome);
+    const barWidth = (value: number) => {
+      if (!scale || value <= 0) return '0%';
+      return `${Math.min(100, (value / scale) * 100)}%`;
+    };
+    return { population, debtPerCitizen, gdpPerCapita, perCapitaIncome, barWidth };
+  })();
 
   if (loading) {
     return (
@@ -178,7 +210,7 @@ export default function DebtTrackerPage() {
                 <div className="flex-1 min-w-0">
                   <p className="text-gray-600 text-sm mb-1">National Debt</p>
                   <p className="text-xl font-bold text-gray-900">
-                    UGX {(latestData.national_debt / 1000000).toLocaleString()}M
+                    {formatMillionsUGX(latestData.national_debt)}
                   </p>
                   <p className="text-xs text-gray-500 mt-1">As of {latestData.year}</p>
                 </div>
@@ -199,7 +231,7 @@ export default function DebtTrackerPage() {
                 <div className="flex-1 min-w-0">
                   <p className="text-gray-600 text-sm mb-1">Interest</p>
                   <p className="text-xl font-bold text-gray-900">
-                    UGX {(latestData.interest / 1000000).toLocaleString()}M
+                    {formatMillionsUGX(latestData.interest)}
                   </p>
                   <p className="text-xs text-gray-500 mt-1">As of {latestData.year}</p>
                 </div>
@@ -220,7 +252,7 @@ export default function DebtTrackerPage() {
                 <div className="flex-1 min-w-0">
                   <p className="text-gray-600 text-sm mb-1">Total Expenditure</p>
                   <p className="text-xl font-bold text-gray-900">
-                    UGX {(latestData.total_expenditure / 1000000).toLocaleString()}M
+                    {formatMillionsUGX(latestData.total_expenditure)}
                   </p>
                   <p className="text-xs text-gray-500 mt-1">As of {latestData.year}</p>
                 </div>
@@ -249,12 +281,12 @@ export default function DebtTrackerPage() {
                   tick={{ fill: '#6b7280' }}
                 />
                 <YAxis
-                  label={{ value: 'GDP', angle: -90, position: 'insideLeft' }}
-                  tickFormatter={(value) => formatLargeNumber(value)}
+                  label={{ value: 'UGX', angle: -90, position: 'insideLeft' }}
+                  tickFormatter={(value) => formatCompactUGX(millionsToUGX(value))}
                   tick={{ fill: '#6b7280' }}
                 />
                 <Tooltip
-                  formatter={(value: number) => formatCurrency(value)}
+                  formatter={(value: number) => formatMillionsUGX(value)}
                   labelFormatter={(label) => `Year: ${label}`}
                   contentStyle={{
                     backgroundColor: 'white',
@@ -286,65 +318,67 @@ export default function DebtTrackerPage() {
           </div>
 
           {/* Sidebar Metrics */}
-          {latestData && (
+          {latestData && perCapitaMetrics && (
             <div className="bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6">
               <h3 className="text-lg font-bold text-gray-900 mb-6">Per Capita Metrics</h3>
               <div className="space-y-6">
-                {/* Debt Per Citizen */}
                 <div>
                   <div className="flex justify-between mb-2">
                     <span className="text-sm font-medium text-gray-700">Debt Per Citizen</span>
                     <span className="text-sm font-bold text-[#2d5016]">
-                      UGX {(latestData.debt_per_citizen / 1000000000).toFixed(1)}B
+                      {perCapitaMetrics.debtPerCitizen > 0
+                        ? formatUGX(perCapitaMetrics.debtPerCitizen)
+                        : '—'}
                     </span>
                   </div>
                   <div className="w-full bg-[#f5f0e8] rounded-full h-3">
                     <div
                       className="bg-[#2d5016] h-3 rounded-full transition-all duration-500"
-                      style={{ width: '60%' }}
+                      style={{ width: perCapitaMetrics.barWidth(perCapitaMetrics.debtPerCitizen) }}
                     ></div>
                   </div>
                 </div>
 
-                {/* GDP Per Capita */}
                 <div>
                   <div className="flex justify-between mb-2">
                     <span className="text-sm font-medium text-gray-700">GDP Per Capita</span>
                     <span className="text-sm font-bold text-[#2d5016]">
-                      UGX {(latestData.gdp_per_capita / 1000000000).toFixed(1)}B
+                      {perCapitaMetrics.gdpPerCapita > 0
+                        ? formatUGX(perCapitaMetrics.gdpPerCapita)
+                        : '—'}
                     </span>
                   </div>
                   <div className="w-full bg-[#f5f0e8] rounded-full h-3">
                     <div
                       className="bg-[#2d5016] h-3 rounded-full transition-all duration-500"
-                      style={{ width: '100%' }}
+                      style={{ width: perCapitaMetrics.barWidth(perCapitaMetrics.gdpPerCapita) }}
                     ></div>
                   </div>
                 </div>
 
-                {/* Per Capita Income */}
-                <div>
-                  <div className="flex justify-between mb-2">
-                    <span className="text-sm font-medium text-gray-700">Per Capita Income</span>
-                    <span className="text-sm font-bold text-[#2d5016]">
-                      UGX {(latestData.per_capita_income / 1000000).toFixed(0)}M
-                    </span>
+                {perCapitaMetrics.perCapitaIncome > 0 && (
+                  <div>
+                    <div className="flex justify-between mb-2">
+                      <span className="text-sm font-medium text-gray-700">Per Capita Income</span>
+                      <span className="text-sm font-bold text-[#2d5016]">
+                        {formatUGX(perCapitaMetrics.perCapitaIncome)}
+                      </span>
+                    </div>
+                    <div className="w-full bg-[#f5f0e8] rounded-full h-3">
+                      <div
+                        className="bg-[#2d5016] h-3 rounded-full transition-all duration-500"
+                        style={{ width: perCapitaMetrics.barWidth(perCapitaMetrics.perCapitaIncome) }}
+                      ></div>
+                    </div>
                   </div>
-                  <div className="w-full bg-[#f5f0e8] rounded-full h-3">
-                    <div
-                      className="bg-[#2d5016] h-3 rounded-full transition-all duration-500"
-                      style={{ width: '20%' }}
-                    ></div>
-                  </div>
-                </div>
+                )}
 
-                {/* Population Info */}
-                {latestData.population && (
+                {perCapitaMetrics.population > 0 && (
                   <div className="mt-6 pt-6 border-t border-gray-200">
                     <div className="text-sm text-gray-600">
                       <span className="font-medium">Population ({latestData.year}):</span>
                       <span className="ml-2 font-bold text-gray-900">
-                        {latestData.population.toLocaleString()}
+                        {perCapitaMetrics.population.toLocaleString()}
                       </span>
                     </div>
                   </div>
