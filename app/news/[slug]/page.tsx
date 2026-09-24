@@ -34,24 +34,11 @@ export async function generateMetadata({
       'News from Parliament Watch Uganda';
     const url = `${SITE_URL}/news/${slug}`;
 
+    // Social share cards (X / WhatsApp) are disabled until the client clears payment.
     return {
       title: article.title,
       description,
       alternates: { canonical: url },
-      openGraph: {
-        title: article.title,
-        description,
-        url,
-        siteName: 'Parliament Watch Uganda',
-        type: 'article',
-        publishedTime: article.published_date,
-      },
-      twitter: {
-        card: 'summary_large_image',
-        title: article.title,
-        description,
-        site: '@pwatchug',
-      },
     };
   } catch {
     return {
