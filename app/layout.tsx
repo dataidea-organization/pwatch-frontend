@@ -14,6 +14,7 @@ const gabarito = Gabarito({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.parliamentwatch.ug'),
   title: "Parliament Watch Uganda",
   description: "Your Eye on Parliament - Bridging the gap between Parliament and citizens",
   icons: {
