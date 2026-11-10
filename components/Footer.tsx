@@ -41,7 +41,7 @@ export default function Footer() {
                 src="/images/PWATCH LOGO.png"
                 alt="Parliament Watch Uganda Logo"
                 width={280}
-                height={93}
+                height={68}
                 className="h-auto w-auto"
                 priority
               />

@@ -255,10 +255,10 @@ textarea::placeholder {
 .dark .blog-content blockquote { color: #a8a294; }
 .dark .blog-content code { background-color: #262b22; color: #f3efe6; }
 
-/* Wordmark is dark green on a transparent image, so keep a light plate behind it. */
+/* Dark header uses a light wordmark, so the logo needs no light plate. */
 .dark .brand-logo {
-  background-color: #f5f0e8;
-  padding: 0.25rem 0.5rem;
+  background-color: transparent;
+  padding: 0;
 }
 
 .dark .keep-light {
