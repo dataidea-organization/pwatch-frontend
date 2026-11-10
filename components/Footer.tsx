@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { fetchFooterDocuments } from '@/lib/api';
+import { publicDocumentUrl } from '@/lib/media';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -35,7 +36,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* About Section */}
           <div>
-            <Link href="/" className="inline-block mb-4 bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] p-3 rounded-xl shadow-md hover:shadow-lg transition-all hover:scale-105">
+            <Link href="/" className="keep-light inline-block mb-4 bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] p-3 rounded-xl shadow-md hover:shadow-lg transition-all hover:scale-105">
               <Image
                 src="/images/PWATCH LOGO.png"
                 alt="Parliament Watch Uganda Logo"
@@ -278,7 +279,7 @@ export default function Footer() {
             <div className="flex flex-wrap items-center gap-4 text-xs text-gray-300">
               {footerDocs.privacy_policy ? (
                 <a 
-                  href={footerDocs.privacy_policy} 
+                  href={publicDocumentUrl(footerDocs.privacy_policy)} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="hover:text-white transition-colors hover:underline"
@@ -293,7 +294,7 @@ export default function Footer() {
               <span className="text-white/30">|</span>
               {footerDocs.terms_of_service ? (
                 <a 
-                  href={footerDocs.terms_of_service} 
+                  href={publicDocumentUrl(footerDocs.terms_of_service)} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="hover:text-white transition-colors hover:underline"
@@ -308,7 +309,7 @@ export default function Footer() {
               <span className="text-white/30">|</span>
               {footerDocs.accessibility ? (
                 <a 
-                  href={footerDocs.accessibility} 
+                  href={publicDocumentUrl(footerDocs.accessibility)} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="hover:text-white transition-colors hover:underline"

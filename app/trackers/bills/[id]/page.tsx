@@ -2,6 +2,7 @@ import { fetchBill } from '@/lib/api';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, FileText, ClipboardList, CheckCircle2, FileDown } from 'lucide-react';
+import { publicDocumentUrl } from '@/lib/media';
 
 export default async function BillDetailsPage({
   params
@@ -264,7 +265,7 @@ export default async function BillDetailsPage({
                       <div className="space-y-2">
                         {reading.document && (
                           <a
-                            href={reading.document}
+                            href={publicDocumentUrl(reading.document)}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:text-[#2d5016] rounded-md border border-gray-200 hover:border-[#2d5016]/30 transition-colors"
@@ -275,7 +276,7 @@ export default async function BillDetailsPage({
                         )}
                         {reading.committee_report && (
                           <a
-                            href={reading.committee_report}
+                            href={publicDocumentUrl(reading.committee_report)}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:text-[#2d5016] rounded-md border border-gray-200 hover:border-[#2d5016]/30 transition-colors"
@@ -286,7 +287,7 @@ export default async function BillDetailsPage({
                         )}
                         {reading.analysis && (
                           <a
-                            href={reading.analysis}
+                            href={publicDocumentUrl(reading.analysis)}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:text-[#2d5016] rounded-md border border-gray-200 hover:border-[#2d5016]/30 transition-colors"

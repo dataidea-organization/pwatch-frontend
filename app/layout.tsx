@@ -7,6 +7,8 @@ import Footer from "@/components/Footer";
 import ChatbotWidget from "@/components/ChatbotWidget";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
+const themeScript = `(function(){try{if(localStorage.getItem('pwatch-theme')==='dark'){document.documentElement.classList.add('dark')}}catch(e){}})();`;
+
 const gabarito = Gabarito({
   variable: "--font-gabarito",
   subsets: ["latin"],
@@ -33,8 +35,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-JQG3VM76CT"
           strategy="afterInteractive"

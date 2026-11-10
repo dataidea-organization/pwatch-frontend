@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { fetchBlogs, BlogPost } from '@/lib/api';
+import { appendUniqueById, uniqueById } from '@/lib/lists';
 import { Calendar, User } from 'lucide-react';
 
 const API_MEDIA = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:8000';
@@ -32,6 +33,7 @@ export default function BlogsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const requestGen = useRef(0);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -41,6 +43,7 @@ export default function BlogsPage() {
   }, [searchQuery]);
 
   const loadBlogs = useCallback(async () => {
+    const gen = ++requestGen.current;
     try {
       setLoading(true);
       const filters: { category?: string; search?: string } = {};
@@ -48,16 +51,20 @@ export default function BlogsPage() {
       if (debouncedSearch.trim()) filters.search = debouncedSearch.trim();
 
       const data = await fetchBlogs(1, 12, filters);
-      setBlogPosts(data.results);
+      if (gen !== requestGen.current) return;
+      setBlogPosts(uniqueById(data.results));
       setHasMore(data.next !== null);
       setPage(1);
       setError(null);
     } catch (err) {
+      if (gen !== requestGen.current) return;
       setError('Failed to load blog posts. Please try again later.');
       console.error('Error fetching blogs:', err);
     } finally {
-      setLoading(false);
-      setInitialLoad(false);
+      if (gen === requestGen.current) {
+        setLoading(false);
+        setInitialLoad(false);
+      }
     }
   }, [selectedCategory, debouncedSearch]);
 
@@ -67,6 +74,7 @@ export default function BlogsPage() {
 
   const loadMore = async () => {
     if (loadingMore) return;
+    const gen = requestGen.current;
     try {
       setLoadingMore(true);
       const nextPage = page + 1;
@@ -75,14 +83,16 @@ export default function BlogsPage() {
       if (debouncedSearch.trim()) filters.search = debouncedSearch.trim();
 
       const data = await fetchBlogs(nextPage, 12, filters);
-      setBlogPosts((prev) => [...prev, ...data.results]);
+      if (gen !== requestGen.current) return;
+      setBlogPosts((prev) => appendUniqueById(prev, data.results));
       setHasMore(data.next !== null);
       setPage(nextPage);
     } catch (err) {
+      if (gen !== requestGen.current) return;
       setError('Failed to load more posts.');
       console.error('Error fetching blogs:', err);
     } finally {
-      setLoadingMore(false);
+      if (gen === requestGen.current) setLoadingMore(false);
     }
   };
 

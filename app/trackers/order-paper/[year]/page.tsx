@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation'
 import { ArrowLeft, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Download, FileText } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { publicDocumentUrl } from '@/lib/media'
 
 interface OrderPaper {
   id: number
@@ -319,7 +320,7 @@ export default function OrderPaperYearPage() {
                       <td className="px-6 py-4">
                         {orderPaper.file ? (
                           <a
-                            href={orderPaper.file}
+                            href={publicDocumentUrl(orderPaper.file)}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 bg-[#2d5016] text-white px-4 py-2 rounded-md hover:bg-[#1b3d26] transition-colors text-sm"

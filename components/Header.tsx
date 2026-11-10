@@ -13,6 +13,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { searchGlobal, GlobalSearchResponse } from '@/lib/api';
+import ThemeToggle from '@/components/ThemeToggle';
 
 export default function Header() {
   const router = useRouter();
@@ -280,7 +281,7 @@ export default function Header() {
 
       <div className="border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
+          <Link href="/" className="brand-logo flex items-center gap-2 hover:opacity-90 transition-opacity rounded-lg">
             <Image
               src="/images/PWATCH LOGO.png"
               alt="Parliament Watch Uganda Logo"
@@ -291,6 +292,8 @@ export default function Header() {
             />
           </Link>
 
+          <div className="flex items-center gap-2">
+          <ThemeToggle />
           <nav className="hidden md:flex items-center gap-6">
             <Link href="/news" className="text-gray-700 hover:text-[#2d5016] font-medium text-sm transition-colors relative group">
               News &amp; Updates
@@ -436,6 +439,7 @@ export default function Header() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
+          </div>
         </div>
 
         {/* Mobile Menu */}

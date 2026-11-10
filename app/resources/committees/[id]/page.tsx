@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Calendar, Users, User, FileText, Download } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { publicDocumentUrl } from '@/lib/media'
 
 export default async function CommitteeDetailPage({
   params
@@ -227,7 +228,7 @@ export default async function CommitteeDetailPage({
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
                           {document.file && (
                             <a
-                              href={document.file}
+                              href={publicDocumentUrl(document.file)}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="inline-flex items-center gap-2 bg-[#2d5016] text-white px-4 py-2 rounded-md hover:bg-[#1b3d26] transition-colors text-sm"

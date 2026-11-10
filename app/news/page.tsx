@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { fetchNews, NewsArticle } from '@/lib/api';
+import { appendUniqueById, uniqueById } from '@/lib/lists';
 import { Calendar, User } from 'lucide-react';
 
 const API_MEDIA = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:8000';
@@ -33,6 +34,7 @@ export default function NewsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
+  const requestGen = useRef(0);
 
   // Debounce search input
   useEffect(() => {
@@ -44,6 +46,7 @@ export default function NewsPage() {
   }, [searchQuery]);
 
   const loadNews = useCallback(async () => {
+    const gen = ++requestGen.current;
     try {
       setLoading(true);
       const filters: { category?: string; search?: string } = {};
@@ -51,16 +54,20 @@ export default function NewsPage() {
       if (debouncedSearch.trim()) filters.search = debouncedSearch.trim();
 
       const data = await fetchNews(1, 12, filters);
-      setNewsArticles(data.results);
+      if (gen !== requestGen.current) return;
+      setNewsArticles(uniqueById(data.results));
       setHasMore(data.next !== null);
       setPage(1);
       setError(null);
     } catch (err) {
+      if (gen !== requestGen.current) return;
       setError('Failed to load news articles. Please try again later.');
       console.error('Error fetching news:', err);
     } finally {
-      setLoading(false);
-      setInitialLoad(false);
+      if (gen === requestGen.current) {
+        setLoading(false);
+        setInitialLoad(false);
+      }
     }
   }, [debouncedSearch, selectedCategory]);
 
@@ -71,6 +78,7 @@ export default function NewsPage() {
 
   const loadMore = async () => {
     if (loadingMore) return;
+    const gen = requestGen.current;
 
     try {
       setLoadingMore(true);
@@ -80,14 +88,16 @@ export default function NewsPage() {
       if (debouncedSearch.trim()) filters.search = debouncedSearch.trim();
 
       const data = await fetchNews(nextPage, 12, filters);
-      setNewsArticles([...newsArticles, ...data.results]);
+      if (gen !== requestGen.current) return;
+      setNewsArticles((current) => appendUniqueById(current, data.results));
       setHasMore(data.next !== null);
       setPage(nextPage);
     } catch (err) {
+      if (gen !== requestGen.current) return;
       setError('Failed to load more articles.');
       console.error('Error fetching more news:', err);
     } finally {
-      setLoadingMore(false);
+      if (gen === requestGen.current) setLoadingMore(false);
     }
   };
 

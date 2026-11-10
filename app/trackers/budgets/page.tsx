@@ -7,6 +7,7 @@ import { ArrowLeft, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRig
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { fetchPageHeroImage } from '@/lib/api'
+import { publicDocumentUrl } from '@/lib/media'
 
 interface Budget {
   id: number
@@ -424,7 +425,7 @@ export default function BudgetsPage() {
                       </td>
                       <td className="px-6 py-4">
                         <a
-                          href={budget.file}
+                          href={publicDocumentUrl(budget.file)}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-2 bg-[#2d5016] text-white px-4 py-2 rounded-lg hover:bg-[#1b3d26] transition-colors text-sm shadow-sm hover:shadow-md"

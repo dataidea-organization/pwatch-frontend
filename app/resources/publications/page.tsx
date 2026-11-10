@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { fetchPublications, Publication } from '@/lib/api';
+import { appendUniqueById, uniqueById } from '@/lib/lists';
 import { ArrowLeft, Calendar } from 'lucide-react';
 
 const PUBLICATION_TYPES = [
@@ -30,6 +31,7 @@ export default function PublicationsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [selectedType, setSelectedType] = useState('all');
+  const requestGen = useRef(0);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -39,6 +41,7 @@ export default function PublicationsPage() {
   }, [searchQuery]);
 
   const loadPublications = useCallback(async () => {
+    const gen = ++requestGen.current;
     try {
       setLoading(true);
       const filters: { type?: string; search?: string } = {};
@@ -47,18 +50,22 @@ export default function PublicationsPage() {
 
       const data = await fetchPublications(1, 12, {
         ...filters,
-        ordering: '-date',
+        ordering: '-date,-id',
       });
-      setPublications(data.results);
+      if (gen !== requestGen.current) return;
+      setPublications(uniqueById(data.results));
       setHasMore(data.next !== null);
       setPage(1);
       setError(null);
     } catch (err) {
+      if (gen !== requestGen.current) return;
       setError('Failed to load publications. Please try again later.');
       console.error('Error fetching publications:', err);
     } finally {
-      setLoading(false);
-      setInitialLoad(false);
+      if (gen === requestGen.current) {
+        setLoading(false);
+        setInitialLoad(false);
+      }
     }
   }, [selectedType, debouncedSearch]);
 
@@ -68,6 +75,7 @@ export default function PublicationsPage() {
 
   const loadMore = async () => {
     if (loadingMore) return;
+    const gen = requestGen.current;
     try {
       setLoadingMore(true);
       const nextPage = page + 1;
@@ -77,16 +85,18 @@ export default function PublicationsPage() {
 
       const data = await fetchPublications(nextPage, 12, {
         ...filters,
-        ordering: '-date',
+        ordering: '-date,-id',
       });
-      setPublications((prev) => [...prev, ...data.results]);
+      if (gen !== requestGen.current) return;
+      setPublications((prev) => appendUniqueById(prev, data.results));
       setHasMore(data.next !== null);
       setPage(nextPage);
     } catch (err) {
+      if (gen !== requestGen.current) return;
       setError('Failed to load more publications.');
       console.error('Error fetching publications:', err);
     } finally {
-      setLoadingMore(false);
+      if (gen === requestGen.current) setLoadingMore(false);
     }
   };
 

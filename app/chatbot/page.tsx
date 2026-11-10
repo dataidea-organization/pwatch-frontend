@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Send, Loader2, FileText, MessageSquare } from 'lucide-react';
 import { chatWithBot, ChatbotResponse } from '@/lib/api';
 import { Button } from '@/components/ui/button';
+import { publicDocumentUrl } from '@/lib/media';
 import { Input } from '@/components/ui/input';
 
 interface ChatMessage {
@@ -133,7 +134,7 @@ export default function ChatbotPage() {
                     <p className="text-sm whitespace-pre-wrap text-gray-700">{item.response.answer}</p>
                     {item.response.document_url && (
                       <a
-                        href={item.response.document_url}
+                        href={publicDocumentUrl(item.response.document_url)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 text-xs text-[#2d5016] hover:text-[#1b3d26] transition-colors font-medium hover:underline mt-2"
@@ -155,7 +156,7 @@ export default function ChatbotPage() {
                   <p className="text-sm whitespace-pre-wrap text-gray-700">{response.answer}</p>
                   {response.document_url && (
                     <a
-                      href={response.document_url}
+                      href={publicDocumentUrl(response.document_url)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 text-xs text-[#2d5016] hover:text-[#1b3d26] transition-colors font-medium hover:underline mt-2"

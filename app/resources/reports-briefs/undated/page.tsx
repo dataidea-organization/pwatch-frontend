@@ -6,6 +6,7 @@ import { ArrowLeft, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRig
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { CommitteeDetail } from '@/lib/api'
+import { publicDocumentUrl } from '@/lib/media'
 
 interface Report {
   id: number
@@ -293,7 +294,7 @@ export default function ReportsBriefsUndatedPage() {
                       <td className="px-6 py-4">
                         {report.file ? (
                           <a
-                            href={report.file}
+                            href={publicDocumentUrl(report.file)}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 bg-[#2d5016] text-white px-4 py-2 rounded-md hover:bg-[#1b3d26] transition-colors text-sm"

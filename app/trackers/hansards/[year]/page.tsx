@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation';
 import { ArrowLeft, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Download, FileText } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { publicDocumentUrl } from '@/lib/media';
 
 interface Hansard {
   id: number;
@@ -377,7 +378,7 @@ export default function HansardsYearPage() {
                     <td className="px-6 py-4">
                       <div className="flex items-center justify-center gap-2">
                         <a
-                          href={hansard.file}
+                          href={publicDocumentUrl(hansard.file)}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-2 px-4 py-2 bg-[#2d5016] text-white text-sm font-medium rounded-md hover:bg-[#1b3d26] transition-colors"

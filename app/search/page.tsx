@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { searchGlobal, GlobalSearchResponse } from '@/lib/api';
 import { Folder } from 'lucide-react';
+import { publicDocumentUrl } from '@/lib/media';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
 
@@ -324,7 +325,7 @@ function SearchPageContent() {
                           <div className="flex-1">
                             {result.file ? (
                               <a
-                                href={`${API_BASE_URL.replace('/api', '')}${result.file}`}
+                                href={publicDocumentUrl(result.file)}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="block"

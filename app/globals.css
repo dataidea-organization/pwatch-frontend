@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #f5f0e8;
   --foreground: #171717;
@@ -9,17 +11,16 @@
   --antique-white: #f5f0e8;
 }
 
+.dark {
+  --background: #141612;
+  --foreground: #f3efe6;
+  color-scheme: dark;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-gabarito);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
@@ -186,4 +187,78 @@ textarea::placeholder {
   background-color: transparent;
   padding: 0;
   color: inherit;
+}
+
+/* Dark theme. Pages use fixed light utilities, so remap that palette when .dark is set.
+   Unlayered rules override Tailwind's layered utilities. */
+.dark .bg-white { background-color: #1c1f18; }
+.dark .bg-\[\#f5f0e8\],
+.dark .bg-\[\#fafaf8\],
+.dark .bg-gray-50 { background-color: #141612; }
+.dark .bg-gray-100,
+.dark .bg-gray-200 { background-color: #22261f; }
+
+.dark .from-\[\#fafaf8\] { --tw-gradient-from: #1c1f18; }
+.dark .to-\[\#f5f0e8\] { --tw-gradient-to: #141612; }
+.dark .hover\:from-\[\#fafaf8\]:hover { --tw-gradient-from: #262b22; }
+.dark .hover\:to-\[\#f5f0e8\]:hover { --tw-gradient-to: #1c1f18; }
+.dark .hover\:bg-\[\#f5f0e8\]:hover,
+.dark .hover\:bg-white:hover,
+.dark .hover\:bg-gray-50:hover,
+.dark .hover\:bg-gray-100:hover { background-color: #262b22; }
+
+.dark .text-gray-900,
+.dark .text-gray-800,
+.dark .text-black { color: #f3efe6; }
+.dark .text-gray-700 { color: #e4dfd4; }
+.dark .text-gray-600 { color: #c9c3b6; }
+.dark .text-gray-500 { color: #a8a294; }
+.dark .text-\[\#2d5016\] { color: #b7d99a; }
+.dark .hover\:text-\[\#2d5016\]:hover { color: #d5ecc4; }
+
+.dark .border-gray-100,
+.dark .border-gray-200,
+.dark .border-gray-300 { border-color: #34392f; }
+.dark .divide-gray-200 > :not([hidden]) ~ :not([hidden]) { border-color: #34392f; }
+
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: #1c1f18;
+  color: #f3efe6;
+  border-color: #34392f;
+}
+
+.dark header input {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border-color: transparent;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder { color: #8f897e; }
+
+.dark .blog-content { color: #e4dfd4; }
+.dark .blog-content h1,
+.dark .blog-content h2,
+.dark .blog-content h3,
+.dark .blog-content h4,
+.dark .blog-content h5,
+.dark .blog-content h6 { color: #f3efe6; }
+.dark .blog-content a { color: #b7d99a; }
+.dark .blog-content a:hover { color: #d5ecc4; }
+.dark .blog-content figure figcaption,
+.dark .blog-content blockquote { color: #a8a294; }
+.dark .blog-content code { background-color: #262b22; color: #f3efe6; }
+
+/* Wordmark is dark green on a transparent image, so keep a light plate behind it. */
+.dark .brand-logo {
+  background-color: #f5f0e8;
+  padding: 0.25rem 0.5rem;
+}
+
+.dark .keep-light {
+  --tw-gradient-from: #fafaf8;
+  --tw-gradient-to: #f5f0e8;
+  background-color: #f5f0e8;
 }

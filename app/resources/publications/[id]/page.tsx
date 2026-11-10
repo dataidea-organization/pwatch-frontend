@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowLeft, Calendar, Tag, FileText, ExternalLink, Download } from 'lucide-react'
+import { publicDocumentUrl } from '@/lib/media'
 
 export default async function PublicationDetailPage({
   params,
@@ -93,7 +94,7 @@ export default async function PublicationDetailPage({
               <div className="space-y-3">
                 {publication.pdf && (
                   <a
-                    href={publication.pdf}
+                    href={publicDocumentUrl(publication.pdf)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 w-full px-4 py-3 rounded-lg border border-gray-200 bg-white hover:bg-[#f5f0e8] text-gray-900 transition-colors"
@@ -104,7 +105,7 @@ export default async function PublicationDetailPage({
                 )}
                 {publication.url && (
                   <a
-                    href={publication.url}
+                    href={publicDocumentUrl(publication.url)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 w-full px-4 py-3 rounded-lg border border-gray-200 bg-white hover:bg-[#f5f0e8] text-gray-900 transition-colors"

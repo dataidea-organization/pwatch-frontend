@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { ArrowLeft, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Download, FileText } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { publicDocumentUrl } from '@/lib/media'
 
 interface Statement {
   id: number
@@ -222,7 +223,7 @@ export default function StatementsUndatedPage() {
                       <td className="px-6 py-4">
                         {statement.file ? (
                           <a
-                            href={statement.file}
+                            href={publicDocumentUrl(statement.file)}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 bg-[#2d5016] text-white px-4 py-2 rounded-md hover:bg-[#1b3d26] transition-colors text-sm"

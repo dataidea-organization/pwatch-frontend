@@ -6,19 +6,9 @@ import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, Folder } from 'lucide-react';
 import { fetchHeroImages, fetchHeadlines, fetchHomeNewsSummary, fetchHomeBlogSummary, fetchHomeTrackersSummary, fetchHomeResourcesSummary, HeroImage, Headline, NewsArticle, BlogPost, HomeTrackersSummary, HomeResourcesSummary } from '@/lib/api';
 import Link from 'next/link';
+import { publicDocumentUrl } from '@/lib/media';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
-const MEDIA_BASE = API_BASE_URL.replace(/\/api\/?$/, '');
-
-/** Build document/file URL: use as-is if already absolute, else prepend media base. Fixes malformed https//. */
-function documentUrl(file: string | null | undefined): string {
-  if (!file) return '';
-  const trimmed = file.trim();
-  if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
-    return trimmed.replace(/^https\/\//, 'https://');
-  }
-  return `${MEDIA_BASE}${trimmed.startsWith('/') ? '' : '/'}${trimmed}`;
-}
 
 type TrackerTab = 'mps' | 'bills' | 'loans' | 'budgets' | 'hansards' | 'order-paper';
 type ResourceTab = 'reports' | 'statements';
@@ -538,7 +528,7 @@ export default function Home() {
                             <div className="flex-1 min-w-0">
                               {budget.file ? (
                                 <a
-                                  href={documentUrl(budget.file)}
+                                  href={publicDocumentUrl(budget.file)}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="text-sm text-gray-800 truncate hover:text-[#2d5016] transition-colors cursor-pointer block"
@@ -580,7 +570,7 @@ export default function Home() {
                             <div className="flex-1 min-w-0">
                               {hansard.file ? (
                                 <a
-                                  href={documentUrl(hansard.file)}
+                                  href={publicDocumentUrl(hansard.file)}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="text-sm text-gray-800 truncate hover:text-[#2d5016] transition-colors cursor-pointer block"
@@ -622,7 +612,7 @@ export default function Home() {
                             <div className="flex-1 min-w-0">
                               {paper.file ? (
                                 <a
-                                  href={documentUrl(paper.file)}
+                                  href={publicDocumentUrl(paper.file)}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="text-sm text-gray-800 truncate hover:text-[#2d5016] transition-colors cursor-pointer block"
@@ -706,7 +696,7 @@ export default function Home() {
                             <div className="flex-1 min-w-0">
                               {report.file ? (
                                 <a
-                                  href={report.file}
+                                  href={publicDocumentUrl(report.file)}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="text-sm text-gray-800 truncate hover:text-[#2d5016] transition-colors cursor-pointer block"
@@ -746,7 +736,7 @@ export default function Home() {
                             <div className="flex-1 min-w-0">
                               {statement.file ? (
                                 <a
-                                  href={statement.file}
+                                  href={publicDocumentUrl(statement.file)}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="text-sm text-gray-800 truncate hover:text-[#2d5016] transition-colors cursor-pointer block"

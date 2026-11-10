@@ -2,17 +2,7 @@ import { fetchLoan } from '@/lib/api';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, FileDown } from 'lucide-react';
-
-/** Build document URL: use as-is if absolute, else prepend media base. */
-function documentUrl(file: string | null | undefined): string {
-  if (!file) return '';
-  const trimmed = file.trim();
-  if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
-    return trimmed.replace(/^https\/\//, 'https://');
-  }
-  const mediaBase = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api').replace(/\/api\/?$/, '');
-  return `${mediaBase}${trimmed.startsWith('/') ? '' : '/'}${trimmed}`;
-}
+import { publicDocumentUrl } from '@/lib/media';
 
 function formatCurrency(amount: number, currency: string): string {
   return new Intl.NumberFormat('en-US', {
@@ -130,7 +120,7 @@ export default async function LoanDetailPage({
                     {loan.documents.map((doc) => (
                       <a
                         key={doc.id}
-                        href={documentUrl(doc.file)}
+                        href={publicDocumentUrl(doc.file)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:text-[#2d5016] rounded-md border border-gray-200 hover:border-[#2d5016]/30 transition-colors"
