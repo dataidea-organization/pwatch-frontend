@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { ArrowLeft, DollarSign, TrendingUp, BarChart3 } from 'lucide-react';
+import { ArrowLeft, DollarSign, TrendingUp } from 'lucide-react';
 import { fetchPageHeroImage } from '@/lib/api';
 
 interface DebtData {
@@ -187,7 +187,7 @@ export default function DebtTrackerPage() {
                 National Debt Tracker
               </h1>
               <p className="text-base text-white/90 leading-relaxed sm:text-lg">
-                Track Uganda&apos;s national debt, GDP, interest, and expenditure over time. Explore per capita metrics and trends.
+                Track Uganda&apos;s national debt and GDP over time. Explore per capita metrics and trends.
               </p>
             </div>
           </div>
@@ -195,7 +195,7 @@ export default function DebtTrackerPage() {
 
         {/* Top Stats Cards */}
         {latestData && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             {/* National Debt */}
             <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
               <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
@@ -217,7 +217,7 @@ export default function DebtTrackerPage() {
               </div>
             </div>
 
-            {/* Interest */}
+            {/* GDP */}
             <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
               <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
                 <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
@@ -229,30 +229,9 @@ export default function DebtTrackerPage() {
                   </div>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-gray-600 text-sm mb-1">Interest</p>
+                  <p className="text-gray-600 text-sm mb-1">GDP</p>
                   <p className="text-xl font-bold text-gray-900">
-                    {formatMillionsUGX(latestData.interest)}
-                  </p>
-                  <p className="text-xs text-gray-500 mt-1">As of {latestData.year}</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Total Expenditure */}
-            <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
-              <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
-                <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
-              </div>
-              <div className="relative z-10 flex items-center gap-4">
-                <div className="flex-shrink-0">
-                  <div className="p-3 bg-white/60 rounded-lg shadow-sm">
-                    <BarChart3 className="w-6 h-6 text-[#2d5016]" />
-                  </div>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-gray-600 text-sm mb-1">Total Expenditure</p>
-                  <p className="text-xl font-bold text-gray-900">
-                    {formatMillionsUGX(latestData.total_expenditure)}
+                    {formatMillionsUGX(latestData.gdp)}
                   </p>
                   <p className="text-xs text-gray-500 mt-1">As of {latestData.year}</p>
                 </div>
