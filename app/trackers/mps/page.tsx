@@ -407,25 +407,7 @@ export default function MPsPage() {
 
         {/* Summary Section */}
         {!loading && allMps.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            {/* Total MPs */}
-            <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
-              <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
-                <div className="absolute inset-0 bg-[#2d5016] rounded-full blur-2xl"></div>
-              </div>
-              <div className="relative z-10 flex items-center gap-4">
-                <div className="flex-shrink-0">
-                  <div className="p-3 bg-white/60 rounded-lg shadow-sm">
-                    <Users className="w-6 h-6 text-[#2d5016]" />
-                  </div>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-gray-600 text-sm mb-1">Total MPs</p>
-                  <p className="text-2xl font-bold text-gray-900">{summary?.total_mps ?? 0}</p>
-                </div>
-              </div>
-            </div>
-
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             {/* Total Parties */}
             <div className="relative bg-gradient-to-br from-[#fafaf8] to-[#f5f0e8] rounded-xl shadow-md border border-gray-200 p-6 overflow-hidden">
               <div className="absolute top-0 right-0 w-24 h-24 opacity-5">
